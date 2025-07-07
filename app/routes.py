@@ -16,11 +16,17 @@ def register():
             return redirect(url_for('main.register'))
 
         hashed_pw = generate_password_hash(form.password.data)
-        new_user = User(email=form.email.data, password=hashed_pw)
+        new_user = User(
+            username=form.username.data,
+            email=form.email.data,
+            password=hashed_pw
+        )
+
         db.session.add(new_user)
         db.session.commit()
         flash("Cont creat! Acum te poți loga.", "success")
         return redirect(url_for('main.login'))
+
     return render_template('register.html', form=form)
 
 
