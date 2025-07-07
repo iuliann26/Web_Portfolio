@@ -30,3 +30,6 @@ def register():
     return render_template('register.html', form=form)
 
 
+@main.route('/login', methods=['GET', 'POST'])
+def login():
+    return "Login page (în construcție)"
