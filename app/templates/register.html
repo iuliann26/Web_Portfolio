@@ -1,0 +1,21 @@
+<form method="POST">
+    {{ form.hidden_tag() }}
+
+    <div class="mb-3">
+        {{ form.username.label }} {{ form.username(class="form-control") }}
+    </div>
+
+    <div class="mb-3">
+        {{ form.email.label }} {{ form.email(class="form-control") }}
+    </div>
+
+    <div class="mb-3">
+        {{ form.password.label }} {{ form.password(class="form-control") }}
+    </div>
+
+    <div class="mb-3">
+        {{ form.confirm.label }} {{ form.confirm(class="form-control") }}
+    </div>
+
+    {{ form.submit(class="btn btn-primary") }}
+</form>
