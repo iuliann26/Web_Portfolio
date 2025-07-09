@@ -10,7 +10,7 @@ main = Blueprint('main', __name__)
 def register():
     form = RegisterForm()
     if form.validate_on_submit():
-#verifica dac este mail existent
+#verifica daca este mail existent
         existing_user_email = User.query.filter_by(email=form.email.data).first()
         if existing_user_email:
             flash("Există deja un cont cu acest email.", "warning")
