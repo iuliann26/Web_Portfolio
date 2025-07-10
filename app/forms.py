@@ -19,3 +19,8 @@ class RegisterForm(FlaskForm):
         user = User.query.filter_by(email=email.data).first()
         if user:
             raise ValidationError('Acest email este deja folosit.')
+
+class LoginForm(FlaskForm):
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    password = PasswordField('Parola', validators=[DataRequired()])
+    submit = SubmitField('Autentificare')
