@@ -5,9 +5,17 @@ from app import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user
 from app.forms import LoginForm
-from flask_login import login_user
+from flask_login import login_required, current_user
+from flask_login import login_user, logout_user
+from datetime import datetime
 
 main = Blueprint('main', __name__)
+
+@main.route('/')
+def home():
+    return render_template('home.html', user=current_user)
+
+
 
 @main.route('/register', methods=['GET', 'POST'])
 def register():
@@ -19,25 +27,7 @@ def register():
             flash("Există deja un cont cu acest email.", "warning")
             return redirect(url_for('main.register'))
 
-#verifica daca este cont cu user
-        existing_user_username = User.query.filter_by(username=form.username.data).first()
-        if existing_user_username:
-            flash("Există deja un cont cu acest username.", "warning")
-            return redirect(url_for('main.register'))
 
-#creaza utilizator nou
-        hashed_pw = generate_password_hash(form.password.data)
-        new_user = User(
-            username=form.username.data,
-            email=form.email.data,
-            password=hashed_pw
-        )
-
-        db.session.add(new_user)
-        db.session.commit()
-        flash("Cont creat! Acum te poți loga.", "success")
-        return redirect(url_for('main.login'))
-    
     return render_template('register.html', form=form)
 
 @main.route('/login', methods=['GET', 'POST'])
@@ -52,3 +42,11 @@ def login():
         else:
             flash('Email sau parolă incorecte', 'danger')
     return render_template('login.html', form=form)
+def logout():
+    logout_user()
+    return redirect(url_for('main.home'))
+
+@main.app_context_processor
+
+def inject_now():
+    return {'now': lambda: datetime.now()}
