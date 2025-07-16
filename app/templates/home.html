@@ -499,17 +499,22 @@
     document.addEventListener('DOMContentLoaded', () => {
       // Smooth scroll and active nav link
       const navLinks = document.querySelectorAll('nav a');
-      navLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-          e.preventDefault();
-          const targetId = link.getAttribute('href').startsWith('#') ? link.getAttribute('href') : `#${link.getAttribute('href')}`;
-          if (targetId.startsWith('#')) {
-            document.querySelector(targetId).scrollIntoView({ behavior: 'smooth' });
-          } else {
-            window.location.href = targetId;
-          }
-        });
-      });
+navLinks.forEach(link => {
+  link.addEventListener('click', (e) => {
+    const href = link.getAttribute('href');
+
+    // Doar linkurile către secțiuni interne (#id)
+    if (href.startsWith('#')) {
+      e.preventDefault();
+      const target = document.querySelector(href);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+    // Linkurile externe (ex: /login) merg normal
+  });
+});
+
 
       // Highlight active nav link on scroll
       const sections = document.querySelectorAll('section');
