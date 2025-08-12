@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Autentificare pentru portofoliul lui Iulian A. Ionita, specialist în IT, networking și automatizare.">
-  <meta name="keywords" content="Iulian Ionita, IT, networking, cloud, PowerShell, Azure, DevOps, Bash, autentificare">
+  <meta name="keywords" content="Iulian Ionita, IT, networking, cloud, PowerShell, Azure, DevOps, Bash, autentificare, login">
   <meta name="author" content="Iulian A. Ionita">
   <title>Autentificare | Iulian A. Ionita</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -148,6 +148,76 @@
       outline-offset: 2px;
     }
 
+    /* Flash Messages */
+    .flash-messages {
+      position: fixed;
+      top: 80px;
+      right: 20px;
+      z-index: 1050;
+      max-width: 400px;
+    }
+    .flash-message {
+      padding: 1rem 1.5rem;
+      margin-bottom: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      animation: slideInRight 0.5s ease-out;
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .flash-message.success {
+      background: #10b981;
+      color: #ffffff;
+      border-left: 4px solid #065f46;
+    }
+    .flash-message.error {
+      background: #ef4444;
+      color: #ffffff;
+      border-left: 4px solid #991b1b;
+    }
+    .flash-message.info {
+      background: #3b82f6;
+      color: #ffffff;
+      border-left: 4px solid #1e40af;
+    }
+    .flash-message.warning {
+      background: #f59e0b;
+      color: #ffffff;
+      border-left: 4px solid #92400e;
+    }
+    .flash-close {
+      background: none;
+      border: none;
+      color: inherit;
+      font-size: 1.2rem;
+      cursor: pointer;
+      padding: 0.25rem;
+      margin-left: auto;
+      opacity: 0.8;
+      transition: opacity 0.3s;
+    }
+    .flash-close:hover {
+      opacity: 1;
+    }
+    .dark-mode .flash-message.success {
+      background: #065f46;
+      border-left-color: #10b981;
+    }
+    .dark-mode .flash-message.error {
+      background: #991b1b;
+      border-left-color: #ef4444;
+    }
+    .dark-mode .flash-message.info {
+      background: #1e40af;
+      border-left-color: #3b82f6;
+    }
+    .dark-mode .flash-message.warning {
+      background: #92400e;
+      border-left-color: #f59e0b;
+    }
+
     /* Login Section */
     .login {
       min-height: 100vh;
@@ -193,7 +263,7 @@
       opacity: 0;
     }
     .login form {
-      max-width: 600px;
+      max-width: 500px;
       width: 100%;
       background: #fff;
       padding: 2rem;
@@ -277,7 +347,7 @@
       font-size: 1rem;
       margin-top: 1rem;
     }
-    .login .register-link {
+    .login .register-link, .login .forgot-password {
       margin-top: 1.5rem;
       font-size: 1rem;
       color: #f87171;
@@ -287,11 +357,38 @@
       display: inline-flex;
       align-items: center;
     }
-    .login .register-link:hover, .login .register-link:focus {
+    .login .register-link:hover, .login .register-link:focus,
+    .login .forgot-password:hover, .login .forgot-password:focus {
       color: #ef4444;
       transform: scale(1.05);
       outline: 2px solid #ef4444;
       outline-offset: 2px;
+    }
+    .login .field-error {
+      color: #dc2626;
+      font-size: 0.875rem;
+      margin-top: 0.25rem;
+      display: block;
+    }
+    .login .form-footer {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: center;
+      margin-top: 1.5rem;
+    }
+    .login .remember-me {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.95rem;
+      color: #6b7280;
+      margin-bottom: 1rem;
+    }
+    .login .remember-me input[type="checkbox"] {
+      width: auto;
+      margin: 0;
+      transform: none;
     }
 
     /* Back to Top Button */
@@ -366,6 +463,10 @@
       0% { transform: translateY(0) scale(1.1); }
       100% { transform: translateY(-100px) scale(1.1); }
     }
+    @keyframes slideInRight {
+      from { opacity: 1; transform: translateX(100%); }
+      to { opacity: 1; transform: translateX(0); }
+    }
 
     /* Mobile Menu */
     @media (max-width: 768px) {
@@ -396,6 +497,12 @@
       .theme-toggle {
         margin-left: 1rem;
       }
+      .flash-messages {
+        top: 70px;
+        right: 10px;
+        left: 10px;
+        max-width: none;
+      }
     }
 
     /* Responsive */
@@ -414,7 +521,7 @@
       .login h2 { font-size: 1.8rem; }
       .login form { padding: 1rem; }
       .login input, .login button { font-size: 0.95rem; }
-      .login .register-link { font-size: 0.95rem; }
+      .login .register-link, .login .forgot-password { font-size: 0.95rem; }
     }
   </style>
   <script>
@@ -450,14 +557,7 @@
         document.body.classList.toggle('dark-mode');
         const isDark = document.body.classList.contains('dark-mode');
         themeToggle.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
-        localStorage.setItem('theme', isDark ? 'dark' : 'light');
       });
-
-      // Load theme from localStorage
-      if (localStorage.getItem('theme') === 'dark') {
-        document.body.classList.add('dark-mode');
-        themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-      }
 
       // Mobile menu toggle
       const menuToggle = document.querySelector('.menu-toggle');
@@ -479,10 +579,58 @@
       backToTop.addEventListener('click', () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       });
+
+      // Flash messages auto-hide and close functionality
+      const flashMessages = document.querySelectorAll('.flash-message');
+      flashMessages.forEach((message, index) => {
+        // Add close button functionality
+        const closeBtn = message.querySelector('.flash-close');
+        if (closeBtn) {
+          closeBtn.addEventListener('click', () => {
+            message.style.animation = 'slideOutRight 0.3s ease-in forwards';
+            setTimeout(() => message.remove(), 300);
+          });
+        }
+
+        // Auto-hide after 5 seconds
+        setTimeout(() => {
+          if (message.parentElement) {
+            message.style.animation = 'slideOutRight 0.3s ease-in forwards';
+            setTimeout(() => message.remove(), 300);
+          }
+        }, 5000 + (index * 100));
+      });
     });
+
+    // Add slideOutRight animation
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes slideOutRight {
+        from { opacity: 1; transform: translateX(0); }
+        to { opacity: 0; transform: translateX(100%); }
+      }
+    `;
+    document.head.appendChild(style);
   </script>
 </head>
 <body>
+  <!-- Flash Messages -->
+  <div class="flash-messages">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="flash-message {{ category }}">
+            <i class="fas fa-{% if category == 'error' %}exclamation-triangle{% elif category == 'success' %}check-circle{% elif category == 'info' %}info-circle{% else %}exclamation-circle{% endif %}"></i>
+            <span>{{ message }}</span>
+            <button class="flash-close" aria-label="Închide mesajul">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+  </div>
+
   <header>
     <div class="logo">Iulian A. Ionita</div>
     <nav>
@@ -505,30 +653,31 @@
     <h2>Autentificare</h2>
     <form action="/login" method="post">
       {{ form.hidden_tag() }} <!-- Includes CSRF token -->
+
       <div class="form-group">
         <label for="username">{{ form.username.label }}</label>
         {{ form.username(id="username", placeholder="Nume de utilizator", required=True) }}
         {% if form.username.errors %}
-          <span class="error-message">{{ form.username.errors[0] }}</span>
+          <span class="field-error">{{ form.username.errors[0] }}</span>
         {% endif %}
       </div>
+
       <div class="form-group">
         <label for="password">{{ form.password.label }}</label>
         {{ form.password(id="password", placeholder="Parolă", required=True) }}
         {% if form.password.errors %}
-          <span class="error-message">{{ form.password.errors[0] }}</span>
+          <span class="field-error">{{ form.password.errors[0] }}</span>
         {% endif %}
       </div>
+
+
+
       {{ form.submit(class="submit-button") }}
     </form>
-    {% if error_message %}
-      <div class="error-message">{{ error_message }}</div>
-    {% endif %}
-    {% if success_message %}
-      <div class="success-message">{{ success_message }}</div>
-    {% endif %}
-    <div class="register-link">
-      <a href="/register" aria-label="Du-te la pagina de înregistrare">Nu ai cont? Înregistrează-te</a>
+    
+    <div class="form-footer">
+      <a href="/forgot-password" class="forgot-password" aria-label="Du-te la pagina de resetare parolă">Ai uitat parola?</a>
+      <a href="/register" class="register-link" aria-label="Du-te la pagina de înregistrare">Nu ai cont? Înregistrează-te</a>
     </div>
   </section>
 
