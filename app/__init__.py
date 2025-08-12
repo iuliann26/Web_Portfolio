@@ -2,6 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from config import Config
+from flask_wtf.csrf import CSRFProtect
 
 # Inițializăm extensiile, dar nu le legăm încă de aplicație
 db = SQLAlchemy()
@@ -10,6 +11,7 @@ login_manager = LoginManager()
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
+    csrf = CSRFProtect(app)
 
     # Inițializăm extensiile cu aplicația
     db.init_app(app)

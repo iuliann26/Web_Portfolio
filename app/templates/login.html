@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Pagină de autentificare pentru portofoliul profesional al lui Iulian A. Ionita.">
-  <meta name="keywords" content="Iulian Ionita, IT, autentificare, portofoliu">
+  <meta name="description" content="Autentificare pentru portofoliul lui Iulian A. Ionita, specialist în IT, networking și automatizare.">
+  <meta name="keywords" content="Iulian Ionita, IT, networking, cloud, PowerShell, Azure, DevOps, Bash, autentificare">
   <meta name="author" content="Iulian A. Ionita">
   <title>Autentificare | Iulian A. Ionita</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -19,7 +19,6 @@
       scroll-behavior: smooth;
       line-height: 1.6;
       transition: background 0.3s, color 0.3s;
-      overflow-x: hidden;
     }
     a { text-decoration: none; color: inherit; }
     ul { list-style: none; }
@@ -28,21 +27,28 @@
       color: #f1f5f9;
     }
     .dark-mode header { background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.95)); }
-    .dark-mode .login-section { background: #2d3748; }
-    .dark-mode .login-container input, .dark-mode .login-container button {
+    .dark-mode .login { background: linear-gradient(135deg, #2d3748, #1e293b); }
+    .dark-mode footer { background: #0f172a; }
+    .dark-mode .login h2 { color: #f1f5f9; }
+    .dark-mode .login label { color: #e2e8f0; }
+    .dark-mode .login input, .dark-mode .login textarea {
       background: #2d3748;
       border-color: #4b5563;
       color: #f1f5f9;
     }
-    .dark-mode .login-container input:focus, .dark-mode .login-container button:focus {
+    .dark-mode .login input:focus, .dark-mode .login textarea:focus {
       border-color: #f87171;
       box-shadow: 0 0 8px rgba(248, 113, 113, 0.3);
     }
-    .dark-mode .success-message, .dark-mode .error-message {
+    .dark-mode .login .success-message, .dark-mode .login .error-message {
       background: #2d3748;
+      border-color: #34d399;
+      color: #34d399;
     }
-    .dark-mode .success-message { border-color: #34d399; }
-    .dark-mode .error-message { border-color: #dc2626; }
+    .dark-mode .login .error-message {
+      border-color: #dc2626;
+      color: #dc2626;
+    }
 
     /* Header & Nav */
     header {
@@ -65,6 +71,10 @@
       letter-spacing: 1.2px;
       animation: fadeInDown 0.8s ease-out;
     }
+    nav {
+      display: flex;
+      align-items: center;
+    }
     nav ul {
       display: flex;
       gap: 1.5rem;
@@ -74,11 +84,17 @@
       font-weight: 500;
       font-size: 1rem;
       position: relative;
-      transition: color 0.3s;
+      transition: color 0.3s, background 0.3s;
       padding: 0.5rem;
       min-height: 44px;
+      min-width: 44px;
       display: flex;
       align-items: center;
+      border-radius: 4px;
+    }
+    nav a:focus {
+      outline: 2px solid #f87171;
+      outline-offset: 2px;
     }
     nav a.active, nav a:hover {
       color: #f87171;
@@ -106,11 +122,14 @@
       transition: color 0.3s;
       padding: 0.5rem;
       min-height: 44px;
+      min-width: 44px;
       display: flex;
       align-items: center;
     }
-    .theme-toggle:hover {
+    .theme-toggle:hover, .theme-toggle:focus {
       color: #f87171;
+      outline: 2px solid #f87171;
+      outline-offset: 2px;
     }
     .menu-toggle {
       display: none;
@@ -121,23 +140,28 @@
       cursor: pointer;
       padding: 0.5rem;
       min-height: 44px;
+      min-width: 44px;
     }
-    .menu-toggle:hover {
+    .menu-toggle:hover, .menu-toggle:focus {
       color: #f87171;
+      outline: 2px solid #f87171;
+      outline-offset: 2px;
     }
 
     /* Login Section */
-    .login-section {
+    .login {
       min-height: 100vh;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
+      text-align: center;
+      position: relative;
       padding: 6rem 2rem 4rem;
       background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
-      position: relative;
       overflow: hidden;
     }
-    .login-section::before {
+    .login::before {
       content: '';
       position: absolute;
       top: 0;
@@ -148,9 +172,9 @@
       z-index: -2;
       transform: scale(1.1);
       animation: parallax 30s linear infinite;
-      opacity: 0.2;
+      opacity: 0.3;
     }
-    .login-section::after {
+    .login::after {
       content: '';
       position: absolute;
       top: 0;
@@ -160,33 +184,33 @@
       background: linear-gradient(180deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5));
       z-index: -1;
     }
-    .login-container {
+    .login h2 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 2rem;
+      animation: fadeInUp 1s ease-out forwards;
+      opacity: 0;
+    }
+    .login form {
+      max-width: 600px;
+      width: 100%;
       background: #fff;
       padding: 2rem;
       border-radius: 12px;
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-      max-width: 400px;
-      width: 100%;
-      text-align: center;
-      animation: fadeInUp 0.8s ease-out;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+      animation: fadeInUp 1.2s ease-out forwards;
+      opacity: 0;
     }
-    .login-container h2 {
-      font-size: 2rem;
-      font-weight: 600;
-      color: #1e293b;
-      margin-bottom: 1.5rem;
-    }
-    .login-container form {
-      display: flex;
-      flex-direction: column;
-      gap: 1.2rem;
-    }
-    .login-container label {
+    .login label {
       font-weight: 500;
       color: #1e293b;
+      display: block;
       text-align: left;
+      margin-bottom: 0.5rem;
     }
-    .login-container input {
+    .login input {
+      width: 100%;
       padding: 1rem;
       border: 1px solid #d1d5db;
       border-radius: 8px;
@@ -194,13 +218,17 @@
       transition: border 0.3s, box-shadow 0.3s, transform 0.3s;
       background: #fff;
     }
-    .login-container input:focus {
+    .login input:focus {
       border-color: #f87171;
       box-shadow: 0 0 8px rgba(248, 113, 113, 0.3);
       outline: none;
       transform: scale(1.02);
     }
-    .login-container button {
+    .login .form-group {
+      margin-bottom: 1.2rem;
+    }
+    .login button {
+      width: 100%;
       padding: 1rem;
       background: #f87171;
       color: #fff;
@@ -216,55 +244,54 @@
       justify-content: center;
       position: relative;
     }
-    .login-container button:hover, .login-container button:active {
+    .login button:hover, .login button:focus {
       background: #ef4444;
       transform: scale(0.95);
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      outline: 2px solid #ef4444;
+      outline-offset: 2px;
     }
-    .login-container .register-btn {
-      background: #4b5563;
+    .login button:disabled {
+      background: #d1d5db;
+      cursor: not-allowed;
     }
-    .login-container .register-btn:hover, .login-container .register-btn:active {
-      background: #374151;
-    }
-    .login-container .error, .login-container .success-message, .login-container .error-message {
-      font-size: 0.9rem;
-      padding: 0.8rem;
-      border-radius: 8px;
-      margin-top: 0.5rem;
-      display: none;
-    }
-    .login-container .error {
-      color: #dc2626;
-    }
-    .login-container .success-message {
-      color: #065f46;
-      border: 1px solid #34d399;
-      background: #fff;
-    }
-    .login-container .error-message {
-      color: #dc2626;
-      border: 1px solid #dc2626;
-      background: #fff;
-    }
-    .login-container .loader {
-      display: none;
-      border: 3px solid #f3f3f3;
-      border-top: 3px solid #f87171;
-      border-radius: 50%;
-      width: 24px;
-      height: 24px;
-      animation: spin 1s linear infinite;
-      position: absolute;
-      right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-    }
-    .login-container button.loading .loader {
+    .login .error-message {
       display: block;
+      padding: 1rem;
+      background: #fff;
+      border: 1px solid #dc2626;
+      border-radius: 8px;
+      color: #dc2626;
+      text-align: center;
+      font-size: 1rem;
+      margin-top: 1rem;
     }
-    .login-container button.loading span {
-      visibility: hidden;
+    .login .success-message {
+      display: block;
+      padding: 1rem;
+      background: #fff;
+      border: 1px solid #34d399;
+      border-radius: 8px;
+      color: #065f46;
+      text-align: center;
+      font-size: 1rem;
+      margin-top: 1rem;
+    }
+    .login .register-link {
+      margin-top: 1.5rem;
+      font-size: 1rem;
+      color: #f87171;
+      font-weight: 500;
+      transition: color 0.3s, transform 0.3s;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+    }
+    .login .register-link:hover, .login .register-link:focus {
+      color: #ef4444;
+      transform: scale(1.05);
+      outline: 2px solid #ef4444;
+      outline-offset: 2px;
     }
 
     /* Back to Top Button */
@@ -292,9 +319,11 @@
       opacity: 1;
       visibility: visible;
     }
-    .back-to-top:hover, .back-to-top:active {
+    .back-to-top:hover, .back-to-top:focus {
       background: #ef4444;
       transform: scale(1.1);
+      outline: 2px solid #ef4444;
+      outline-offset: 2px;
     }
 
     /* Footer */
@@ -317,9 +346,11 @@
       display: inline-flex;
       align-items: center;
     }
-    .social-links a:hover, .social-links a:active {
+    .social-links a:hover, .social-links a:focus {
       color: #f87171;
       transform: scale(1.1);
+      outline: 2px solid #f87171;
+      outline-offset: 2px;
     }
 
     /* Keyframes */
@@ -330,10 +361,6 @@
     @keyframes fadeInDown {
       from { opacity: 0; transform: translateY(-30px); }
       to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
     }
     @keyframes parallax {
       0% { transform: translateY(0) scale(1.1); }
@@ -369,16 +396,25 @@
       .theme-toggle {
         margin-left: 1rem;
       }
-      .login-container {
-        padding: 1.5rem;
-        max-width: 90%;
-      }
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .login h2 { font-size: 2.2rem; }
+      .login form { padding: 1.5rem; }
+    }
+    @media (max-width: 768px) {
+      header { padding: 0.8rem 1.5rem; }
+      .logo { font-size: 1.6rem; }
+      .login h2 { font-size: 2rem; }
+      .login { padding: 4rem 1.5rem 3rem; }
     }
     @media (max-width: 480px) {
-      .login-section { padding: 4rem 1rem 3rem; }
-      .login-container h2 { font-size: 1.8rem; }
-      .login-container input, .login-container button { font-size: 0.95rem; }
-      .login-container { padding: 1.2rem; }
+      .login { padding: 3rem 1rem; }
+      .login h2 { font-size: 1.8rem; }
+      .login form { padding: 1rem; }
+      .login input, .login button { font-size: 0.95rem; }
+      .login .register-link { font-size: 0.95rem; }
     }
   </style>
   <script>
@@ -403,6 +439,10 @@
           }
         });
       });
+
+      // Highlight active nav link
+      const loginLink = document.querySelector('nav a[href="/login"]');
+      if (loginLink) loginLink.classList.add('active');
 
       // Dark mode toggle
       const themeToggle = document.querySelector('.theme-toggle');
@@ -439,79 +479,6 @@
       backToTop.addEventListener('click', () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       });
-
-      // Form submission with AJAX
-      const form = document.querySelector('.login-container form');
-      const successMessage = document.querySelector('.success-message');
-      const errorMessage = document.querySelector('.error-message');
-      form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const username = form.querySelector('input[name="username"]').value.trim();
-        const password = form.querySelector('input[name="password"]').value.trim();
-        const usernameError = form.querySelector('.error.username');
-        const passwordError = form.querySelector('.error.password');
-
-        // Reset errors and messages
-        usernameError.style.display = 'none';
-        passwordError.style.display = 'none';
-        successMessage.style.display = 'none';
-        errorMessage.style.display = 'none';
-
-        // Client-side validation
-        let valid = true;
-        if (!username) {
-          usernameError.style.display = 'block';
-          usernameError.textContent = 'Numele de utilizator este obligatoriu';
-          valid = false;
-        }
-        if (!password) {
-          passwordError.style.display = 'block';
-          passwordError.textContent = 'Parola este obligatorie';
-          valid = false;
-        }
-        if (!valid) return;
-
-        // Show loading state
-        const loginButton = form.querySelector('button[type="submit"]');
-        loginButton.classList.add('loading');
-        loginButton.disabled = true;
-
-        try {
-          const response = await fetch('/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username, password })
-          });
-          const result = await response.json();
-
-          loginButton.classList.remove('loading');
-          loginButton.disabled = false;
-
-          if (result.success) {
-            successMessage.style.display = 'block';
-            successMessage.textContent = result.message;
-            form.reset();
-            // Redirect to dashboard or homepage after 2s
-            setTimeout(() => window.location.href = '/', 2000);
-          } else {
-            if (result.errors.general) {
-              errorMessage.style.display = 'block';
-              errorMessage.textContent = result.errors.general;
-            } else {
-              for (const [field, error] of Object.entries(result.errors)) {
-                const errorElement = form.querySelector(`.error.${field}`);
-                errorElement.style.display = 'block';
-                errorElement.textContent = error;
-              }
-            }
-          }
-        } catch (error) {
-          loginButton.classList.remove('loading');
-          loginButton.disabled = false;
-          errorMessage.style.display = 'block';
-          errorMessage.textContent = 'Eroare la autentificare. Încearcă din nou.';
-        }
-      });
     });
   </script>
 </head>
@@ -521,32 +488,47 @@
     <nav>
       <button class="menu-toggle" aria-label="Deschide meniul"><i class="fas fa-bars"></i></button>
       <ul>
-        <li><a href="/" aria-label="Du-te la pagina Acasă">Acasă</a></li>
+        <li><a href="/#home" aria-label="Du-te la secțiunea Acasă">Acasă</a></li>
         <li><a href="/#about" aria-label="Du-te la secțiunea Despre">Despre</a></li>
         <li><a href="/#skills" aria-label="Du-te la secțiunea Aptitudini">Aptitudini</a></li>
         <li><a href="/#portfolio" aria-label="Du-te la secțiunea Portofoliu">Portofoliu</a></li>
         <li><a href="/#contact" aria-label="Du-te la secțiunea Contact">Contact</a></li>
-        <li><a href="{{ url_for('main.login') }}" aria-label="Du-te la pagina de autentificare" class="active">Login</a></li>
+        <li><a href="/login" class="active" aria-label="Du-te la pagina de autentificare">Login</a></li>
+        <li><a href="/register" aria-label="Du-te la pagina de înregistrare">Înregistrare</a></li>
         <li><button class="theme-toggle" aria-label="Comută între modurile de temă"><i class="fas fa-moon"></i></button></li>
       </ul>
     </nav>
   </header>
 
-  <section class="login-section">
-    <div class="login-container">
-      <h2>Autentificare</h2>
-      <form action="/login" method="post">
-        <label for="username">Nume de utilizator</label>
-        <input id="username" name="username" type="text" placeholder="Nume utilizator" required>
-        <span class="error username"></span>
-        <label for="password">Parolă</label>
-        <input id="password" name="password" type="password" placeholder="Parolă" required>
-        <span class="error password"></span>
-        <button type="submit"><span>Autentificare</span><span class="loader"></span></button>
-        <button type="button" class="register-btn" onclick="window.location.href='/register'">Înregistrare</button>
-      </form>
-      <div class="success-message"></div>
-      <div class="error-message"></div>
+  <!-- Login Section -->
+  <section class="login">
+    <h2>Autentificare</h2>
+    <form action="/login" method="post">
+      {{ form.hidden_tag() }} <!-- Includes CSRF token -->
+      <div class="form-group">
+        <label for="username">{{ form.username.label }}</label>
+        {{ form.username(id="username", placeholder="Nume de utilizator", required=True) }}
+        {% if form.username.errors %}
+          <span class="error-message">{{ form.username.errors[0] }}</span>
+        {% endif %}
+      </div>
+      <div class="form-group">
+        <label for="password">{{ form.password.label }}</label>
+        {{ form.password(id="password", placeholder="Parolă", required=True) }}
+        {% if form.password.errors %}
+          <span class="error-message">{{ form.password.errors[0] }}</span>
+        {% endif %}
+      </div>
+      {{ form.submit(class="submit-button") }}
+    </form>
+    {% if error_message %}
+      <div class="error-message">{{ error_message }}</div>
+    {% endif %}
+    {% if success_message %}
+      <div class="success-message">{{ success_message }}</div>
+    {% endif %}
+    <div class="register-link">
+      <a href="/register" aria-label="Du-te la pagina de înregistrare">Nu ai cont? Înregistrează-te</a>
     </div>
   </section>
 

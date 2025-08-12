@@ -3,67 +3,60 @@ from app.forms import RegisterForm, LoginForm
 from app.models import User
 from app import db
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import login_user
-from app.forms import LoginForm
-from flask_login import login_required, current_user
-from flask_login import login_user, logout_user
+from flask_login import login_user, logout_user, current_user
 
 main = Blueprint('main', __name__)
-
-@main.route('/')
-def home():
-    return render_template('home.html', user=current_user)
-
-
 
 @main.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegisterForm()
-    print("A intrat în ruta /register")
-
     if form.validate_on_submit():
-        print("Formular validat")
-        print("Email:", form.email.data)
-        print("Parolă:", form.password.data)
+        username = form.username.data
+        email = form.email.data
+        password = form.password.data
 
-        # Hash parolă
-        hashed_pw = generate_password_hash(form.password.data, method='pbkdf2:sha256')
-        print("Parola hashed:", hashed_pw)
+        print(f"Înregistrare: {username}, {email}")
 
-        # Creează utilizatorul
-        user = User(email=form.email.data, password=hashed_pw)
-        print("User creat:", user)
+        existing_user = User.query.filter_by(email=email).first()
+        print(f"Utilizator existent: {existing_user}")
 
-        # Adaugă utilizatorul în DB
-        db.session.add(user)
+        if existing_user:
+            flash('Acest email este deja folosit.', 'danger')
+            return redirect(url_for('main.register'))
+
+        hashed_password = generate_password_hash(password)
+        new_user = User(username=username, email=email, password=hashed_password)
+
         try:
+            db.session.add(new_user)
             db.session.commit()
-            print("Contul a fost salvat în DB")
-            flash('Cont creat cu succes!', 'success')
+            flash('Înregistrare reușită!', 'success')
+            return redirect(url_for('main.login'))
         except Exception as e:
-            print("Eroare la salvarea în DB:", e)
-
-        return redirect(url_for('main.login'))
-    
-    else:
-        print("Formularul NU a trecut de validare")
-        print("Erori de validare:", form.errors)
+            db.session.rollback()
+            print(f"Eroare DB: {e}")
+            flash('A apărut o eroare la crearea contului.', 'danger')
+            return redirect(url_for('main.register'))
 
     return render_template('register.html', form=form)
-
 
 @main.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).first()
+        user = User.query.filter_by(username=form.username.data).first()
         if user and check_password_hash(user.password, form.password.data):
             login_user(user)
-            flash('Autentificare reușită!', 'success')
-            return redirect(url_for('main.home'))  # sau altă pagină
+            flash('Te-ai conectat cu succes!', 'success')
+            return redirect(url_for('main.home'))  # sau pagina ta principală după login
         else:
-            flash('Email sau parolă incorecte', 'danger')
+            flash('Nume utilizator sau parolă incorecte.', 'danger')
+            return redirect(url_for('main.login'))
+
     return render_template('login.html', form=form)
-def logout():
-    logout_user()
-    return redirect(url_for('main.home'))
+
+
+@main.route('/')
+def home():
+    return render_template('home.html', user=current_user)
+
