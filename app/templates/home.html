@@ -617,17 +617,53 @@ navLinks.forEach(link => {
 <body>
   <header>
     <div class="logo">Iulian A. Ionita</div>
+    <style>
+  /* Forțează textul utilizatorului să fie alb indiferent de temă */
+  .welcome-user {
+    color: #ffffff !important;
+  }
+
+  /* Asigură că link-urile din nav nu se schimbă cu toggle-ul */
+  nav a,
+  nav button.theme-toggle,
+  .logout-btn {
+    color: #ffffff !important; /* alb fix */
+  }
+
+  /*pastrat toata bara alba*/
+  nav i {
+    color: #ffffff !important;
+  }
+</style>
     <nav>
-      <ul>
-        <li><a href="#home" aria-label="Du-te la secțiunea Acasă">Acasă</a></li>
-        <li><a href="#about" aria-label="Du-te la secțiunea Despre">Despre</a></li>
-        <li><a href="#skills" aria-label="Du-te la secțiunea Aptitudini">Aptitudini</a></li>
-        <li><a href="#portfolio" aria-label="Du-te la secțiunea Portofoliu">Portofoliu</a></li>
-        <li><a href="#contact" aria-label="Du-te la secțiunea Contact">Contact</a></li>
-        <li><a href="{{ url_for('main.login') }}" aria-label="Du-te la pagina de autentificare">Login</a></li>
-        <li><button class="theme-toggle" aria-label="Comută între modurile de temă"><i class="fas fa-moon"></i></button></li>
-      </ul>
-    </nav>
+  <ul>
+    <li><a href="#home" aria-label="Du-te la secțiunea Acasă">Acasă</a></li>
+    <li><a href="#about" aria-label="Du-te la secțiunea Despre">Despre</a></li>
+    <li><a href="#skills" aria-label="Du-te la secțiunea Aptitudini">Aptitudini</a></li>
+    <li><a href="#portfolio" aria-label="Du-te la secțiunea Portofoliu">Portofoliu</a></li>
+    <li><a href="#contact" aria-label="Du-te la secțiunea Contact">Contact</a></li>
+    
+    <!-- Logica condițională pentru utilizator logat/nelogat -->
+    {% if current_user.is_authenticated %}
+      <!-- Pentru utilizator logat: afișează numele și butonul logout -->
+      <li class="user-info">
+        <span class="welcome-user">
+          <i class="fas fa-user"></i>
+          Bună, {{ current_user.username }}!
+        </span>
+      </li>
+      <li><a href="{{ url_for('main.logout') }}" class="logout-btn" aria-label="Deconectare">
+        <i class="fas fa-sign-out-alt"></i> Logout
+      </a></li>
+    {% else %}
+      <!-- Pentru utilizator nelogat: afișează butoanele Login și Înregistrare -->
+      <li><a href="{{ url_for('main.login') }}" aria-label="Du-te la pagina de autentificare">Login</a></li>
+      <li><a href="{{ url_for('main.register') }}" aria-label="Du-te la pagina de înregistrare">Înregistrare</a></li>
+    {% endif %}
+    
+    <li><button class="theme-toggle" aria-label="Comută între modurile de temă"><i class="fas fa-moon"></i></button></li>
+  </ul>
+</nav>
   </header>
 
   <!-- Hero -->

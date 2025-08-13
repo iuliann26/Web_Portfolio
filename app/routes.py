@@ -1,9 +1,11 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, request
 from app.forms import RegisterForm, LoginForm
 from app.models import User
+from flask_login import login_user, logout_user, current_user, login_required
 from app import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, logout_user, current_user
+from app.forms import LoginForm
 
 main = Blueprint('main', __name__)
 
@@ -15,22 +17,20 @@ def register():
         email = form.email.data
         password = form.password.data
 
-        print(f"Înregistrare: {username}, {email}")
-
+        # Verifică dacă emailul există deja
         existing_user = User.query.filter_by(email=email).first()
-        print(f"Utilizator existent: {existing_user}")
-
         if existing_user:
             flash('Acest email este deja folosit.', 'danger')
             return redirect(url_for('main.register'))
 
-        hashed_password = generate_password_hash(password)
-        new_user = User(username=username, email=email, password=hashed_password)
+        # Creează utilizatorul și setează parola criptată
+        new_user = User(username=username, email=email)
+        new_user.set_password(password)
 
         try:
             db.session.add(new_user)
             db.session.commit()
-            flash('Înregistrare reușită!', 'success')
+            flash('Înregistrare reușită! Te poți autentifica.', 'success')
             return redirect(url_for('main.login'))
         except Exception as e:
             db.session.rollback()
@@ -42,18 +42,24 @@ def register():
 
 @main.route('/login', methods=['GET', 'POST'])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('main.home'))
+
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
-        if user and check_password_hash(user.password, form.password.data):
-            login_user(user)
-            flash('Te-ai conectat cu succes!', 'success')
-            return redirect(url_for('main.home'))  # sau pagina ta principală după login
+        if user and user.check_password(form.password.data):
+            login_user(user, remember=True)
+            return redirect(url_for('main.home'))
         else:
-            flash('Nume utilizator sau parolă incorecte.', 'danger')
-            return redirect(url_for('main.login'))
-
+            flash('Username sau parolă incorecte.', 'danger')
     return render_template('login.html', form=form)
+
+@main.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('main.home'))
 
 
 @main.route('/')

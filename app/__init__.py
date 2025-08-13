@@ -1,29 +1,36 @@
+# app/__init__.py
+
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
-from config import Config
 from flask_wtf.csrf import CSRFProtect
+from config import Config
 
-# Inițializăm extensiile, dar nu le legăm încă de aplicație
+# Inițializăm extensiile (fără să le atașăm încă la aplicație)
 db = SQLAlchemy()
 login_manager = LoginManager()
+csrf = CSRFProtect()
 
 def create_app():
+    # Creăm instanța aplicației Flask
     app = Flask(__name__)
     app.config.from_object(Config)
-    csrf = CSRFProtect(app)
 
     # Inițializăm extensiile cu aplicația
     db.init_app(app)
     login_manager.init_app(app)
-    login_manager.login_view = 'main.login'
+    csrf.init_app(app)
 
-    # Importuri după ce app & db sunt complet configurate
+    # Setări pentru Flask-Login
+    login_manager.login_view = 'main.login'   # ruta unde trimite dacă nu e logat
+    login_manager.login_message_category = 'info'  # mesaj flash category (Bootstrap friendly)
+
+    # Import modele și blueprint-uri după ce app & db sunt configurate
     from app.models import User
     from app.routes import main
     app.register_blueprint(main)
 
-    # Înregistrăm funcția pentru încărcarea utilizatorului
+    # Funcția care încarcă utilizatorul din sesiune
     @login_manager.user_loader
     def load_user(user_id):
         return User.query.get(int(user_id))
