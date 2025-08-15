@@ -1,792 +1,662 @@
 <!DOCTYPE html>
-<html lang="ro">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Pagina principală</title>
-</head>
-<body>
-    <h1>Bine ai venit, {{ user.username }}!</h1>
-    <p>Acum ești logat.</p>
-</body>
-</html>
+<html lang="ro" data-theme="auto">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Portofoliu profesional al lui Iulian A. Ionita, pasionat de IT, specializat în networking, cloud și automatizare.">
-  <meta name="keywords" content="Iulian Ionita, IT, networking, cloud, PowerShell, Azure, DevOps">
-  <meta name="author" content="Iulian A. Ionita">
-  <title>Portofoliu Profesional | Iulian A. Ionita</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Portofoliul profesional al lui Iulian A. Ioniță – networking, cloud, automatizare, securitate." />
+  <meta name="author" content="Iulian A. Ioniță" />
+  <meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <title>Portofoliu Profesional | Iulian A. Ioniță</title>
+
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Portofoliu – Iulian A. Ioniță" />
+  <meta property="og:description" content="Networking • Cloud • Automatizare • Securitate" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="/static/img/og-card.jpg" />
+
   <style>
-    /* Reset & Base */
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Poppins', sans-serif;
-      color: #1a1a1a;
-      background: #f8fafc;
-      scroll-behavior: smooth;
-      line-height: 1.6;
-      transition: background 0.3s, color 0.3s;
+    /* ------------------ CSS DESIGN SYSTEM ------------------ */
+    :root{
+      --bg: #f8fafc;
+      --text: #0f172a;
+      --muted:#475569;
+      --primary:#f87171;
+      --primary-600:#ef4444;
+      --card:#ffffff;
+      --ring: rgba(248,113,113,.35);
+      --shadow: 0 10px 30px rgba(2,6,23,.08);
+      --glass: rgba(255,255,255,.65);
     }
-    a { text-decoration: none; color: inherit; }
-    ul { list-style: none; }
-    .dark-mode {
-      background: #1e293b;
-      color: #f1f5f9;
+    html[data-theme="dark"]:root{
+      --bg:#0b1220;
+      --text:#e2e8f0;
+      --muted:#94a3b8;
+      --primary:#f87171;
+      --primary-600:#ef4444;
+      --card:#0f172a;
+      --ring: rgba(248,113,113,.35);
+      --shadow: 0 12px 35px rgba(0,0,0,.45);
+      --glass: rgba(15,23,42,.65);
     }
-    .dark-mode header { background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.95)); }
-    .dark-mode .about, .dark-mode .portfolio { background: #2d3748; }
-    .dark-mode .skills, .dark-mode .contact { background: linear-gradient(135deg, #2d3748, #1e293b); }
-    .dark-mode footer { background: #0f172a; }
-    .dark-mode .filter-btn { background: #4b5563; }
-    .dark-mode .filter-btn.active, .dark-mode .filter-btn:hover { background: #f87171; color: #fff; }
-    .dark-mode .about h2, .dark-mode .skills h2, .dark-mode .portfolio h2, .dark-mode .contact h2 {
-      color: #f1f5f9;
-    }
-    .dark-mode .about p, .dark-mode .about ul, .dark-mode .contact label {
-      color: #e2e8f0;
-    }
-    .dark-mode .contact input, .dark-mode .contact textarea {
-      background: #2d3748;
-      border-color: #4b5563;
-      color: #f1f5f9;
-    }
-    .dark-mode .contact input:focus, .dark-mode .contact textarea:focus {
-      border-color: #f87171;
-      box-shadow: 0 0 10px rgba(248, 113, 113, 0.3);
+    @media (prefers-reduced-motion: reduce){
+      *{animation:none!important;transition:none!important;}
     }
 
-    /* Header & Nav */
-    header {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(44, 62, 80, 0.95));
-      padding: 1.2rem 3rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 1000;
-      backdrop-filter: blur(12px);
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:'Poppins',system-ui,Segoe UI,Roboto,Arial,sans-serif;
+      color:var(--text);
+      background:radial-gradient(1200px 600px at 80% -10%, rgba(248,113,113,.12), transparent 60%),
+                 radial-gradient(900px 500px at -10% 90%, rgba(99,102,241,.10), transparent 55%),
+                 var(--bg);
+      line-height:1.6;
     }
-    .logo {
-      color: #fff;
-      font-size: 2.2rem;
-      font-weight: 700;
-      letter-spacing: 1.2px;
-      animation: fadeInDown 0.8s ease-out;
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    .container{max-width:1200px;margin:0 auto;padding:0 24px}
+
+    /* ------------------ ACCESSIBILITY ------------------ */
+    .skip-link{
+      position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;
     }
-    nav ul {
-      display: flex;
-      gap: 2.5rem;
+    .skip-link:focus{left:12px;top:12px;width:auto;height:auto;background:var(--card);color:var(--text);padding:8px 12px;border-radius:12px;box-shadow:var(--shadow)}
+
+    /* ------------------ HEADER ------------------ */
+    header{
+      position:sticky;top:0;z-index:1000;
+      backdrop-filter:saturate(140%) blur(10px);
+      background:linear-gradient(135deg, rgba(30,41,59,.85), rgba(44,62,80,.85));
+      border-bottom:1px solid rgba(255,255,255,.08);
     }
-    nav a {
-      color: #d1d5db;
-      font-weight: 500;
-      font-size: 1.1rem;
-      position: relative;
-      transition: color 0.3s;
+    .nav{
+      display:flex;align-items:center;justify-content:space-between;padding:14px 0;
     }
-    nav a.active, nav a:hover {
-      color: #f87171;
-    }
-    nav a::after {
-      content: '';
-      position: absolute;
-      bottom: -6px;
-      left: 50%;
-      width: 0;
-      height: 3px;
-      background: #f87171;
-      transition: width 0.3s, left 0.3s;
-    }
-    nav a.active::after, nav a:hover::after {
-      left: 0;
-      width: 100%;
-    }
-    .theme-toggle {
-      background: none;
-      border: none;
-      color: #d1d5db;
-      font-size: 1.2rem;
-      cursor: pointer;
-      transition: color 0.3s;
-    }
-    .theme-toggle:hover {
-      color: #f87171;
+    .brand{display:flex;align-items:center;gap:12px;color:#fff}
+    .brand .logo{width:36px;height:36px;border-radius:12px;background:linear-gradient(135deg,var(--primary),#60a5fa);display:grid;place-items:center;box-shadow:0 10px 25px rgba(248,113,113,.35)}
+    .brand strong{font-size:1.25rem;letter-spacing:.5px}
+
+    nav ul{display:flex;gap:24px;align-items:center}
+    nav a{color:#e5e7eb;position:relative}
+    nav a::after{content:"";position:absolute;left:0;bottom:-6px;width:0;height:2px;background:var(--primary);transition:width .2s ease}
+    nav a:hover::after,nav a.active::after{width:100%}
+
+    .icon-btn{background:transparent;border:0;color:#e5e7eb;cursor:pointer;font-size:1.1rem;padding:8px;border-radius:10px}
+    .icon-btn:hover{background:rgba(255,255,255,.08)}
+
+    /* Mobile menu */
+    .hamburger{display:none}
+    @media (max-width:900px){
+      .hamburger{display:inline-flex}
+      nav ul{position:fixed;inset:64px 12px auto 12px;background:var(--glass);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.1);border-radius:16px;box-shadow:var(--shadow);padding:16px;display:none;flex-direction:column;gap:12px}
+      nav ul.open{display:flex}
     }
 
-    /* Hero Section */
-    .hero {
-      height: 100VH;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      color: #fff;
-      overflow: hidden;
-    }
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: url('/static/img/hero-bg.jpg') center/cover no-repeat fixed;
-      z-index: -2;
-      transform: scale(1.1);
-      animation: parallax 30s linear infinite;
-      opacity: 0.8;
-    }
-    .hero::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(180deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.7));
-      z-index: -1;
-    }
-    .hero h1 {
-      font-size: 4rem;
-      font-weight: 700;
-      letter-spacing: 2px;
-      margin-bottom: 1.5rem;
-      animation: fadeInUp 1s ease-out forwards;
-      opacity: 0;
-    }
-    .hero p {
-      font-size: 1.5rem;
-      max-width: 700px;
-      margin-bottom: 2.5rem;
-      animation: fadeInUp 1.4s ease-out forwards;
-      opacity: 0;
-    }
-    .hero .btn {
-      padding: 1rem 3rem;
-      background: #f87171;
-      color: #fff;
-      border-radius: 50px;
-      font-weight: 600;
-      font-size: 1.2rem;
-      transition: transform 0.3s, background 0.3s, box-shadow 0.3s;
-      animation: fadeInUp 1.8s ease-out forwards;
-      opacity: 0;
-    }
-    .hero .btn:hover {
-      transform: translateY(-5px);
-      background: #ef4444;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    }
+    /* ------------------ PROGRESS BAR ------------------ */
+    .progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--primary),#60a5fa);width:0;z-index:1200}
 
-    /* Sections */
-    section {
-      padding: 8rem 3rem 6rem;
-      max-width: 1280px;
-      margin: 0 auto;
-      opacity: 0;
-      transform: translateY(40px);
-      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-    }
-    section.visible {
-      opacity: 1;
-      transform: none;
-    }
+    /* ------------------ HERO ------------------ */
+    .hero{position:relative;min-height:88vh;display:grid;place-items:center;text-align:center;color:#fff;overflow:hidden}
+    .hero .layer{position:absolute;inset:0;z-index:-2;background:url('/static/img/hero-bg.jpg') center/cover no-repeat}
+    .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,.45), rgba(0,0,0,.75));z-index:-1}
+    .hero h1{font-size:clamp(2rem,3.5vw,3.5rem);margin:0 0 12px;font-weight:700;letter-spacing:.5px;opacity:0;transform:translateY(20px);animation:fadeUp .9s forwards}
+    .hero p{max-width:780px;margin:0 auto 24px;font-size:clamp(1rem,1.3vw,1.25rem);opacity:0;transform:translateY(20px);animation:fadeUp 1.2s .15s forwards}
+    .cta{display:flex;gap:12px;justify-content:center}
+    .btn{padding:12px 20px;border-radius:12px;font-weight:600;border:1px solid transparent;box-shadow:var(--shadow);transition:.2s}
+    .btn-primary{background:var(--primary);color:#fff}
+    .btn-primary:hover{background:var(--primary-600);transform:translateY(-2px)}
+    .btn-ghost{background:rgba(255,255,255,.08);color:#fff;border-color:rgba(255,255,255,.16)}
+    .btn-ghost:hover{background:rgba(255,255,255,.16)}
 
-    /* About */
-    .about {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 3rem;
-      align-items: center;
-      background: #fff;
-      padding: 3rem;
-      border-radius: 16px;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    }
-    .about img {
-      width: 240px;
-      height: 240px;
-      border-radius: 50%;
-      border: 6px solid #f87171;
-      object-fit: cover;
-      animation: float 5s ease-in-out infinite;
-    }
-    .about .text {
-      flex: 1;
-      min-width: 320px;
-    }
-    .about h2 {
-      font-size: 2.2rem;
-      margin-bottom: 1.5rem;
-      color: #1e293b;
-    }
-    .about p, .about ul {
-      font-size: 1.1rem;
-      color: #4b5563;
-    }
-    .about ul {
-      margin: 1rem 0;
-      padding-left: 1.5rem;
-    }
-    .about li {
-      list-style: disc;
-      margin-bottom: 0.6rem;
-    }
-    .about .resume-btn {
-      display: inline-block;
-      margin-top: 1.5rem;
-      padding: 0.8rem 2.5rem;
-      background: #f87171;
-      color: #fff;
-      border-radius: 50px;
-      font-weight: 600;
-      transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
-    }
-    .about .resume-btn:hover {
-      background: #ef4444;
-      transform: translateY(-3px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    }
+    /* ------------------ SECTIONS ------------------ */
+    section{padding:84px 0}
+    section .section-title{font-size:1.8rem;margin:0 0 24px}
+    .card{background:var(--card);border:1px solid rgba(148,163,184,.15);border-radius:16px;box-shadow:var(--shadow)}
 
-    /* Skills */
-    .skills {
-      background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
-      padding: 6rem 3rem;
-    }
-    .skills h2 {
-      text-align: center;
-      font-size: 2.2rem;
-      margin-bottom: 2.5rem;
-      color: #1e293b;
-    }
-    .skills .skill-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 1.5rem;
-      justify-content: center;
-    }
-    .skills .skill {
-      background: #000;
-      color: #fff;
-      padding: 1.2rem 1.5rem;
-      border-radius: 12px;
-      text-align: center;
-      font-weight: 500;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s, background 0.3s, color 0.3s;
-    }
-    .skills .skill:hover {
-      transform: translateY(-8px);
-      background: #f87171;
-      color: #fff;
-    }
-    .dark-mode .skills .skill {
-      background: #fff;
-      color: #000;
-    }
-    .dark-mode .skills .skill:hover {
-      background: #f87171;
-      color: #fff;
-    }
+    /* ABOUT */
+    .about{display:grid;grid-template-columns:320px 1fr;gap:28px;align-items:center}
+    .about .photo{border-radius:16px;overflow:hidden;border:6px solid var(--primary);}
+    .about .meta{color:var(--muted)}
+    .badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+    .badge{padding:6px 10px;border-radius:999px;background:rgba(248,113,113,.12);border:1px solid rgba(248,113,113,.35);font-size:.85rem}
 
-    /* Portfolio */
-    .portfolio {
-      background: #fff;
-      padding: 6rem 3rem;
-      border-radius: 16px;
-    }
-    .portfolio h2 {
-      text-align: center;
-      font-size: 2.2rem;
-      margin-bottom: 2rem;
-      color: #1e293b;
-    }
-    .portfolio .filters {
-      display: flex;
-      justify-content: center;
-      gap: 1.2rem;
-      margin-bottom: 2.5rem;
-    }
-    .portfolio .filter-btn {
-      padding: 0.7rem 1.5rem;
-      background: #e5e7eb;
-      border-radius: 25px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: background 0.3s, color 0.3s, transform 0.3s;
-    }
-    .portfolio .filter-btn.active, .portfolio .filter-btn:hover {
-      background: #f87171;
-      color: #fff;
-      transform: translateY(-3px);
-    }
-    .portfolio .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-    }
-    .portfolio .card {
-      background: #000;
-      color: #fff;
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
-    .portfolio .card img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      transition: transform 0.3s;
-    }
-    .portfolio .card .info {
-      padding: 1.5rem;
-    }
-    .portfolio .card h3 {
-      font-size: 1.4rem;
-      margin-bottom: 0.6rem;
-      color: #fff;
-    }
-    .portfolio .card p {
-      font-size: 1rem;
-      color: #e2e8f0;
-    }
-    .portfolio .card:hover {
-      transform: translateY(-12px);
-      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
-    }
-    .portfolio .card:hover img {
-      transform: scale(1.1);
-    }
-    .portfolio .card.hidden {
-      display: none;
-    }
-    .dark-mode .portfolio .card {
-      background: #fff;
-      color: #000;
-    }
-    .dark-mode .portfolio .card h3 {
-      color: #000;
-    }
-    .dark-mode .portfolio .card p {
-      color: #1a1a1a;
-    }
+    /* STATS */
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:18px}
+    .stat{padding:16px;text-align:center}
+    .stat strong{font-size:1.8rem;display:block}
+    .stat span{color:var(--muted);font-size:.95rem}
 
-    /* Contact */
-    .contact {
-      background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
-      padding: 6rem 3rem;
-    }
-    .contact h2 {
-      text-align: center;
-      font-size: 2.2rem;
-      margin-bottom: 2.5rem;
-      color: #1e293b;
-    }
-    .contact form {
-      max-width: 800px;
-      margin: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-    }
-    .contact label {
-      font-weight: 500;
-      color: #1e293b;
-    }
-    .contact input, .contact textarea {
-      padding: 1.2rem;
-      border: 1px solid #d1d5db;
-      border-radius: 10px;
-      font-size: 1rem;
-      transition: border 0.3s, box-shadow 0.3s;
-      background: #fff;
-    }
-    .contact input:focus, .contact textarea:focus {
-      border-color: #f87171;
-      box-shadow: 0 0 10px rgba(248, 113, 113, 0.3);
-      outline: none;
-    }
-    .contact button {
-      padding: 1.2rem;
-      background: #f87171;
-      color: #fff;
-      border: none;
-      border-radius: 10px;
-      font-size: 1.1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
-    }
-    .contact button:hover {
-      background: #ef4444;
-      transform: translateY(-3px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    }
-    .contact .error {
-      color: #dc2626;
-      font-size: 0.9rem;
-      display: none;
-    }
+    /* SKILLS */
+    .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+    .skill{padding:14px 16px}
+    .skill h4{margin:0 0 6px;font-size:1rem}
+    .skill .tags{display:flex;flex-wrap:wrap;gap:8px}
+    .tag{font-size:.85rem;padding:6px 10px;border-radius:999px;background:#000;color:#fff}
+    html[data-theme="dark"] .tag{background:#fff;color:#000}
+    .tag:hover{background:var(--primary);color:#fff}
 
-    /* Footer */
-    footer {
-      text-align: center;
-      padding: 3rem;
-      background: #1e293b;
-      color: #d1d5db;
-      font-size: 1rem;
-    }
-    .social-links {
-      margin-top: 1rem;
-    }
-    .social-links a {
-      color: #d1d5db;
-      font-size: 1.5rem;
-      margin: 0 0.8rem;
-      transition: color 0.3s, transform 0.3s;
-    }
-    .social-links a:hover {
-      color: #f87171;
-      transform: translateY(-3px);
-    }
+    /* PORTFOLIO */
+    .controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:16px}
+    .filters{display:flex;gap:10px}
+    .filter-btn{padding:10px 14px;border-radius:999px;background:#e5e7eb;cursor:pointer;border:0;font-weight:600}
+    .filter-btn.active,.filter-btn:hover{background:var(--primary);color:#fff}
+    .search{display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;border:1px solid rgba(148,163,184,.35);background:var(--card)}
+    .search input{border:0;outline:0;background:transparent;color:inherit;width:220px}
 
-    /* Keyframes */
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(40px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes fadeInDown {
-      from { opacity: 0; transform: translateY(-40px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-25px); }
-    }
-    @keyframes parallax {
-      0% { transform: translateY(0) scale(1.1); }
-      100% { transform: translateY(-150px) scale(1.1); }
-    }
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
+    .work{overflow:hidden;position:relative}
+    .work img{height:180px;width:100%;object-fit:cover;transition:transform .3s ease}
+    .work:hover img{transform:scale(1.06)}
+    .work .info{padding:14px}
+    .work .info h3{margin:0 0 6px}
+    .work .info p{margin:0;color:var(--muted)}
 
-    /* Responsive */
-    @media (max-width: 1024px) {
-      .portfolio .cards {
-        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      }
-      .hero h1 { font-size: 3rem; }
-      .hero p { font-size: 1.3rem; }
-    }
-    @media (max-width: 768px) {
-      header { padding: 1rem 2rem; }
-      .logo { font-size: 1.8rem; }
-      nav ul { gap: 1.5rem; }
-      nav a { font-size: 1rem; }
-      .hero h1 { font-size: 2.5rem; }
-      .hero p { font-size: 1.2rem; }
-      .about { flex-direction: column; text-align: center; padding: 2rem; }
-      .about img { margin: auto; }
-      .portfolio .filters { flex-wrap: wrap; }
-      .skills .skill-list { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
-    }
-    @media (max-width: 480px) {
-      section { padding: 5rem 1.5rem; }
-      .hero h1 { font-size: 2rem; }
-      .hero p { font-size: 1rem; }
-      .portfolio .cards { grid-template-columns: 1fr; }
-      .about img { width: 180px; height: 180px; }
-    }
+    /* CONTACT */
+    .contact form{display:grid;gap:12px;max-width:760px}
+    .contact label{font-weight:600}
+    .input{padding:12px;border:1px solid rgba(148,163,184,.35);border-radius:12px;background:var(--card);outline:0}
+    .input:focus{box-shadow:0 0 0 4px var(--ring);border-color:transparent}
+    .error{color:#dc2626;font-size:.9rem;display:none}
+
+    /* FOOTER + TOAST + MODALS */
+    footer{padding:36px 0;color:#cbd5e1;text-align:center;background:#1e293b}
+    .social a{color:#cbd5e1;font-size:1.3rem;margin:0 .5rem}
+    .social a:hover{color:var(--primary)}
+
+    .toast{position:fixed;right:16px;bottom:16px;background:var(--card);border:1px solid rgba(148,163,184,.35);padding:12px 14px;border-radius:12px;box-shadow:var(--shadow);display:none}
+    .toast.show{display:block}
+
+    .modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:1100}
+    .modal.open{display:flex}
+    .modal .dialog{background:var(--card);padding:0;border-radius:16px;max-width:900px;width:min(92vw,900px);box-shadow:var(--shadow);overflow:hidden}
+    .dialog header{padding:12px 16px;border-bottom:1px solid rgba(148,163,184,.2);display:flex;align-items:center;justify-content:space-between}
+    .dialog main{padding:0}
+    .dialog img{width:100%;height:auto;display:block}
+
+    /* COMMAND PALETTE */
+    .cmdp{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:flex-start;justify-content:center;padding-top:10vh;z-index:1200}
+    .cmdp.open{display:flex}
+    .cmdp .box{background:var(--card);width:min(800px,92vw);border-radius:16px;border:1px solid rgba(148,163,184,.35);box-shadow:var(--shadow)}
+    .cmdp .box input{width:100%;padding:14px 16px;border:0;outline:0;background:transparent}
+    .cmdp .list{max-height:40vh;overflow:auto;border-top:1px solid rgba(148,163,184,.2)}
+    .cmdp .item{padding:12px 16px;border-bottom:1px solid rgba(148,163,184,.12);cursor:pointer}
+    .cmdp .item:hover{background:rgba(148,163,184,.12)}
+
+    /* RESPONSIVE */
+    @media (max-width:1024px){.about{grid-template-columns:1fr}}
+    @media (max-width:640px){.stats{grid-template-columns:repeat(2,1fr)}}
+
+    /* ANIM */
+    @keyframes fadeUp{to{opacity:1;transform:none}}
   </style>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      // Smooth scroll and active nav link
-      const navLinks = document.querySelectorAll('nav a');
-navLinks.forEach(link => {
-  link.addEventListener('click', (e) => {
-    const href = link.getAttribute('href');
-
-    // Doar linkurile către secțiuni interne (#id)
-    if (href.startsWith('#')) {
-      e.preventDefault();
-      const target = document.querySelector(href);
-      if (target) {
-        target.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
-    // Linkurile externe (ex: /login) merg normal
-  });
-});
-
-
-      // Highlight active nav link on scroll
-      const sections = document.querySelectorAll('section');
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            navLinks.forEach(link => link.classList.remove('active'));
-            const activeLink = document.querySelector(`nav a[href="#${entry.target.id}"]`);
-            if (activeLink) activeLink.classList.add('active');
-            entry.target.classList.add('visible');
-          }
-        });
-      }, { threshold: 0.3 });
-      sections.forEach(sec => observer.observe(sec));
-
-      // Portfolio filtering
-      const filterButtons = document.querySelectorAll('.filter-btn');
-      const cards = document.querySelectorAll('.portfolio .card');
-      filterButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-          filterButtons.forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          const filter = btn.dataset.filter;
-          cards.forEach(card => {
-            if (filter === 'all' || card.dataset.category === filter) {
-              card.classList.remove('hidden');
-            } else {
-              card.classList.add('hidden');
-            }
-          });
-        });
-      });
-
-      // Form validation
-      const form = document.querySelector('.contact form');
-      form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const name = form.querySelector('input[name="name"]').value.trim();
-        const email = form.querySelector('input[name="email"]').value.trim();
-        const message = form.querySelector('textarea[name="message"]').value.trim();
-        const emailRegex = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i;
-
-        const nameError = form.querySelector('.error.name');
-        const emailError = form.querySelector('.error.email');
-        const messageError = form.querySelector('.error.message');
-
-        let valid = true;
-        nameError.style.display = 'none';
-        emailError.style.display = 'none';
-        messageError.style.display = 'none';
-
-        if (!name) {
-          nameError.style.display = 'block';
-          nameError.textContent = 'Numele este obligatoriu';
-          valid = false;
-        }
-        if (!email || !emailRegex.test(email)) {
-          emailError.style.display = 'block';
-          emailError.textContent = 'Introdu un email valid';
-          valid = false;
-        }
-        if (!message) {
-          messageError.style.display = 'block';
-          messageError.textContent = 'Mesajul este obligatoriu';
-          valid = false;
-        }
-
-        if (valid) {
-          alert('Formular trimis cu succes!'); // Replace with backend endpoint later
-          form.reset();
-        }
-      });
-
-      // Dark mode toggle
-      const themeToggle = document.querySelector('.theme-toggle');
-      themeToggle.addEventListener('click', () => {
-        document.body.classList.toggle('dark-mode');
-        const isDark = document.body.classList.contains('dark-mode');
-        themeToggle.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
-        localStorage.setItem('theme', isDark ? 'dark' : 'light');
-      });
-
-      // Load theme from localStorage
-      if (localStorage.getItem('theme') === 'dark') {
-        document.body.classList.add('dark-mode');
-        themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-      }
-    });
-  </script>
 </head>
 <body>
+  <a href="#main" class="skip-link">Sari la conținut</a>
+  <div class="progress" id="progress"></div>
+
+  <!-- HEADER -->
   <header>
-    <div class="logo">Iulian A. Ionita</div>
-    <style>
-  /* Forțează textul utilizatorului să fie alb indiferent de temă */
-  .welcome-user {
-    color: #ffffff !important;
-  }
+    <div class="container nav">
+      <div class="brand">
+        <div class="logo"><i class="fa-solid fa-bolt"></i></div>
+        <strong>Iulian A. Ioniță</strong>
+      </div>
 
-  /* Asigură că link-urile din nav nu se schimbă cu toggle-ul */
-  nav a,
-  nav button.theme-toggle,
-  .logout-btn {
-    color: #ffffff !important; /* alb fix */
-  }
-
-  /*pastrat toata bara alba*/
-  nav i {
-    color: #ffffff !important;
-  }
-</style>
-    <nav>
-  <ul>
-    <li><a href="#home" aria-label="Du-te la secțiunea Acasă">Acasă</a></li>
-    <li><a href="#about" aria-label="Du-te la secțiunea Despre">Despre</a></li>
-    <li><a href="#skills" aria-label="Du-te la secțiunea Aptitudini">Aptitudini</a></li>
-    <li><a href="#portfolio" aria-label="Du-te la secțiunea Portofoliu">Portofoliu</a></li>
-    <li><a href="#contact" aria-label="Du-te la secțiunea Contact">Contact</a></li>
-    
-    <!-- Logica condițională pentru utilizator logat/nelogat -->
-    {% if current_user.is_authenticated %}
-      <!-- Pentru utilizator logat: afișează numele și butonul logout -->
-      <li class="user-info">
-        <span class="welcome-user">
-          <i class="fas fa-user"></i>
-          Bună, {{ current_user.username }}!
-        </span>
-      </li>
-      <li><a href="{{ url_for('main.logout') }}" class="logout-btn" aria-label="Deconectare">
-        <i class="fas fa-sign-out-alt"></i> Logout
-      </a></li>
-    {% else %}
-      <!-- Pentru utilizator nelogat: afișează butoanele Login și Înregistrare -->
-      <li><a href="{{ url_for('main.login') }}" aria-label="Du-te la pagina de autentificare">Login</a></li>
-      <li><a href="{{ url_for('main.register') }}" aria-label="Du-te la pagina de înregistrare">Înregistrare</a></li>
-    {% endif %}
-    
-    <li><button class="theme-toggle" aria-label="Comută între modurile de temă"><i class="fas fa-moon"></i></button></li>
-  </ul>
-</nav>
+      <nav aria-label="Meniul principal">
+        <button class="icon-btn hamburger" id="hamburger" aria-label="Deschide meniul"><i class="fa-solid fa-bars"></i></button>
+        <ul id="menu">
+          <li><a href="#home" class="active">Acasă</a></li>
+          <li><a href="#about">Despre</a></li>
+          <li><a href="#skills">Aptitudini</a></li>
+          <li><a href="#portfolio">Portofoliu</a></li>
+          <li><a href="#contact">Contact</a></li>
+          {% if current_user.is_authenticated %}
+            <li><span class="welcome-user" style="color:#fff"><i class="fas fa-user"></i> Bună, {{ current_user.username }}!</span></li>
+            <li><a href="{{ url_for('main.logout') }}" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+          {% else %}
+            <li><a href="{{ url_for('main.login') }}">Login</a></li>
+            <li><a href="{{ url_for('main.register') }}">Înregistrare</a></li>
+          {% endif %}
+          <li><button class="icon-btn" id="cmdk" title="Command Palette (Ctrl/⌘ K)"><i class="fa-solid fa-terminal"></i></button></li>
+          <li><button class="icon-btn" id="themeToggle" aria-label="Comută tema"><i class="fa-solid fa-moon"></i></button></li>
+        </ul>
+      </nav>
+    </div>
   </header>
 
-  <!-- Hero -->
-  <section id="home" class="hero">
-    <h1>Salut, sunt Iulian!</h1>
-    <p>Inginer IT pasionat de networking, cloud și automatizare, creând soluții inovatoare și scalabile.</p>
-    <a href="#about" class="btn">Află mai multe</a>
-  </section>
+  <main id="main">
+    <!-- HERO -->
+    <section id="home" class="hero">
+      <div class="layer" role="img" aria-label="Fundal erou"></div>
+      <div class="container">
+        <h1>Salut, sunt Iulian!</h1>
+        <p>Inginer IT pasionat de <strong>networking</strong>, <strong>cloud</strong> și <strong>automatizare</strong>, creând soluții inovatoare și scalabile pentru sisteme moderne.</p>
+        <div class="cta">
+          <a href="#about" class="btn btn-primary"><i class="fa-solid fa-circle-info"></i> Află mai multe</a>
+          <a href="/static/resume.pdf" class="btn btn-ghost" download><i class="fa-solid fa-file-arrow-down"></i> Descarcă CV</a>
+          <button class="btn btn-ghost" id="copyEmail"><i class="fa-solid fa-copy"></i> Copiază email</button>
+        </div>
+      </div>
+    </section>
 
-  <!-- About -->
-  <section id="about" class="about">
-    <img src="/static/img/profile.jpg" alt="Poza de profil Iulian Ionita" loading="lazy" onerror="this.src='/static/img/fallback-profile.jpg'">
-    <div class="text">
-      <h2>Despre Mine</h2>
-      <p>Sunt un entuziast al tehnologiei, cu o pasiune arzătoare pentru domeniul IT, în special pentru networking, securitate, cloud și automatizare. Deși studiez Mecatronică și Robotică la Universitatea POLITEHNICA din București, interesul meu profund pentru informatică m-a condus să explorez și să mă perfecționez în mod autodidact în tehnologii de ultimă oră, dezvoltând proiecte practice care să răspundă nevoilor reale ale industriei.</p>
-      <p>Am dobândit experiență practică în:</p>
-      <ul>
-        <li>Configurarea și gestionarea Windows Server, Active Directory și Group Policy pentru medii enterprise.</li>
-        <li>Proiectarea și implementarea rețelelor virtuale securizate în Azure, inclusiv VPN Gateway.</li>
-        <li>Dezvoltarea de scripturi PowerShell pentru automatizarea proceselor și monitorizarea rețelelor.</li>
-        <li>Optimizarea securității cu Microsoft Defender, asigurând protecție robustă împotriva amenințărilor.</li>
-      </ul>
-      <p>Obiectivul meu este să devin un expert în ingineria cloud și DevOps, contribuind la dezvoltarea de soluții scalabile, eficiente și sigure. În prezent, sunt dedicat învățării tehnologiilor moderne precum Kubernetes (K8s), Docker, Jenkins și Terraform, pentru a-mi extinde competențele și a aborda provocările complexe ale infrastructurilor IT contemporane.</p>
-      <a href="/static/resume.pdf" class="resume-btn" download>Descarcă CV</a>
-    </div>
-  </section>
+    <!-- ABOUT -->
+    <section id="about">
+      <div class="container about card">
+        <div class="photo">
+          <img src="/static/img/profile.jpg" alt="Poză profil Iulian" loading="lazy" onerror="this.src='/static/img/fallback-profile.jpg'" />
+        </div>
+        <div>
+          <h2 class="section-title">Despre mine</h2>
+          <p>Sunt un entuziast al tehnologiei, cu interes pentru networking, securitate, cloud și automatizare. Studiez Mecatronică & Robotică la UPB și îmbin practica cu teoria prin proiecte reale orientate pe rezultate.</p>
+          <div class="badges">
+            <span class="badge">Windows Server & AD</span>
+            <span class="badge">Azure Networking</span>
+            <span class="badge">PowerShell</span>
+            <span class="badge">Microsoft Defender</span>
+            <span class="badge">Linux</span>
+          </div>
+          <div class="stats">
+            <div class="stat"><strong data-count="35">0</strong><span>scripturi automate</span></div>
+            <div class="stat"><strong data-count="12">0</strong><span>lab-uri cloud</span></div>
+            <div class="stat"><strong data-count="5">0</strong><span>proiecte securitate</span></div>
+            <div class="stat"><strong data-count="3">0</strong><span>deploy-uri end‑to‑end</span></div>
+          </div>
+          <div class="badges" style="margin-top:14px">
+            <span class="badge"><i class="fa-solid fa-location-dot"></i> București</span>
+            <span class="badge"><i class="fa-solid fa-globe"></i> Română • Engleză</span>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  <!-- Skills -->
-  <section id="skills" class="skills">
-    <h2>Aptitudini Tehnice</h2>
-    <div class="skill-list">
-      <div class="skill">TCP/IP, DNS, DHCP, VLAN</div>
-      <div class="skill">Windows Server & Active Directory</div>
-      <div class="skill">Azure Networking & Cloud</div>
-      <div class="skill">PowerShell Automation</div>
-      <div class="skill">Wireshark, Fiddler, Performance Monitor</div>
-      <div class="skill">Microsoft 365 & Defender</div>
-      <div class="skill">Hyper-V & Virtualizare</div>
-      <div class="skill">VPN & Remote Access</div>
-      <div class="skill">Git & GitHub</div>
-      <div class="skill">Linux</div>
-    </div>
-  </section>
+    <!-- SKILLS -->
+    <section id="skills">
+      <div class="container">
+        <h2 class="section-title">Aptitudini Tehnice</h2>
+        <div class="skills-grid">
+          <div class="skill card">
+            <h4>Rețelistică</h4>
+            <div class="tags">
+              <span class="tag">TCP/IP</span>
+              <span class="tag">DNS</span>
+              <span class="tag">DHCP</span>
+              <span class="tag">VLAN</span>
+              <span class="tag">VPN</span>
+            </div>
+          </div>
+          <div class="skill card">
+            <h4>Infra & Cloud</h4>
+            <div class="tags">
+              <span class="tag">Azure</span>
+              <span class="tag">Hyper‑V</span>
+              <span class="tag">M365</span>
+              <span class="tag">Defender</span>
+            </div>
+          </div>
+          <div class="skill card">
+            <h4>Automatizare</h4>
+            <div class="tags">
+              <span class="tag">PowerShell</span>
+              <span class="tag">Bash</span>
+              <span class="tag">Git</span>
+              <span class="tag">GitHub</span>
+            </div>
+          </div>
+          <div class="skill card">
+            <h4>Observabilitate</h4>
+            <div class="tags">
+              <span class="tag">Wireshark</span>
+              <span class="tag">Fiddler</span>
+              <span class="tag">PerfMon</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  <!-- Portfolio -->
-  <section id="portfolio" class="portfolio">
-    <h2>Proiecte Cheie</h2>
-    <div class="filters">
-      <div class="filter-btn active" data-filter="all">Toate</div>
-      <div class="filter-btn" data-filter="cloud">Cloud</div>
-      <div class="filter-btn" data-filter="automation">Automatizare</div>
-      <div class="filter-btn" data-filter="security">Securitate</div>
-    </div>
-    <div class="cards">
-      <div class="card" data-category="automation">
-        <img src="/static/img/ad_gpo.jpg" alt="Proiect Active Directory și Group Policy" loading="lazy" onerror="this.src='/static/img/fallback-project.jpg'">
-        <div class="info">
-          <h3>AD & Group Policy</h3>
-          <p>Implementare AD enterprise și configurare GPO folosind PowerShell.</p>
+    <!-- PORTFOLIO -->
+    <section id="portfolio">
+      <div class="container">
+        <h2 class="section-title">Proiecte Cheie</h2>
+        <div class="controls">
+          <div class="filters" role="tablist" aria-label="Filtre portofoliu">
+            <button class="filter-btn active" data-filter="all" role="tab">Toate</button>
+            <button class="filter-btn" data-filter="cloud" role="tab">Cloud</button>
+            <button class="filter-btn" data-filter="automation" role="tab">Automatizare</button>
+            <button class="filter-btn" data-filter="security" role="tab">Securitate</button>
+          </div>
+          <div class="search">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input id="searchInput" type="search" placeholder="Caută proiect… (/)">
+          </div>
         </div>
-      </div>
-      <div class="card" data-category="cloud">
-        <img src="/static/img/azure_vpn.jpg" alt="Proiect Azure VNet și VPN" loading="lazy" onerror="this.src='/static/img/fallback-project.jpg'">
-        <div class="info">
-          <h3>Azure VNet & VPN</h3>
-          <p>Dezvoltare VNet securizat și integrare VPN Gateway.</p>
-        </div>
-      </div>
-      <div class="card" data-category="automation">
-        <img src="/static/img/powershell_monitoring.png" alt="Proiect monitorizare PowerShell" loading="lazy" onerror="this.src='/static/img/fallback-project.jpg'">
-        <div class="info">
-          <h3>Monitoring cu PowerShell</h3>
-          <p>Script automat pentru verificare uptime și generare alerte.</p>
-        </div>
-      </div>
-      <div class="card" data-category="security">
-        <img src="/static/img/defender.jpg" alt="Proiect optimizare Microsoft Defender" loading="lazy" onerror="this.src='/static/img/fallback-project.jpg'">
-        <div class="info">
-          <h3>Defender Optimization</h3>
-          <p>Configurare baseline de securitate și management al amenințărilor.</p>
-        </div>
-      </div>
-      <div class="card" data-category="cloud">
-        <img src="/static/img/m365_hybrid.jpg" alt="Proiect integrare hibrid M365" loading="lazy" onerror="this.src='/static/img/fallback-project.jpg'">
-        <div class="info">
-          <h3>Hybrid M365 Integration</h3>
-          <p>Sincronizare Exchange Online și SharePoint cu Azure AD Connect.</p>
-        </div>
-      </div>
-      <div class="card" data-category="automation">
-        <img src="/static/img/bash_scripting.jpg" alt="Proiect automatizare scripturi Bash" loading="lazy" onerror="this.src='/static/img/fallback-project.jpg'" srcset="/static/img/bash_scripting_small.jpg 480w, /static/img/bash_scripting.jpg 800w" sizes="(max-width: 480px) 480px, 800px">
-        <div class="info">
-          <h3>Bash Scripting Automation</h3>
-          <p>Rulare și dezvoltare de scripturi Bash pentru automatizarea sarcinilor de sistem.</p>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- Contact -->
-  <section id="contact" class="contact">
-    <h2>Contact</h2>
-    <form action="#" method="post">
-      <label for="name">Nume</label>
-      <input id="name" name="name" type="text" placeholder="Nume" required>
-      <span class="error name"></span>
-      <label for="email">Email</label>
-      <input id="email" name="email" type="email" placeholder="Email" required>
-      <span class="error email"></span>
-      <label for="message">Mesaj</label>
-      <textarea id="message" name="message" rows="6" placeholder="Mesaj..." required></textarea>
-      <span class="error message"></span>
-      <button type="submit">Trimite</button>
-    </form>
-  </section>
+        <div class="grid" id="works">
+          <article class="work card" data-category="automation" data-title="ad gpo powershell">
+            <img src="/static/img/ad_gpo.jpg" alt="Active Directory & Group Policy" loading="lazy" onerror="this.src='/static/img/fallback-project.jpg'">
+            <div class="info">
+              <h3>AD & Group Policy</h3>
+              <p>Implementare AD enterprise și configurare GPO cu PowerShell.</p>
+            </div>
+          </article>
+          <article class="work card" data-category="cloud" data-title="azure vnet vpn gateway">
+            <img src="/static/img/azure_vpn.jpg" alt="Azure VNet & VPN" loading="lazy" onerror="this.src='/static/img/fallback-project.jpg'">
+            <div class="info">
+              <h3>Azure VNet & VPN</h3>
+              <p>VNet securizat și integrare cu VPN Gateway.</p>
+            </div>
+          </article>
+          <article class="work card" data-category="automation" data-title="monitoring powershell uptime">
+            <img src="/static/img/powershell_monitoring.png" alt="Monitoring PowerShell" loading="lazy" onerror="this.src='/static/img/fallback-project.jpg'">
+            <div class="info">
+              <h3>Monitoring cu PowerShell</h3>
+              <p>Script pentru verificare uptime și alerte.</p>
+            </div>
+          </article>
+          <article class="work card" data-category="security" data-title="defender baseline securitate">
+            <img src="/static/img/defender.jpg" alt="Defender Optimization" loading="lazy" onerror="this.src='/static/img/fallback-project.jpg'">
+            <div class="info">
+              <h3>Defender Optimization</h3>
+              <p>Baseline de securitate și management amenințări.</p>
+            </div>
+          </article>
+          <article class="work card" data-category="cloud" data-title="hybrid m365 exchange sharepoint aad connect">
+            <img src="/static/img/m365_hybrid.jpg" alt="Hybrid M365" loading="lazy" onerror="this.src='/static/img/fallback-project.jpg'">
+            <div class="info">
+              <h3>Hybrid M365 Integration</h3>
+              <p>Sincronizare Exchange Online & SharePoint cu Azure AD Connect.</p>
+            </div>
+          </article>
+          <article class="work card" data-category="automation" data-title="bash scripting automations">
+            <img src="/static/img/bash_scripting.jpg" alt="Bash Scripting" loading="lazy" srcset="/static/img/bash_scripting_small.jpg 480w, /static/img/bash_scripting.jpg 800w" sizes="(max-width: 480px) 480px, 800px" onerror="this.src='/static/img/fallback-project.jpg'">
+            <div class="info">
+              <h3>Bash Scripting Automation</h3>
+              <p>Automatizări de sistem cu Bash.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <!-- Lightbox modal -->
+      <div class="modal" id="lightbox" aria-hidden="true" role="dialog" aria-label="Previzualizare proiect">
+        <div class="dialog">
+          <header>
+            <strong id="lbTitle">Previzualizare</strong>
+            <button class="icon-btn" id="lbClose" aria-label="Închide"><i class="fa-solid fa-xmark"></i></button>
+          </header>
+          <main>
+            <img id="lbImg" alt="Previzualizare proiect">
+          </main>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="contact">
+      <div class="container">
+        <h2 class="section-title">Contact</h2>
+        <form id="contactForm" action="#" method="post" novalidate>
+          <div>
+            <label for="name">Nume</label>
+            <input id="name" name="name" type="text" class="input" placeholder="Nume" required>
+            <div class="error name">Numele este obligatoriu</div>
+          </div>
+          <div>
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" class="input" placeholder="Email" required>
+            <div class="error email">Introdu un email valid</div>
+          </div>
+          <div>
+            <label for="message">Mesaj</label>
+            <textarea id="message" name="message" rows="6" class="input" placeholder="Mesaj…" required></textarea>
+            <div class="error message">Mesajul este obligatoriu</div>
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i> Trimite</button>
+            <button type="button" id="exportMsgs" class="btn"><i class="fa-solid fa-file-export"></i> Exportă mesaje</button>
+            <a class="btn" href="data:text/vcard;charset=utf-8,BEGIN%3AVCARD%0AVERSION%3A4.0%0AN%3AIonita%3B%20Iulian%0AFN%3AIulian%20A.%20Ionita%0AEMAIL%3Aionita.a.iulian26%40gmail.com%0AURL%3Ahttps%3A%2F%2Fgithub.com%2Fiuliann26%0AEND%3AVCARD" download="iulian-contact.vcf"><i class="fa-solid fa-address-card"></i> Descarcă vCard</a>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
 
   <footer>
-    <p>© <script>document.write(new Date().getFullYear());</script> Iulian A. Ionita. Toate drepturile rezervate.</p>
-    <div class="social-links">
-      <a href="https://www.linkedin.com/in/ionita-andrei-iulian-a829bb213/" target="_blank" aria-label="Profil LinkedIn"><i class="fab fa-linkedin"></i></a>
-      <a href="https://github.com/iuliann26" target="_blank" aria-label="Profil GitHub"><i class="fab fa-github"></i></a>
-      <a href="mailto:ionita.a.iulian26@gmail.com" aria-label="Trimite email"><i class="fas fa-envelope"></i></a>
+    <div class="container">
+      <p>© <span id="year"></span> Iulian A. Ioniță. Toate drepturile rezervate.</p>
+      <div class="social" aria-label="Rețele sociale">
+        <a href="https://www.linkedin.com/in/ionita-andrei-iulian-a829bb213/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+        <a href="https://github.com/iuliann26" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+        <a href="mailto:ionita.a.iulian26@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+      </div>
     </div>
   </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <!-- COMMAND PALETTE -->
+  <div class="cmdp" id="cmdp" aria-hidden="true">
+    <div class="box">
+      <input type="text" id="cmdInput" placeholder="Tastează pentru a naviga… (ex: 'about', 'skills', 'logout')">
+      <div class="list" id="cmdList"></div>
+    </div>
+  </div>
+
+  <script>
+  (function(){
+    const $ = s => document.querySelector(s);
+    const $$ = s => document.querySelectorAll(s);
+
+    /* -------- YEAR -------- */
+    $('#year').textContent = new Date().getFullYear();
+
+    /* -------- MOBILE MENU -------- */
+    const menu = $('#menu');
+    $('#hamburger').addEventListener('click', ()=> menu.classList.toggle('open'));
+
+    /* -------- ACTIVE LINK + REVEAL ON SCROLL -------- */
+    const links = $$('#menu a[href^="#"]');
+    const sections = document.querySelectorAll('main section');
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if(e.isIntersecting){
+          links.forEach(l=>l.classList.remove('active'));
+          const act = $(`#menu a[href="#${e.target.id}"]`);
+          if(act) act.classList.add('active');
+          e.target.classList.add('seen');
+        }
+      })
+    },{threshold:.3});
+    sections.forEach(s=>io.observe(s));
+
+    /* -------- SMOOTH SCROLL & PROGRESS -------- */
+    links.forEach(a=>a.addEventListener('click', ev=>{
+      const href = a.getAttribute('href');
+      if(href.startsWith('#')){
+        ev.preventDefault();
+        document.querySelector(href)?.scrollIntoView({behavior:'smooth'});
+        menu.classList.remove('open');
+      }
+    }));
+    const progress = $('#progress');
+    window.addEventListener('scroll',()=>{
+      const max = document.body.scrollHeight - innerHeight;
+      const pct = Math.min(100, Math.round(scrollY / max * 100));
+      progress.style.width = pct + '%';
+    });
+
+    /* -------- THEME TOGGLE (auto/light/dark) -------- */
+    const themeBtn = $('#themeToggle');
+    function applyTheme(mode){
+      const html = document.documentElement;
+      if(mode==='auto'){
+        const prefersDark = matchMedia('(prefers-color-scheme: dark)').matches;
+        html.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+      }else{
+        html.setAttribute('data-theme', mode);
+      }
+      localStorage.setItem('theme-mode', mode);
+      themeBtn.innerHTML = html.getAttribute('data-theme')==='dark' ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>';
+    }
+    applyTheme(localStorage.getItem('theme-mode') || 'auto');
+    themeBtn.addEventListener('click', ()=>{
+      const current = localStorage.getItem('theme-mode') || 'auto';
+      const next = current==='auto' ? 'dark' : current==='dark' ? 'light' : 'auto';
+      applyTheme(next);
+      showToast(`Tema: ${next}`);
+    });
+
+    /* -------- COPY EMAIL -------- */
+    $('#copyEmail').addEventListener('click', async ()=>{
+      try{
+        await navigator.clipboard.writeText('ionita.a.iulian26@gmail.com');
+        showToast('Email copiat în clipboard ✅');
+      }catch{ showToast('Nu am putut copia emailul'); }
+    });
+
+    /* -------- COUNTERS -------- */
+    const counters = document.querySelectorAll('[data-count]');
+    const cobs = new IntersectionObserver(es=>{
+      es.forEach(e=>{
+        if(e.isIntersecting){
+          const el = e.target; const target = +el.dataset.count; let n=0; const step = Math.max(1, Math.round(target/50));
+          const t = setInterval(()=>{ n+=step; el.textContent = (n>=target? target : n); if(n>=target) clearInterval(t); }, 24);
+          cobs.unobserve(el);
+        }
+      })
+    },{threshold:1});
+    counters.forEach(c=>cobs.observe(c));
+
+    /* -------- PORTFOLIO: FILTER + SEARCH + LIGHTBOX -------- */
+    const filterBtns = $$('.filter-btn');
+    const works = $$('#works .work');
+    function applyFilters(){
+      const active = $('.filter-btn.active')?.dataset.filter || 'all';
+      const q = $('#searchInput').value.toLowerCase().trim();
+      works.forEach(card=>{
+        const okCat = active==='all' || card.dataset.category===active;
+        const okText = card.dataset.title.includes(q);
+        card.style.display = (okCat && okText) ? '' : 'none';
+      });
+    }
+    filterBtns.forEach(b=>b.addEventListener('click',()=>{ filterBtns.forEach(x=>x.classList.remove('active')); b.classList.add('active'); applyFilters(); }));
+    $('#searchInput').addEventListener('input', applyFilters);
+
+    works.forEach(card=>{
+      card.addEventListener('click',()=>{
+        $('#lbImg').src = card.querySelector('img').src;
+        $('#lbImg').alt = card.querySelector('img').alt;
+        $('#lbTitle').textContent = card.querySelector('h3').textContent;
+        $('#lightbox').classList.add('open');
+        $('#lightbox').setAttribute('aria-hidden','false');
+      })
+    });
+    $('#lbClose').addEventListener('click',()=>{
+      $('#lightbox').classList.remove('open');
+      $('#lightbox').setAttribute('aria-hidden','true');
+    });
+
+    /* -------- FORM VALIDATION + LOCAL SAVE + EXPORT -------- */
+    const form = $('#contactForm');
+    form.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const name = form.name.value.trim();
+      const email = form.email.value.trim();
+      const message = form.message.value.trim();
+      const emailRegex = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i;
+
+      const nameErr = $('.error.name');
+      const emailErr = $('.error.email');
+      const msgErr = $('.error.message');
+      let valid = true;
+      [nameErr,emailErr,msgErr].forEach(el=>el.style.display='none');
+
+      if(!name){ nameErr.style.display='block'; valid=false; }
+      if(!email || !emailRegex.test(email)){ emailErr.style.display='block'; valid=false; }
+      if(!message){ msgErr.style.display='block'; valid=false; }
+
+      if(valid){
+        const item = {name,email,message,date:new Date().toISOString()};
+        const key = 'iulian_msgs';
+        const arr = JSON.parse(localStorage.getItem(key) || '[]');
+        arr.push(item);
+        localStorage.setItem(key, JSON.stringify(arr));
+        showToast('Formular trimis cu succes!');
+        form.reset();
+      }
+    });
+    $('#exportMsgs').addEventListener('click',()=>{
+      const data = localStorage.getItem('iulian_msgs') || '[]';
+      const blob = new Blob([data],{type:'application/json'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'mesaje-contact.json'; a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    /* -------- TOAST -------- */
+    const toast = $('#toast');
+    function showToast(txt){
+      toast.textContent = txt; toast.classList.add('show');
+      setTimeout(()=>toast.classList.remove('show'), 2500);
+    }
+
+    /* -------- COMMAND PALETTE (Ctrl/⌘ K) -------- */
+    const cmdp = $('#cmdp');
+    const cmdInput = $('#cmdInput');
+    const cmdList = $('#cmdList');
+    const palette = [
+      {label:'Go: Acasă', action:()=>go('#home')},
+      {label:'Go: Despre', action:()=>go('#about')},
+      {label:'Go: Aptitudini', action:()=>go('#skills')},
+      {label:'Go: Portofoliu', action:()=>go('#portfolio')},
+      {label:'Go: Contact', action:()=>go('#contact')},
+      {% if current_user.is_authenticated %}
+      {label:'Logout', action:()=>window.location.href='{{ url_for('main.logout') }}'},
+      {% else %}
+      {label:'Login', action:()=>window.location.href='{{ url_for('main.login') }}'},
+      {label:'Înregistrare', action:()=>window.location.href='{{ url_for('main.register') }}'},
+      {% endif %}
+      {label:'Tema: Auto', action:()=>applyTheme('auto')},
+      {label:'Tema: Dark', action:()=>applyTheme('dark')},
+      {label:'Tema: Light', action:()=>applyTheme('light')}
+    ];
+    function openCmd(){ cmdp.classList.add('open'); cmdp.setAttribute('aria-hidden','false'); cmdInput.value=''; renderCmd(''); cmdInput.focus(); }
+    function closeCmd(){ cmdp.classList.remove('open'); cmdp.setAttribute('aria-hidden','true'); }
+    function renderCmd(q){
+      cmdList.innerHTML = '';
+      const ql = q.toLowerCase();
+      palette.filter(i=>i.label.toLowerCase().includes(ql)).forEach(item=>{
+        const div = document.createElement('div');
+        div.className='item'; div.textContent=item.label;
+        div.addEventListener('click',()=>{ item.action(); closeCmd(); });
+        cmdList.appendChild(div);
+      })
+    }
+    function go(sel){ document.querySelector(sel)?.scrollIntoView({behavior:'smooth'}); }
+    document.addEventListener('keydown',e=>{
+      if((e.ctrlKey||e.metaKey) && e.key.toLowerCase()==='k'){ e.preventDefault(); openCmd(); }
+      if(e.key==='/'){ const active = document.activeElement.tagName; if(active!=='INPUT'&&active!=='TEXTAREA'){ e.preventDefault(); $('#searchInput').focus(); } }
+      if(e.key==='Escape'){ closeCmd(); $('#lightbox').classList.remove('open'); }
+    });
+    $('#cmdk').addEventListener('click', openCmd);
+    cmdInput.addEventListener('input', e=>renderCmd(e.target.value));
+    cmdp.addEventListener('click', e=>{ if(e.target===cmdp) closeCmd(); });
+
+    /* -------- SERVICE WORKER (optional PWA cache) -------- */
+    if('serviceWorker' in navigator){
+      const swCode = `self.addEventListener('install',e=>{e.waitUntil(caches.open('iulian-v1').then(c=>c.addAll(['/','/static/img/hero-bg.jpg'])))});self.addEventListener('fetch',e=>{e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request)))})`;
+      const blob = new Blob([swCode],{type:'text/javascript'});
+      const swUrl = URL.createObjectURL(blob);
+      navigator.serviceWorker.register(swUrl).catch(()=>{});
+    }
+  })();
+  </script>
 </body>
 </html>
