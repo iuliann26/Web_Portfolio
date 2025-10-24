@@ -545,17 +545,28 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       // Smooth scroll and active nav link
+      // Smooth scroll and active nav link
       const navLinks = document.querySelectorAll('nav a');
       navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
-          e.preventDefault();
-          const targetId = link.getAttribute('href').startsWith('#') ? link.getAttribute('href') : `#${link.getAttribute('href')}`;
-          if (targetId.startsWith('#')) {
-            document.querySelector(targetId)?.scrollIntoView({ behavior: 'smooth' });
-          } else {
-            window.location.href = targetId;
-          }
-          // Close mobile menu after click
+          const href = link.getAttribute('href');
+          // Verifică dacă suntem pe pagina principală
+          const isHomePage = window.location.pathname === '/' || window.location.pathname === '/index.html' || window.location.pathname === '';
+          
+          // Verifică dacă e un link de ancorare (ex: /#about)
+          if (href.startsWith('/#')) {
+            // Dacă SUNTEM pe homepage, facem smooth scroll
+            if (isHomePage) {
+              e.preventDefault(); // Oprește navigarea normală
+              const targetId = href.substring(1); // Ia id-ul (ex: #about)
+              document.querySelector(targetId)?.scrollIntoView({ behavior: 'smooth' });
+            }
+            // Dacă NU suntem pe homepage (suntem pe /register), NU facem e.preventDefault()
+            // Lăsăm link-ul să încarce pagina principală și să sară la secțiune.
+          } 
+          // Pentru link-uri normale (ex: /login), lăsăm browserul să navigheze.
+
+          // Închide meniul mobil 
           const navUl = document.querySelector('nav ul');
           const menuToggle = document.querySelector('.menu-toggle');
           if (navUl.classList.contains('show')) {
