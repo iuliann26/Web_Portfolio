@@ -4,7 +4,4 @@ instance/
 *.pyc
 *.sqlite
 .env
-*.pre-commit-config.yaml
-pyproject.toml
-uv.lock
 config.py

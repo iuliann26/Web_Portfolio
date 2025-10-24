@@ -1,0 +1,8 @@
+[tool.ruff]
+line-length = 84  # limita de caractere
+target-version = "py310"  # suport Python 3.10+
+exclude = ["venv", "instance", "__pycache__"]
+
+[tool.ruff.lint]
+# selectează regulile dorite
+extend-select = ["E", "F", "UP", "D"]  # E și F = flake8, UP = pyupgrade, D = docstrings
