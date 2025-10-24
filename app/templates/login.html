@@ -527,16 +527,56 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       // Smooth scroll and active nav link
+      // Smooth scroll and active nav link
       const navLinks = document.querySelectorAll('nav a');
       navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
-          e.preventDefault();
-          const targetId = link.getAttribute('href').startsWith('#') ? link.getAttribute('href') : `#${link.getAttribute('href')}`;
-          if (targetId.startsWith('#')) {
-            document.querySelector(targetId)?.scrollIntoView({ behavior: 'smooth' });
-          } else {
-            window.location.href = targetId;
+          const href = link.getAttribute('href');
+          const isHomePage = window.location.pathname === '/' || window.location.pathname === '/index.html' || window.location.pathname === '';
+          
+          // Verifică dacă e un link intern (ancoră)
+          if (href.startsWith('/#')) {
+            // Dacă SUNTEM pe homepage, facem smooth scroll
+            if (isHomePage) {
+              e.preventDefault(); // Oprește navigarea normală
+              const targetId = href.substring(1); // Ia id-ul (ex: #about)
+              document.querySelector(targetId)?.scrollIntoView({ behavior: 'smooth' });
+            }
+            // Dacă NU suntem pe homepage (ex: /login), NU facem e.preventDefault()
+            // și lăsăm link-ul să ne ducă la /#about (care va încărca homepage-ul și va sări la secțiune)
+          } 
+          // Pentru link-uri normale (ex: /login, /register), nu facem nimic special
+          // (nu apelăm e.preventDefault())
+
+          // Close mobile menu after click
+          const navUl = document.querySelector('nav ul');
+          const menuToggle = document.querySelector('.menu-toggle');
+          if (navUl.classList.contains('show')) {
+            navUl.classList.remove('show');
+            menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
           }
+        });
+      });// Smooth scroll and active nav link
+      const navLinks = document.querySelectorAll('nav a');
+      navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+          const href = link.getAttribute('href');
+          const isHomePage = window.location.pathname === '/' || window.location.pathname === '/index.html' || window.location.pathname === '';
+          
+          // Verifică dacă e un link intern (ancoră)
+          if (href.startsWith('/#')) {
+            // Dacă SUNTEM pe homepage, facem smooth scroll
+            if (isHomePage) {
+              e.preventDefault(); // Oprește navigarea normală
+              const targetId = href.substring(1); // Ia id-ul (ex: #about)
+              document.querySelector(targetId)?.scrollIntoView({ behavior: 'smooth' });
+            }
+            // Dacă NU suntem pe homepage (ex: /login), NU facem e.preventDefault()
+            // și lăsăm link-ul să ne ducă la /#about (care va încărca homepage-ul și va sări la secțiune)
+          } 
+          // Pentru link-uri normale (ex: /login, /register), nu facem nimic special
+          // (nu apelăm e.preventDefault())
+
           // Close mobile menu after click
           const navUl = document.querySelector('nav ul');
           const menuToggle = document.querySelector('.menu-toggle');
@@ -641,6 +681,7 @@
         <li><a href="/#skills" aria-label="Du-te la secțiunea Aptitudini">Aptitudini</a></li>
         <li><a href="/#portfolio" aria-label="Du-te la secțiunea Portofoliu">Portofoliu</a></li>
         <li><a href="/#contact" aria-label="Du-te la secțiunea Contact">Contact</a></li>
+        
         <li><a href="/login" class="active" aria-label="Du-te la pagina de autentificare">Login</a></li>
         <li><a href="/register" aria-label="Du-te la pagina de înregistrare">Înregistrare</a></li>
         <li><button class="theme-toggle" aria-label="Comută între modurile de temă"><i class="fas fa-moon"></i></button></li>
