@@ -226,7 +226,7 @@
           <li><a href="#portfolio">Portofoliu</a></li>
           <li><a href="#contact">Contact</a></li>
           {% if current_user.is_authenticated %}
-          <li><span class="welcome-user" style="color:#fff"><i class="fas fa-user"></i> Bună, {{ current_user.username }}!</span></li>
+          <li><span class="welcome-user" style="color:#fff"><i class="fas fa-user"></i> Bună, {{ current_user.username }}</span></li>
           <li><a href="{{ url_for('main.logout') }}" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
           {% else %}
           <li><a href="{{ url_for('main.login') }}">Login</a></li>
