@@ -1,0 +1,67 @@
+name: Azure CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10' 
+    - name: Install dependencies
+      run: |
+        pip install uv
+        uv pip install -r requirements.txt
+    - name: Run Tests
+      run: |
+        pip install pytest
+        pytest 
+
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    needs: build_and_test 
+    if: github.event_name == 
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: 'Log in to Azure Container Registry'
+      uses: azure/docker-login@v1
+      with:
+        login-server: ACRIonita25.azurecr.io # <-- ÎNLOCUIEȘTE AICI
+        username: ${{ secrets.ACR_USERNAME }}
+        password: ${{ secrets.ACR_PASSWORD }}
+
+    # Pasul 2: Build și Push Imaginea
+    - name: 'Build and push Docker image'
+      run: |
+        docker build . -t ACRIonita25.azurecr.io/portofoliu:${{ github.sha }} # <-- ÎNLOCUIEȘTE AICI
+        docker push ACRIonita25.azurecr.io/portofoliu:${{ github.sha }} # <-- ÎNLOCUIEȘTE AICI
+
+    # Pasul 3: Deploy în App Service (Cuptor)
+    - name: 'Deploy to Azure App Service'
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: portofoliu-iulian # <-- ÎNLOCUIEȘTE AICI
+        publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
+        images: 'ACRIonita25.azurecr.io/portofoliu:${{ github.sha }}' # <-- ÎNLOCUIEȘTE AICI
+
+    # Pasul 4: Setarea Secretelor în Producție (Baza de date, etc.)
+    - name: 'Set App Service Environment Variables'
+      uses: azure/appservice-settings@v1
+      with:
+        app-name: portofoliu-iulian # <-- ÎNLOCUIEȘTE AICI
+        publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
+        app-settings-json: |
+          [
+            { "name": "DATABASE_URL", "value": "${{ secrets.DATABASE_URL }}", "slotSetting": false },
+            { "name": "SECRET_KEY", "value": "${{ secrets.SECRET_KEY }}", "slotSetting": false }
+          ]
