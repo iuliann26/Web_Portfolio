@@ -23,7 +23,7 @@ jobs:
       run: |
         pip install pytest
         python -m pytest tests/
-        pytest tests/
+        pytest tests/ 
 
   build_and_deploy:
     runs-on: ubuntu-latest
