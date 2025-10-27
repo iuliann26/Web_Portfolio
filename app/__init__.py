@@ -7,7 +7,7 @@ from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf.csrf import CSRFProtect
 
-from .config import Config as Config
+from .config import Config
 
 __all__ = ["Config"]
 # Inițializăm extensiile (fără să le atașăm încă la aplicație)
@@ -16,11 +16,11 @@ login_manager = LoginManager()
 csrf = CSRFProtect()
 
 
-def create_app():
+def create_app(config_class=Config):
     """Create and configure the Flask application."""
     # Creăm instanța aplicației Flask
     app = Flask(__name__)
-    app.config.from_object(Config)
+    app.config.from_object(config_class)
 
     # Inițializăm extensiile cu aplicația
     db.init_app(app)
