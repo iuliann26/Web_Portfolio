@@ -4,4 +4,3 @@ instance/
 *.pyc
 *.sqlite
 .env
-config.py
