@@ -22,7 +22,7 @@ jobs:
     - name: Run Tests
       run: |
         pip install pytest
-        export PYTHONPATH=$PYTHONPATH:.
+        
         python -m pytest tests/
         pytest tests/ 
 
@@ -57,14 +57,14 @@ jobs:
         images: 'ACRIonita25.azurecr.io/portofoliu:${{ github.sha }}'
 
     # setting secrets in production
-    - name: 'Set App Service Environment Variables'
-      uses: azure/appservice-settings@v1
-      with:
-        app-name: portofoliu-iulian 
-        publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
-        app-settings-json: |
-          [
-            { "name": "DATABASE_URL", "value": "${{ secrets.DATABASE_URL }}", "slotSetting": false },
-            { "name": "SECRET_KEY", "value": "${{ secrets.SECRET_KEY }}", "slotSetting": false }
-          ]
+   # - name: 'Set App Service Environment Variables'
+    #  uses: azure/appservice-settings@v1
+     # with:
+      #  app-name: portofoliu-iulian 
+       # publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
+        #app-settings-json: |
+         # [
+          #  { "name": "DATABASE_URL", "value": "${{ secrets.DATABASE_URL }}", "slotSetting": false },
+           # { "name": "SECRET_KEY", "value": "${{ secrets.SECRET_KEY }}", "slotSetting": false }
+          #]
             
