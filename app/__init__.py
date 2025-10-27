@@ -20,7 +20,7 @@ def create_app():
     """Create and configure the Flask application."""
     # Creăm instanța aplicației Flask
     app = Flask(__name__)
-    app.config.from_object("config.Config")
+    app.config.from_object(Config)
 
     # Inițializăm extensiile cu aplicația
     db.init_app(app)
