@@ -1,5 +1,7 @@
 import pytest
-from app import create_app  # Import the factory function from your 'app' package
+from app import create_app
+from app.config import TestConfig
+  # Import the factory function from your 'app' package
 
 @pytest.fixture(scope='module')
 def app():
@@ -12,18 +14,15 @@ def app():
     """
     
     # Create the app instance using the factory
-    app = create_app()
+    app = create_app(TestConfig)
 
     # Apply specific configurations for the testing environment
-    app.config.update({
-        "TESTING": True,  # Enables testing mode (e.g., propagates exceptions)
-        "WTF_CSRF_ENABLED": False,  # Disable CSRF forms for easier test posting
-        "SQLALCHEMY_DATABASE_URI": "sqlite:///:memory:",  # Use a fast, in-memory SQLite DB
-        "SERVER_NAME": "localhost.localdomain" # Fixes URL generation errors in tests
-    })
-
-    # The 'yield' keyword provides the 'app' object to the tests
-    yield app
+    with app.app_context():
+        # You might need db.create_all() here if your tests add data
+        # db.create_all() 
+        yield app # Provide the app object to the tests
+        # Teardown: db.drop_all() might go here if needed
+        # db.drop_all()
 
 @pytest.fixture
 def client(app):
