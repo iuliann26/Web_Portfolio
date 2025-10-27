@@ -22,7 +22,7 @@ jobs:
     - name: Run Tests
       run: |
         pip install pytest
-        export PYTHONPATH=.
+        python -m pytest tests/
         pytest tests/
 
   build_and_deploy:
