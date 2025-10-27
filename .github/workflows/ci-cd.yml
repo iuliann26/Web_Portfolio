@@ -18,7 +18,7 @@ jobs:
     - name: Install dependencies
       run: |
         pip install uv
-        uv pip install -r requirements.txt
+        uv pip install --system -r requirements.txt
     - name: Run Tests
       run: |
         pip install pytest
@@ -29,7 +29,6 @@ jobs:
     needs: build_and_test 
     if: github.event_name == 'push' # <-- EROAREA 1 CORECTATĂ (am adăugat 'push')
     
-    # <-- EROAREA 2 CORECTATĂ (tot blocul de mai jos a fost indentat la dreapta)
     steps: 
     - name: Checkout code
       uses: actions/checkout@v4
@@ -37,29 +36,29 @@ jobs:
     - name: 'Log in to Azure Container Registry'
       uses: azure/docker-login@v1
       with:
-        login-server: ACRIonita25.azurecr.io # Acesta e numele tău, e corect
+        login-server: ACRIonita25.azurecr.io 
         username: ${{ secrets.ACR_USERNAME }}
         password: ${{ secrets.ACR_PASSWORD }}
 
-    # Pasul 2: Build și Push Imaginea
+    #build and push the image
     - name: 'Build and push Docker image'
       run: |
         docker build . -t ACRIonita25.azurecr.io/portofoliu:${{ github.sha }}
         docker push ACRIonita25.azurecr.io/portofoliu:${{ github.sha }}
 
-    # Pasul 3: Deploy în App Service (Cuptor)
+    # deploy in web service
     - name: 'Deploy to Azure App Service'
       uses: azure/webapps-deploy@v2
       with:
-        app-name: portofoliu-iulian # Acesta e numele tău, e corect
+        app-name: portofoliu-iulian
         publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
         images: 'ACRIonita25.azurecr.io/portofoliu:${{ github.sha }}'
 
-    # Pasul 4: Setarea Secretelor în Producție (Baza de date, etc.)
+    # setting secrets in production
     - name: 'Set App Service Environment Variables'
       uses: azure/appservice-settings@v1
       with:
-        app-name: portofoliu-iulian # Acesta e numele tău, e corect
+        app-name: portofoliu-iulian 
         publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
         app-settings-json: |
           [
