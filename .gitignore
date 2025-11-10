@@ -4,3 +4,4 @@ instance/
 *.pyc
 *.sqlite
 .env
+.ruff_cache
