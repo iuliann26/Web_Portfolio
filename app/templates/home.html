@@ -1,14 +1,19 @@
 <!DOCTYPE html>
-<html lang="ro"> <head>
+<html lang="ro" data-theme="auto">
+<head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Portofoliul profesional al lui Iulian A. Ioniță – networking, cloud, automatizare, securitate." />
   <meta name="author" content="Iulian A. Ioniță" />
+  <meta name="theme-color" content="#0b0f1a" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#111111" media="(prefers-color-scheme: light)">
   <title>Portofoliu Profesional | Iulian A. Ioniță</title>
 
+  <!-- Fonts & Icons -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" />
 
+  <!-- Open Graph -->
   <meta property="og:title" content="Portofoliu – Iulian A. Ioniță" />
   <meta property="og:description" content="Networking • Cloud • Automatizare • Securitate" />
   <meta property="og:type" content="website" />
@@ -32,9 +37,10 @@
       --glass: rgba(16,22,39,.75);
       --grid: radial-gradient(circle at 1px 1px, rgba(255,255,255,.06) 1px, transparent 1px);
     }
-    
-    /* Regula CSS 'html[data-theme="light"]:root' a fost eliminată */
-    
+    html[data-theme="light"]:root{
+      --bg:#111111; --bg-2:#161616; --text:#0f172a; --muted:#4b5563; --card:#ffffff; --shadow:0 16px 40px rgba(2,6,23,.12);
+      --grid: radial-gradient(circle at 1px 1px, rgba(0,0,0,.06) 1px, transparent 1px);
+    }
     @media (prefers-reduced-motion: reduce){ *{animation:none!important;transition:none!important;} }
     *{box-sizing:border-box}
     body{
@@ -62,29 +68,7 @@
     header.scrolled{background:linear-gradient(135deg, rgba(5,8,14,.9), rgba(16,22,39,.9)); box-shadow:0 8px 30px rgba(0,0,0,.35)}
     header:hover{transform:translateY(-1px)} /* hover sticky vibe */
 
-    /* MODIFICAT: Am adăugat regula .nav pentru a centra navigația */
-    .nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 14px 0;
-    }
-
-    /* MODIFICAT: Am eliminat duplicatul 'nav ul' și am păstrat-o pe aceasta */
-    nav ul{
-      display:flex;
-      gap:18px;
-      align-items:center; 
-      list-style:none; 
-      padding-left:0; 
-      margin:0;
-    }
-
-    /* MODIFICAT: Centrează linkurile prin mutarea iconițelor în dreapta */
-    #menu li:has(> a[href*="login"]),
-    #menu li:has(> span.welcome-user) {
-      margin-left: auto;
-    }
+    .nav ul{display:flex;gap:18px;align-items:center; list-style:none; padding-left:0; margin:0}
 
     /* Brand / Logo monogram */
     .brand{display:flex;align-items:center;gap:12px;color:#fff}
@@ -95,6 +79,7 @@
     .logo::after{content:"IAI"; font-weight:800; letter-spacing:.5px; color:#0b0f1a; text-shadow:0 1px 0 rgba(255,255,255,.5)}
     .brand strong{font-size:1.2rem;letter-spacing:.6px; background:linear-gradient(90deg,#fff,var(--primary-300)); -webkit-background-clip:text; background-clip:text; color:transparent}
 
+    nav ul{display:flex;gap:18px;align-items:center}
     nav a{color:#e5e7eb;position:relative;padding:8px 10px;border-radius:10px;transition: color .2s ease, background .2s}
     nav a::after{content:"";position:absolute;left:10px;right:10px;bottom:6px;height:2px;background:var(--primary);transform:scaleX(0);transform-origin:left;transition:transform .2s ease}
     nav a:hover{background:rgba(255,255,255,.06)}
@@ -103,22 +88,11 @@
     .icon-btn{background:transparent;border:0;color:#e5e7eb;cursor:pointer;font-size:1.1rem;padding:8px;border-radius:10px}
     .icon-btn:hover{background:rgba(255,255,255,.08)}
     .hamburger{display:none}
-    
     @media (max-width:900px){
       .hamburger{display:inline-flex}
       nav ul{position:fixed;inset:64px 12px auto 12px;background:var(--glass);backdrop-filter:blur(14px);
         border:1px solid rgba(255,255,255,.1);border-radius:16px;box-shadow:var(--shadow);padding:16px;display:none;flex-direction:column;gap:12px}
       nav ul.open{display:flex}
-      
-      /* MODIFICAT: Optimizare Hero pe mobil */
-      .hero {
-        min-height: 80vh;
-      }
-      /* MODIFICAT: Mută marginea de auto-centrare înapoi la 0 pe mobil */
-      #menu li:has(> a[href*="login"]),
-      #menu li:has(> span.welcome-user) {
-        margin-left: 0;
-      }
     }
 
     /* ------------------ PROGRESS BAR ------------------ */
@@ -171,9 +145,7 @@
     .skill h4{margin:0 0 10px;font-size:1.05rem; color:#fff}
     .skill .tags{display:flex;flex-wrap:wrap;gap:8px}
     .tag{font-size:.85rem;padding:6px 10px;border-radius:999px;background:#0b0f1a;color:#fff;border:1px solid rgba(255,255,255,.1)}
-    
-    /* Regula 'html[data-theme="light"] .tag' a fost eliminată */
-    
+    html[data-theme="light"] .tag{background:#fff;color:#000}
     .tag:hover{background:var(--primary);color:#fff;border-color:transparent}
 
     /* PORTFOLIO */
@@ -228,11 +200,7 @@
 
     /* RESPONSIVE */
     @media (max-width:1024px){.about{grid-template-columns:1fr}}
-    @media (max-width:640px){
-      .stats{grid-template-columns:repeat(2,1fr)}
-      /* MODIFICAT: Stivuiește butoanele CTA pe mobil */
-      .cta { flex-direction: column; }
-    }
+    @media (max-width:640px){.stats{grid-template-columns:repeat(2,1fr)}}
 
     /* ANIM */
     @keyframes fadeUp{to{opacity:1;transform:none}}
@@ -242,6 +210,7 @@
   <a href="#main" class="skip-link">Sari la conținut</a>
   <div class="progress" id="progress"></div>
 
+  <!-- HEADER -->
   <header id="siteHeader">
     <div class="container nav">
       <div class="brand">
@@ -264,12 +233,14 @@
           <li><a href="{{ url_for('main.register') }}">Înregistrare</a></li>
           {% endif %}
           <li><button class="icon-btn" id="cmdk" title="Command Palette (Ctrl/⌘ K)"><i class="fa-solid fa-terminal"></i></button></li>
-          </ul>
+          <li><button class="icon-btn" id="themeToggle" aria-label="Comută tema"><i class="fa-solid fa-moon"></i></button></li>
+        </ul>
       </nav>
     </div>
   </header>
 
   <main id="main">
+    <!-- HERO -->
     <section id="home" class="hero">
       <div class="layer" role="img" aria-label="Fundal erou"></div>
       <div class="container">
@@ -285,6 +256,7 @@
       </div>
     </section>
 
+    <!-- ABOUT -->
     <section id="about">
       <div class="container about card">
         <div class="photo">
@@ -314,6 +286,7 @@
       </div>
     </section>
 
+    <!-- SKILLS -->
     <section id="skills">
       <div class="container skills-wrap">
         <h2 class="section-title">Aptitudini Tehnice</h2>
@@ -358,6 +331,7 @@
       </div>
     </section>
 
+    <!-- PORTFOLIO -->
     <section id="portfolio">
       <div class="container">
         <h2 class="section-title">Proiecte Cheie</h2>
@@ -419,6 +393,7 @@
           </article>
         </div>
 
+        <!-- Lightbox modal -->
         <div class="modal" id="lightbox" aria-hidden="true" role="dialog" aria-label="Previzualizare proiect">
           <div class="dialog">
             <header>
@@ -433,6 +408,7 @@
       </div>
     </section>
 
+    <!-- CONTACT (larger, Formspree, removed export/vCard) -->
     <section id="contact" class="contact">
       <div class="container">
         <h2 class="section-title">Contact</h2>
@@ -455,6 +431,7 @@
                 <textarea id="message" name="message" rows="7" class="input" placeholder="Mesaj…" required></textarea>
                 <div class="error message">Mesajul este obligatoriu</div>
               </div>
+              <!-- honeypot anti-spam -->
               <input type="text" name="_gotcha" style="display:none">
               <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
                 <button type="submit" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i> Trimite</button>
@@ -489,6 +466,7 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
+  <!-- COMMAND PALETTE -->
   <div class="cmdp" id="cmdp" aria-hidden="true">
     <div class="box">
       <input type="text" id="cmdInput" placeholder="Tastează pentru a naviga… (ex: 'about', 'skills', 'logout')">
@@ -505,12 +483,8 @@
       $('#year').textContent = new Date().getFullYear();
 
       /* -------- MOBILE MENU -------- */
-      // MODIFICAT: Adaugă blocare scroll
       const menu = $('#menu');
-      $('#hamburger')?.addEventListener('click', () => {
-        const isOpen = menu.classList.toggle('open');
-        document.body.style.overflow = isOpen ? 'hidden' : '';
-      });
+      $('#hamburger')?.addEventListener('click', ()=> menu.classList.toggle('open'));
 
       /* -------- HEADER SCROLL STATE -------- */
       const header = $('#siteHeader');
@@ -541,7 +515,6 @@
           ev.preventDefault();
           document.querySelector(href)?.scrollIntoView({behavior:'smooth'});
           menu.classList.remove('open');
-          document.body.style.overflow = ''; // MODIFICAT: Deblochează scroll la click pe link
         }
       }));
       const progress = $('#progress');
@@ -551,7 +524,26 @@
         progress.style.width = pct + '%';
       });
 
-      /* -------- BLOCUL THEME TOGGLE A FOST ELIMINAT -------- */
+      /* -------- THEME TOGGLE (auto/light/dark) -------- */
+      const themeBtn = $('#themeToggle');
+      function applyTheme(mode){
+        const html = document.documentElement;
+        if(mode==='auto'){
+          const prefersDark = matchMedia('(prefers-color-scheme: dark)').matches;
+          html.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+        } else {
+          html.setAttribute('data-theme', mode);
+        }
+        localStorage.setItem('theme-mode', mode);
+        themeBtn.innerHTML = html.getAttribute('data-theme')==='dark' ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>';
+      }
+      applyTheme(localStorage.getItem('theme-mode') || 'auto');
+      themeBtn.addEventListener('click', ()=>{
+        const current = localStorage.getItem('theme-mode') || 'auto';
+        const next = current==='auto' ? 'dark' : current==='dark' ? 'light' : 'auto';
+        applyTheme(next);
+        showToast(`Tema: ${next}`);
+      });
 
       /* -------- TYPING EFFECT (first visit only for 24h) -------- */
       const typingEl = $('#typing');
@@ -683,7 +675,6 @@
       const cmdp = $('#cmdp');
       const cmdInput = $('#cmdInput');
       const cmdList = $('#cmdList');
-      // MODIFICAT: Eliminat opțiunile de temă
       const palette = [
         {label:'Go: Acasă', action:()=>go('#home')},
         {label:'Go: Despre', action:()=>go('#about')},
@@ -696,6 +687,9 @@
         {label:'Login', action:()=>window.location.href='{{ url_for("main.login") }}'},
         {label:'Înregistrare', action:()=>window.location.href='{{ url_for("main.register") }}'},
         {% endif %}
+        {label:'Tema: Auto', action:()=>applyTheme('auto')},
+        {label:'Tema: Dark', action:()=>applyTheme('dark')},
+        {label:'Tema: Light', action:()=>applyTheme('light')}
       ];
       function openCmd(){ cmdp.classList.add('open'); cmdp.setAttribute('aria-hidden','false'); cmdInput.value=''; renderCmd(''); cmdInput.focus(); }
       function closeCmd(){ cmdp.classList.remove('open'); cmdp.setAttribute('aria-hidden','true'); }
@@ -719,7 +713,7 @@
         const swUrl = URL.createObjectURL(blob);
         navigator.serviceWorker.register(swUrl).catch(()=>{});
       }
-    })();
+    })(); 
   </script>
 </body>
 </html>
