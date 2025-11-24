@@ -1,719 +1,1299 @@
 <!DOCTYPE html>
-<html lang="ro" data-theme="auto">
+<html lang="ro">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Portofoliul profesional al lui Iulian A. Ioniță – networking, cloud, automatizare, securitate." />
+  <meta name="description" content="Portofoliul profesional al lui Iulian A. Ioniță – DevOps, Cloud, Automatizare." />
   <meta name="author" content="Iulian A. Ioniță" />
-  <meta name="theme-color" content="#0b0f1a" media="(prefers-color-scheme: dark)">
-  <meta name="theme-color" content="#111111" media="(prefers-color-scheme: light)">
-  <title>Portofoliu Profesional | Iulian A. Ioniță</title>
+  <meta name="theme-color" content="#0f172a">
+  <title>Portofoliu | Iulian A. Ioniță</title>
 
-  <!-- Fonts & Icons -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" />
 
-  <!-- Open Graph -->
   <meta property="og:title" content="Portofoliu – Iulian A. Ioniță" />
-  <meta property="og:description" content="Networking • Cloud • Automatizare • Securitate" />
+  <meta property="og:description" content="DevOps • Cloud • Automatizare • Securitate" />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="/static/img/og-card.jpg" />
 
   <style>
-    /* ------------------ DESIGN SYSTEM (Cyberpunk red/black, pro-DevOps) ------------------ */
-    :root{
-      --bg: #0b0f1a;           /* nocturne black-blue */
-      --bg-2: #0e121f;
-      --text: #eef2f8;
-      --muted:#9aa3b2;
-      --primary:#ff2740;       /* neon red */
-      --primary-600:#e0172e;
-      --primary-300:#ff5a6e;
-      --accent:#7dd3fc;        /* cyan accents */
-      --card:#101627;
-      --ring: rgba(255,39,64,.35);
-      --ring-strong: rgba(255,39,64,.55);
-      --shadow: 0 16px 40px rgba(0,0,0,.45);
-      --glass: rgba(16,22,39,.75);
-      --grid: radial-gradient(circle at 1px 1px, rgba(255,255,255,.06) 1px, transparent 1px);
-    }
-    html[data-theme="light"]:root{
-      --bg:#111111; --bg-2:#161616; --text:#0f172a; --muted:#4b5563; --card:#ffffff; --shadow:0 16px 40px rgba(2,6,23,.12);
-      --grid: radial-gradient(circle at 1px 1px, rgba(0,0,0,.06) 1px, transparent 1px);
-    }
-    @media (prefers-reduced-motion: reduce){ *{animation:none!important;transition:none!important;} }
-    *{box-sizing:border-box}
-    body{
-      margin:0; font-family:'Poppins',system-ui,Segoe UI,Roboto,Arial,sans-serif; color:var(--text);
-      background:
-        linear-gradient(180deg, rgba(255,39,64,.07), transparent 22%),
-        radial-gradient(900px 500px at -10% 90%, rgba(125,211,252,.10), transparent 55%),
-        var(--bg);
-      line-height:1.6;
-    }
-    a{color:inherit;text-decoration:none}
-    img{max-width:100%;display:block}
-    .container{max-width:1200px;margin:0 auto;padding:0 24px}
-
-    /* ------------------ ACCESSIBILITY ------------------ */
-    .skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px}
-    .skip-link:focus{left:12px;top:12px;width:auto;height:auto;background:var(--card);color:var(--text);padding:8px 12px;border-radius:12px;box-shadow:var(--shadow)}
-
-    /* ------------------ HEADER / NAV ------------------ */
-    header{position:sticky;top:0;z-index:1000;backdrop-filter:saturate(160%) blur(12px);
-      transition: background .25s ease, box-shadow .25s ease, transform .2s ease;
-      background:linear-gradient(135deg, rgba(5,8,14,.78), rgba(16,22,39,.78));
-      border-bottom:1px solid rgba(255,255,255,.06)
-    }
-    header.scrolled{background:linear-gradient(135deg, rgba(5,8,14,.9), rgba(16,22,39,.9)); box-shadow:0 8px 30px rgba(0,0,0,.35)}
-    header:hover{transform:translateY(-1px)} /* hover sticky vibe */
-
-    .nav ul{display:flex;gap:18px;align-items:center; list-style:none; padding-left:0; margin:0}
-
-    /* Brand / Logo monogram */
-    .brand{display:flex;align-items:center;gap:12px;color:#fff}
-    .logo{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;position:relative;
-      background:linear-gradient(135deg,var(--primary),#4cc9f0);
-      box-shadow:0 10px 30px var(--ring-strong), inset 0 0 18px rgba(255,255,255,.25);
-    }
-    .logo::after{content:"IAI"; font-weight:800; letter-spacing:.5px; color:#0b0f1a; text-shadow:0 1px 0 rgba(255,255,255,.5)}
-    .brand strong{font-size:1.2rem;letter-spacing:.6px; background:linear-gradient(90deg,#fff,var(--primary-300)); -webkit-background-clip:text; background-clip:text; color:transparent}
-
-    nav ul{display:flex;gap:18px;align-items:center}
-    nav a{color:#e5e7eb;position:relative;padding:8px 10px;border-radius:10px;transition: color .2s ease, background .2s}
-    nav a::after{content:"";position:absolute;left:10px;right:10px;bottom:6px;height:2px;background:var(--primary);transform:scaleX(0);transform-origin:left;transition:transform .2s ease}
-    nav a:hover{background:rgba(255,255,255,.06)}
-    nav a:hover::after,nav a.active::after{transform:scaleX(1)}
-
-    .icon-btn{background:transparent;border:0;color:#e5e7eb;cursor:pointer;font-size:1.1rem;padding:8px;border-radius:10px}
-    .icon-btn:hover{background:rgba(255,255,255,.08)}
-    .hamburger{display:none}
-    @media (max-width:900px){
-      .hamburger{display:inline-flex}
-      nav ul{position:fixed;inset:64px 12px auto 12px;background:var(--glass);backdrop-filter:blur(14px);
-        border:1px solid rgba(255,255,255,.1);border-radius:16px;box-shadow:var(--shadow);padding:16px;display:none;flex-direction:column;gap:12px}
-      nav ul.open{display:flex}
+    /* ------------------ MODERN DESIGN SYSTEM ------------------ */
+    :root {
+      --bg-body: #0f172a;       /* Deep Slate */
+      --bg-card: #1e293b;       /* Lighter Slate */
+      --bg-glass: rgba(30, 41, 59, 0.7);
+      
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      
+      --primary: #6366f1;       /* Indigo */
+      --primary-hover: #4f46e5;
+      --accent: #14b8a6;        /* Teal for success/highlights */
+      
+      --border: rgba(255, 255, 255, 0.08);
+      --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.25);
+      
+      --font-main: 'Inter', sans-serif;
+      --font-code: 'Fira Code', monospace;
+      
+      --radius: 12px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    /* ------------------ PROGRESS BAR ------------------ */
-    .progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--primary),#60a5fa);width:0;z-index:1200}
-
-    /* ------------------ HERO ------------------ */
-    .hero{position:relative;min-height:92vh;display:grid;place-items:center;text-align:center;color:#fff;}
-    .hero .layer{position:absolute;inset:0;z-index:-2;
-      background:
-        linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,.75)),
-        url('/static/img/hero-bg.jpg') center/cover no-repeat;
-      filter:saturate(1.1)
+    /* Reset & Base */
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    
+    body {
+      margin: 0;
+      font-family: var(--font-main);
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      line-height: 1.7;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 15% 50%, rgba(99, 102, 241, 0.08), transparent 25%),
+        radial-gradient(circle at 85% 30%, rgba(20, 184, 166, 0.08), transparent 25%);
     }
-    .hero::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg, transparent 0 2px, rgba(255,255,255,.02) 2px 3px);z-index: -1;}
-    .hero h1{font-size:clamp(2rem,3.5vw,3.6rem);margin:0 0 12px;font-weight:700;letter-spacing:.5px;opacity:0;transform:translateY(20px);animation:fadeUp .9s forwards}
-    .hero p{max-width:780px;margin:0 auto 24px;font-size:clamp(1rem,1.25vw,1.25rem);opacity:0;transform:translateY(20px);animation:fadeUp 1.2s .15s forwards}
-    .typing{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; display:inline-block;border-right:2px solid var(--primary);white-space:nowrap}
 
-    .cta{display:flex;gap:12px;justify-content:center}
-    .btn{padding:12px 20px;border-radius:12px;font-weight:600;border:1px solid transparent;box-shadow:var(--shadow);transition:.2s}
-    .btn-primary{background:var(--primary);color:#fff}
-    .btn-primary:hover{background:var(--primary-600);transform:translateY(-2px)}
-    .btn-ghost{background:rgba(255,255,255,.08);color:#fff;border-color:rgba(255,255,255,.16)}
-    .btn-ghost:hover{background:rgba(255,255,255,.16)}
+    a { color: inherit; text-decoration: none; transition: var(--transition); }
+    img { max-width: 100%; display: block; }
+    ul { list-style: none; padding: 0; margin: 0; }
+    
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
 
-    /* ------------------ SECTIONS ------------------ */
-    section{padding:92px 0}
-    section .section-title{font-size:1.9rem;margin:0 0 24px}
-    .card{background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:16px;box-shadow:var(--shadow)}
+    /* ------------------ SCROLL ANIMATIONS ------------------ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
-    /* ABOUT */
-    .about{display:grid;grid-template-columns:320px 1fr;gap:28px;align-items:center}
-    .about .photo{border-radius:16px;border:2px solid var(--primary); box-shadow:0 0 0 6px rgba(255,39,64,.15)}
-    .about .meta{color:var(--muted)}
-    .badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
-    .badge{padding:6px 10px;border-radius:999px;background:rgba(255,39,64,.12);border:1px solid rgba(255,39,64,.35);font-size:.85rem}
+    /* ------------------ HEADER ------------------ */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: var(--bg-glass);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      transition: var(--transition);
+    }
+    
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+    }
 
-    /* STATS */
-    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:18px}
-    .stat{padding:16px;text-align:center}
-    .stat strong{font-size:1.8rem;display:block}
-    .stat span{color:var(--muted);font-size:.95rem}
+    .brand {
+      font-family: var(--font-code);
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .brand span { color: var(--primary); }
+    .brand:hover { transform: scale(1.02); }
 
-    /* SKILLS (highlighted but tasteful) */
-    .skills-wrap{position:relative}
-    .skills-wrap::before{content:"";position:absolute;inset:-24px;z-index:-1; background-image:var(--grid); background-size:20px 20px; opacity:.35; pointer-events:none}
-    .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
-    .skill{padding:16px 18px; position:relative}
-    .skill::after{content:""; position:absolute; inset:0; pointer-events:none; border-radius:16px; box-shadow:0 0 0 1px rgba(255,39,64,.2), inset 0 0 24px rgba(255,39,64,.12)}
-    .skill h4{margin:0 0 10px;font-size:1.05rem; color:#fff}
-    .skill .tags{display:flex;flex-wrap:wrap;gap:8px}
-    .tag{font-size:.85rem;padding:6px 10px;border-radius:999px;background:#0b0f1a;color:#fff;border:1px solid rgba(255,255,255,.1)}
-    html[data-theme="light"] .tag{background:#fff;color:#000}
-    .tag:hover{background:var(--primary);color:#fff;border-color:transparent}
+    /* Desktop Menu */
+    .desktop-menu {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+    }
+    
+    .nav-link {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      position: relative;
+    }
+    .nav-link:hover, .nav-link.active { color: var(--text-main); }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--primary);
+      transition: width 0.3s ease;
+    }
+    .nav-link:hover::after, .nav-link.active::after { width: 100%; }
 
-    /* PORTFOLIO */
-    .controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:16px}
-    .filters{display:flex;gap:10px}
-    .filter-btn{padding:10px 14px;border-radius:999px;background:#1f2937;color:#e5e7eb;cursor:pointer;border:1px solid rgba(255,255,255,.1);font-weight:600}
-    .filter-btn.active,.filter-btn:hover{background:var(--primary);color:#fff;border-color:transparent}
-    .search{display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.15);background:var(--card)}
-    .search input{border:0;outline:0;background:transparent;color:inherit;width:220px}
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
-    .work{position:relative}
-    .work img{height:180px;width:100%;object-fit:cover;transition:transform .3s ease}
-    .work:hover img{transform:scale(1.06)}
-    .work .info{padding:14px}
-    .work .info h3{margin:0 0 6px}
-    .work .info p{margin:0;color:var(--muted)}
+    /* Highlighted "Aptitudini" Link */
+    .nav-link.highlight {
+      background: rgba(99, 102, 241, 0.15);
+      color: var(--primary);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      padding: 8px 20px;
+      border-radius: 50px;
+      font-weight: 600;
+    }
+    .nav-link.highlight:hover {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 0 15px rgba(99, 102, 241, 0.4);
+      transform: translateY(-1px);
+    }
+    .nav-link.highlight::after { display: none; }
 
-    /* CONTACT (bigger & improved) */
-    .contact{background:linear-gradient(180deg, var(--bg-2), transparent)}
-    .contact .wrap{display:grid;grid-template-columns:1.2fr .8fr;gap:20px;align-items:start}
-    @media (max-width:960px){.contact .wrap{grid-template-columns:1fr}}
-    .contact .pane{padding:22px}
-    .contact form{display:grid;gap:12px}
-    .contact label{font-weight:600}
-    .input{padding:14px;border:1px solid rgba(255,255,255,.18);border-radius:12px;background:var(--card);outline:0;color:var(--text)}
-    .input:focus{box-shadow:0 0 0 4px var(--ring);border-color:transparent}
-    .text-muted{color:var(--muted)}
-    .error{color:#fecaca;font-size:.9rem;display:none}
+    .btn-sm-primary {
+      font-size: 0.85rem;
+      background: var(--primary);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-weight: 600;
+      box-shadow: 0 2px 10px rgba(99, 102, 241, 0.2);
+    }
+    .btn-sm-primary:hover {
+      background: var(--primary-hover);
+      transform: translateY(-1px);
+    }
 
-    /* FOOTER + TOAST + MODALS */
-    footer{padding:40px 0;color:#cbd5e1;text-align:center;background:#0a0f1a;border-top:1px solid rgba(255,255,255,.06)}
-    .social a{color:#cbd5e1;font-size:1.3rem;margin:0 .5rem}
-    .social a:hover{color:var(--primary)}
-    .toast{position:fixed;right:16px;bottom:16px;background:var(--card);border:1px solid rgba(255,255,255,.18);padding:12px 14px;border-radius:12px;box-shadow:var(--shadow);display:none}
-    .toast.show{display:block}
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .icon-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .icon-btn:hover {
+      background: rgba(255,255,255,0.05);
+      color: var(--primary);
+      border-color: var(--primary);
+    }
 
-    .modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:1100}
-    .modal.open{display:flex}
-    .modal .dialog{background:var(--card);padding:0;border-radius:16px;max-width:900px;width:min(92vw,900px);box-shadow:var(--shadow);overflow:hidden}
-    .dialog header{padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.12);display:flex;align-items:center;justify-content:space-between}
-    .dialog main{padding:0}
-    .dialog img{width:100%;height:auto;display:block}
+    .logout-btn {
+      font-size: 0.85rem;
+      color: var(--accent);
+      border: 1px solid rgba(20, 184, 166, 0.3);
+      padding: 6px 12px;
+      border-radius: 6px;
+    }
+    .logout-btn:hover { background: rgba(20, 184, 166, 0.1); }
 
-    /* COMMAND PALETTE */
-    .cmdp{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:flex-start;justify-content:center;padding-top:10vh;z-index:1200}
-    .cmdp.open{display:flex}
-    .cmdp .box{background:var(--card);width:min(800px,92vw);border-radius:16px;border:1px solid rgba(255,255,255,.18);box-shadow:var(--shadow)}
-    .cmdp .box input{width:100%;padding:14px 16px;border:0;outline:0;background:transparent;color:var(--text)}
-    .cmdp .list{max-height:40vh;overflow:auto;border-top:1px solid rgba(255,255,255,.12)}
-    .cmdp .item{padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.08);cursor:pointer}
-    .cmdp .item:hover{background:rgba(255,255,255,.06)}
+    .hamburger { display: none; font-size: 1.2rem; background: none; border: none; color: var(--text-main); cursor: pointer; }
 
-    /* RESPONSIVE */
-    @media (max-width:1024px){.about{grid-template-columns:1fr}}
-    @media (max-width:640px){.stats{grid-template-columns:repeat(2,1fr)}}
+    /* ------------------ HERO SECTION ------------------ */
+    .hero {
+      min-height: 90vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 100px 0;
+      position: relative;
+    }
+    
+    .hero-content {
+      max-width: 900px;
+      margin: 0 auto;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-    /* ANIM */
-    @keyframes fadeUp{to{opacity:1;transform:none}}
+    h1 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      background: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .typing-wrapper {
+      font-family: var(--font-code);
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      color: var(--primary);
+      margin-bottom: 2rem;
+      min-height: 1.6em;
+    }
+    
+    .typing::after {
+      content: '|';
+      animation: blink 1s step-end infinite;
+      color: var(--text-muted);
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      margin-bottom: 2.5rem;
+      line-height: 1.8;
+      max-width: 700px;
+    }
+
+    .cta-group {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      border: 1px solid transparent;
+    }
+    
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 4px 14px 0 rgba(99, 102, 241, 0.39);
+    }
+    .btn-primary:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border-color: var(--border);
+      color: var(--text-main);
+    }
+    .btn-outline:hover {
+      border-color: var(--text-muted);
+      background: rgba(255,255,255,0.03);
+    }
+
+    /* ------------------ SECTIONS GENERAL ------------------ */
+    section { padding: 100px 0; }
+    
+    .section-header {
+      margin-bottom: 60px;
+      text-align: center;
+    }
+    .section-header h2 {
+      font-size: 2rem;
+      margin-bottom: 16px;
+    }
+    .section-header p {
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* ------------------ ABOUT & STATS ------------------ */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 60px;
+      align-items: center;
+    }
+    
+    .profile-img-wrapper {
+      position: relative;
+    }
+    .profile-img-wrapper::before {
+      content: '';
+      position: absolute;
+      inset: -10px;
+      border: 1px solid var(--primary);
+      border-radius: 20px;
+      opacity: 0.3;
+      z-index: -1;
+    }
+    .profile-img {
+      width: 100%;
+      border-radius: 16px;
+      box-shadow: var(--shadow-lg);
+      transition: var(--transition);
+    }
+    .profile-img:hover { transform: scale(1.01); }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      margin-top: 32px;
+    }
+    .stat-card {
+      background: var(--bg-card);
+      padding: 20px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      text-align: center;
+    }
+    .stat-number {
+      display: block;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    .stat-label {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    /* ------------------ SKILLS ------------------ */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    
+    .skill-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      transition: var(--transition);
+    }
+    .skill-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-5px);
+    }
+    .skill-card h3 { margin-top: 0; font-size: 1.1rem; }
+    
+    .tags-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+    .tech-tag {
+      font-size: 0.8rem;
+      font-family: var(--font-code);
+      background: rgba(255,255,255,0.05);
+      color: var(--text-muted);
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: 1px solid transparent;
+      transition: var(--transition);
+    }
+    .tech-tag:hover {
+      background: rgba(99, 102, 241, 0.1);
+      color: var(--primary);
+      border-color: rgba(99, 102, 241, 0.3);
+    }
+
+    /* ------------------ PORTFOLIO & INTERACTIVE DEVOPS ------------------ */
+    .portfolio-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    
+    .filter-group {
+      display: flex;
+      gap: 8px;
+      background: var(--bg-card);
+      padding: 6px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+    .filter-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: var(--transition);
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background: rgba(255,255,255,0.1);
+      color: var(--text-main);
+    }
+
+    .search-bar {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text-muted);
+    }
+    .search-bar input {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--text-main);
+      width: 200px;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 30px;
+    }
+
+    .project-card {
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+    }
+    .project-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+      border-color: rgba(99, 102, 241, 0.3);
+    }
+    .project-img {
+      height: 200px;
+      overflow: hidden;
+    }
+    .project-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .project-card:hover .project-img img { transform: scale(1.05); }
+    
+    .project-content { padding: 24px; flex: 1; display: flex; flex-direction: column;}
+    .project-content h3 { margin-top: 0; font-size: 1.2rem; }
+    .project-desc { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 16px; flex: 1; }
+    .project-meta {
+      margin-top: auto;
+      display: flex;
+      gap: 10px;
+      font-size: 0.85rem;
+      color: var(--accent);
+    }
+
+    /* --- DevOps Interactive Accordion --- */
+    .devops-showcase {
+      grid-column: 1 / -1;
+      background: linear-gradient(145deg, #1e293b, #0f172a);
+      border: 1px solid var(--primary);
+      border-radius: var(--radius);
+      padding: 32px;
+      margin-bottom: 40px;
+    }
+    .devops-showcase h3 { color: var(--primary); margin-bottom: 20px; display: flex; align-items: center; gap:10px; }
+    
+    .accordion { display: flex; flex-direction: column; gap: 12px; }
+    .acc-item {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .acc-header {
+      padding: 16px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+    .acc-header:hover { background: rgba(255,255,255,0.05); }
+    .acc-icon { transition: transform 0.3s; }
+    .acc-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+      padding: 0 16px;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      border-top: 1px solid transparent;
+    }
+    .acc-item.active .acc-content {
+      max-height: 200px;
+      padding-bottom: 16px;
+      border-top-color: var(--border);
+    }
+    .acc-item.active .acc-icon { transform: rotate(180deg); }
+    .acc-item.active .acc-header { color: var(--accent); }
+
+    /* ------------------ CONTACT ------------------ */
+    .contact-form-container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: var(--bg-card);
+      padding: 40px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+    }
+    .form-group { margin-bottom: 20px; }
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+    .form-input {
+      width: 100%;
+      padding: 12px 16px;
+      background: var(--bg-body);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-main);
+      font-family: inherit;
+      transition: var(--transition);
+    }
+    .form-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+    }
+    .error-msg { color: #ef4444; font-size: 0.85rem; margin-top: 6px; display: none; }
+
+    /* ------------------ FOOTER ------------------ */
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 40px 0;
+      border-top: 1px solid var(--border);
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+    .social-links a {
+      font-size: 1.2rem;
+      margin-left: 20px;
+      color: var(--text-muted);
+    }
+    .social-links a:hover { color: var(--text-main); }
+
+    /* ------------------ UTILS ------------------ */
+    .toast {
+      position: fixed; bottom: 24px; right: 24px;
+      background: var(--bg-card); border: 1px solid var(--primary);
+      padding: 16px 24px; border-radius: 8px;
+      box-shadow: var(--shadow-lg);
+      transform: translateY(100px); transition: transform 0.3s;
+      z-index: 2000;
+    }
+    .toast.show { transform: translateY(0); }
+
+    .cmd-palette {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(4px);
+      display: none; align-items: flex-start; justify-content: center;
+      padding-top: 15vh; z-index: 3000;
+    }
+    .cmd-palette.open { display: flex; }
+    .cmd-box {
+      width: 100%; max-width: 600px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+    }
+    .cmd-box input {
+      width: 100%; padding: 16px;
+      background: transparent; border: none; border-bottom: 1px solid var(--border);
+      color: var(--text-main); font-size: 1rem; outline: none;
+    }
+    .cmd-list { max-height: 300px; overflow-y: auto; }
+    .cmd-item {
+      padding: 12px 16px; cursor: pointer;
+      display: flex; justify-content: space-between;
+      color: var(--text-muted);
+    }
+    .cmd-item:hover, .cmd-item.selected { background: rgba(255,255,255,0.05); color: var(--text-main); }
+
+    /* ------------------ MEDIA QUERIES ------------------ */
+    @media (max-width: 900px) {
+      .nav { height: 60px; }
+      .desktop-menu { display: none; }
+      .hamburger { display: block; font-size: 1.5rem; }
+      
+      .mobile-menu {
+        position: fixed; inset: 0; top: 60px;
+        background: var(--bg-body);
+        padding: 24px;
+        display: flex; flex-direction: column; gap: 20px;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        z-index: 999;
+        border-top: 1px solid var(--border);
+      }
+      .mobile-menu.open { transform: translateX(0); }
+      .mobile-menu a { font-size: 1.2rem; border-bottom: 1px solid var(--border); padding-bottom: 10px; display: block; }
+      
+      .about-grid { grid-template-columns: 1fr; text-align: center; }
+      .profile-img-wrapper { max-width: 300px; margin: 0 auto; }
+      
+      .hero { min-height: 80vh; padding-top: 80px; }
+    }
+
+    @media (max-width: 640px) {
+      h1 { font-size: 2.2rem; }
+      .stats-grid { grid-template-columns: 1fr; }
+      .cta-group { flex-direction: column; }
+      .btn { width: 100%; justify-content: center; }
+      .footer-content { flex-direction: column; gap: 20px; }
+      .social-links a { margin: 0 10px; }
+    }
+
+    @keyframes blink { 50% { opacity: 0; } }
   </style>
 </head>
 <body>
-  <a href="#main" class="skip-link">Sari la conținut</a>
-  <div class="progress" id="progress"></div>
+  <div class="progress" id="progressBar"></div>
 
-  <!-- HEADER -->
-  <header id="siteHeader">
+  <header id="navbar">
     <div class="container nav">
-      <div class="brand">
-        <div class="logo" aria-hidden="true"></div>
-        <strong>Iulian A. Ioniță</strong>
-      </div>
-      <nav aria-label="Meniul principal">
-        <button class="icon-btn hamburger" id="hamburger" aria-label="Deschide meniul"><i class="fa-solid fa-bars"></i></button>
-        <ul id="menu">
-          <li><a href="#home" class="active">Acasă</a></li>
-          <li><a href="#about">Despre</a></li>
-          <li><a href="#skills">Aptitudini</a></li>
-          <li><a href="#portfolio">Portofoliu</a></li>
-          <li><a href="#contact">Contact</a></li>
-          {% if current_user.is_authenticated %}
-          <li><span class="welcome-user" style="color:#fff"><i class="fas fa-user"></i> Bună, {{ current_user.username }}</span></li>
-          <li><a href="{{ url_for('main.logout') }}" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-          {% else %}
-          <li><a href="{{ url_for('main.login') }}">Login</a></li>
-          <li><a href="{{ url_for('main.register') }}">Înregistrare</a></li>
-          {% endif %}
-          <li><button class="icon-btn" id="cmdk" title="Command Palette (Ctrl/⌘ K)"><i class="fa-solid fa-terminal"></i></button></li>
-          <li><button class="icon-btn" id="themeToggle" aria-label="Comută tema"><i class="fa-solid fa-moon"></i></button></li>
-        </ul>
+      <a href="#" class="brand">
+        <i class="fa-solid fa-terminal"></i> <span>Iulian</span>.dev
+      </a>
+
+      <nav class="desktop-menu" id="desktopMenu">
+        <a href="#home" class="nav-link">Acasă</a>
+        <a href="#about" class="nav-link">Despre</a>
+        <a href="#skills" class="nav-link highlight">Aptitudini</a>
+        <a href="#portfolio" class="nav-link">Proiecte</a>
+        <a href="#contact" class="nav-link">Contact</a>
       </nav>
+
+      <div class="nav-actions">
+        {% if current_user.is_authenticated %}
+          <span class="welcome-user" style="font-size: 0.85rem; color: var(--text-muted); margin-right: 10px;">
+            <i class="fa-solid fa-user"></i> {{ current_user.username }}
+          </span>
+          <a href="{{ url_for('main.logout') }}" class="logout-btn">Logout</a>
+        {% else %}
+          <a href="{{ url_for('main.login') }}" class="nav-link" style="font-size: 0.9rem;">Login</a>
+          <a href="{{ url_for('main.register') }}" class="btn-sm-primary">Înregistrare</a>
+        {% endif %}
+        
+        <button class="icon-btn" id="cmdTrigger" title="Command Palette (Ctrl+K)">
+          <i class="fa-solid fa-search"></i>
+        </button>
+        <button class="hamburger" id="mobileTrigger" aria-label="Menu">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#home">Acasă</a>
+      <a href="#about">Despre</a>
+      <a href="#skills" style="color: var(--primary); font-weight: 700;">Aptitudini</a>
+      <a href="#portfolio">Proiecte</a>
+      <a href="#contact">Contact</a>
+      {% if not current_user.is_authenticated %}
+        <div style="border-top: 1px solid var(--border); margin-top: 10px; padding-top: 20px;">
+            <a href="{{ url_for('main.login') }}">Login</a>
+            <a href="{{ url_for('main.register') }}">Creează Cont</a>
+        </div>
+      {% endif %}
     </div>
   </header>
 
   <main id="main">
-    <!-- HERO -->
-    <section id="home" class="hero">
-      <div class="layer" role="img" aria-label="Fundal erou"></div>
+    <section id="home" class="hero reveal">
       <div class="container">
-        <h1>Salut, sunt Iulian!</h1>
-        <p>
-          <span id="typing" class="typing" aria-label="mesaj introductiv"></span>
-        </p>
-        <div class="cta">
-          <a href="#about" class="btn btn-primary"><i class="fa-solid fa-circle-info"></i> Află mai multe</a>
-          <a href="/static/resume.pdf" class="btn btn-ghost" download><i class="fa-solid fa-file-arrow-down"></i> Descarcă CV</a>
-          <button class="btn btn-ghost" id="copyEmail"><i class="fa-solid fa-copy"></i> Copiază email</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- ABOUT -->
-    <section id="about">
-      <div class="container about card">
-        <div class="photo">
-          <img src="/static/img/profile.jpg" alt="Poză profil Iulian" loading="lazy" onerror="this.src='/static/img/fallback-profile.jpg'" />
-        </div>
-        <div>
-          <h2 class="section-title">Despre mine</h2>
-          <p class="meta">Sunt un entuziast al tehnologiei, cu interes pentru networking, securitate, cloud și automatizare. Studiez Mecatronică & Robotică la UPB și îmbin practica cu teoria prin proiecte reale orientate pe rezultate.</p>
-          <div class="badges">
-            <span class="badge">Windows Server & AD</span>
-            <span class="badge">Azure Networking</span>
-            <span class="badge">PowerShell</span>
-            <span class="badge">Microsoft Defender</span>
-            <span class="badge">Linux</span>
+        <div class="hero-content">
+          <h1>DevOps Engineer &<br>Cloud Automation Specialist</h1>
+          
+          <div class="typing-wrapper">
+            <span id="typingText"></span>
           </div>
-          <div class="stats">
-            <div class="stat"><strong data-count="35">0</strong><span>scripturi automate</span></div>
-            <div class="stat"><strong data-count="12">0</strong><span>lab-uri cloud</span></div>
-            <div class="stat"><strong data-count="5">0</strong><span>proiecte securitate</span></div>
-            <div class="stat"><strong data-count="3">0</strong><span>deploy-uri end‑to‑end</span></div>
-          </div>
-          <div class="badges" style="margin-top:14px">
-            <span class="badge"><i class="fa-solid fa-location-dot"></i> București</span>
-            <span class="badge"><i class="fa-solid fa-globe"></i> Română • Engleză</span>
+          
+          <p>
+            Proiectez infrastructură scalabilă și sigură pe Azure. <br>
+            Transform cunoștințele de inginerie în sisteme software automatizate și eficiente.
+          </p>
+          
+          <div class="cta-group">
+            <a href="#portfolio" class="btn btn-primary">Vezi Portofoliul Tehnic <i class="fa-solid fa-code-branch"></i></a>
+            <a href="/static/resume.pdf" class="btn btn-outline" download>Descarcă CV <i class="fa-solid fa-file-pdf"></i></a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- SKILLS -->
-    <section id="skills">
-      <div class="container skills-wrap">
-        <h2 class="section-title">Aptitudini Tehnice</h2>
+    <section id="about" class="reveal">
+      <div class="container">
+        <div class="about-grid">
+          <div class="profile-img-wrapper">
+            <img src="/static/img/profile.jpg" alt="Iulian Ionita" class="profile-img" onerror="this.src='https://ui-avatars.com/api/?name=Iulian+Ionita&background=6366f1&color=fff&size=400'"/>
+          </div>
+          <div>
+            <div class="section-header" style="text-align: left; margin-bottom: 20px;">
+              <h2>Despre Mine</h2>
+            </div>
+            <p style="color: var(--text-muted); margin-bottom: 24px;">
+              Sunt student la Mecatronică și Robotică (UPB) pasionat de intersecția dintre hardware și software. 
+              Îmi folosesc background-ul tehnic pentru a aborda probleme complexe de infrastructură, trecând de la sisteme fizice la cloud computing și automatizare software.
+            </p>
+            
+            <div class="stats-grid">
+              <div class="stat-card">
+                <span class="stat-number" data-target="35">0</span>
+                <span class="stat-label">Proiecte Automate</span>
+              </div>
+              <div class="stat-card">
+                <span class="stat-number" data-target="15">0</span>
+                <span class="stat-label">Repo-uri GitHub</span>
+              </div>
+              <div class="stat-card">
+                <span class="stat-number" data-target="100">0</span>%
+                <span class="stat-label">Pasiune</span>
+              </div>
+              <div class="stat-card">
+                <span class="stat-number">24/7</span>
+                <span class="stat-label">Uptime Mental</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills" class="reveal">
+      <div class="container">
+        <div class="section-header">
+          <h2>Expertiză Tehnică</h2>
+          <p>Unelte și tehnologii pe care le utilizez pentru a construi și menține sisteme.</p>
+        </div>
+
         <div class="skills-grid">
-          <div class="skill card">
-            <h4>Rețelistică</h4>
-            <div class="tags">
-              <span class="tag">TCP/IP</span>
-              <span class="tag">DNS</span>
-              <span class="tag">DHCP</span>
-              <span class="tag">VLAN</span>
-              <span class="tag">VPN</span>
+          <div class="skill-card">
+            <h3><i class="fa-solid fa-infinity" style="color:var(--accent)"></i> DevOps & CI/CD</h3>
+            <div class="tags-container">
+              <span class="tech-tag">GitHub Actions</span>
+              <span class="tech-tag">Docker</span>
+              <span class="tech-tag">Containerization</span>
+              <span class="tech-tag">Linting (Ruff/Black)</span>
+              <span class="tech-tag">Secrets Mgmt</span>
             </div>
           </div>
-          <div class="skill card">
-            <h4>Infra & Cloud</h4>
-            <div class="tags">
-              <span class="tag">Azure</span>
-              <span class="tag">Hyper‑V</span>
-              <span class="tag">M365</span>
-              <span class="tag">Defender</span>
+
+          <div class="skill-card">
+            <h3><i class="fa-solid fa-cloud" style="color:var(--primary)"></i> Cloud & IaC</h3>
+            <div class="tags-container">
+              <span class="tech-tag">Azure Web Apps</span>
+              <span class="tech-tag">Azure SQL</span>
+              <span class="tech-tag">Terraform (Basic)</span>
+              <span class="tech-tag">Linux/Bash</span>
+              <span class="tech-tag">IaC Concepts</span>
+            </div>
+            
+          </div>
+
+          <div class="skill-card">
+            <h3><i class="fa-solid fa-network-wired" style="color:#f59e0b"></i> Networking</h3>
+            <div class="tags-container">
+              <span class="tech-tag">TCP/IP</span>
+              <span class="tech-tag">DNS & DHCP</span>
+              <span class="tech-tag">VLANs</span>
+              <span class="tech-tag">Firewalls</span>
+              <span class="tech-tag">Troubleshooting</span>
             </div>
           </div>
-          <div class="skill card">
-            <h4>Automatizare</h4>
-            <div class="tags">
-              <span class="tag">PowerShell</span>
-              <span class="tag">Bash</span>
-              <span class="tag">Git</span>
-              <span class="tag">GitHub</span>
-            </div>
-          </div>
-          <div class="skill card">
-            <h4>Observabilitate</h4>
-            <div class="tags">
-              <span class="tag">Wireshark</span>
-              <span class="tag">Fiddler</span>
-              <span class="tag">PerfMon</span>
+
+          <div class="skill-card">
+            <h3><i class="fa-solid fa-chart-line" style="color:#ef4444"></i> Monitoring</h3>
+            <div class="tags-container">
+              <span class="tech-tag">Wireshark</span>
+              <span class="tech-tag">Azure Log Stream</span>
+              <span class="tech-tag">Performance Mon</span>
+              <span class="tech-tag">Logging Strategy</span>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- PORTFOLIO -->
-    <section id="portfolio">
+    <section id="portfolio" class="reveal">
       <div class="container">
-        <h2 class="section-title">Proiecte Cheie</h2>
-        <div class="controls">
-          <div class="filters" role="tablist" aria-label="Filtre portofoliu">
-            <button class="filter-btn active" data-filter="all" role="tab">Toate</button>
-            <button class="filter-btn" data-filter="cloud" role="tab">Cloud</button>
-            <button class="filter-btn" data-filter="automation" role="tab">Automatizare</button>
-            <button class="filter-btn" data-filter="security" role="tab">Securitate</button>
-          </div>
-          <div class="search">
-            <i class="fa-solid fa-magnifying-glass"></i>
-            <input id="searchInput" type="search" placeholder="Caută proiect… (/)" aria-label="Caută proiect">
+        <div class="section-header">
+          <h2>Proiecte Recente</h2>
+          <p>O selecție de implementări practice și studii de caz.</p>
+        </div>
+
+        <div class="devops-showcase">
+          <h3>
+            <i class="fa-brands fa-python"></i> Website Personal - Arhitectură DevOps
+            <span class="tech-tag" style="margin-left:auto; background:rgba(255,255,255,0.1)">Featured</span>
+          </h3>
+          <p style="margin-bottom: 20px; color: var(--text-muted);">
+            O implementare completă a unui ciclu de dezvoltare software modern, folosind Python (Flask), Docker și Azure.
+            Mai jos este detaliat fluxul de lucru automatizat (Pipeline).
+          </p>
+          
+
+[Image of DevOps CI/CD pipeline diagram]
+
+
+          <div class="accordion">
+            <div class="acc-item">
+              <div class="acc-header">
+                <span>1. CI/CD Pipeline (GitHub Actions)</span>
+                <i class="fa-solid fa-chevron-down acc-icon"></i>
+              </div>
+              <div class="acc-content">
+                <p>La fiecare <code>push</code> pe ramura <code>main</code>, un workflow automatizat este declanșat. Acesta rulează teste unitare (Pytest), verifică stilul codului și, dacă totul trece, inițiază procesul de build.</p>
+              </div>
+            </div>
+            <div class="acc-item">
+              <div class="acc-header">
+                <span>2. Quality Assurance & Linting</span>
+                <i class="fa-solid fa-chevron-down acc-icon"></i>
+              </div>
+              <div class="acc-content">
+                <p>Calitatea codului este asigurată prin <strong>Ruff</strong> și <strong>Black</strong>. Pipeline-ul blochează deploy-ul dacă standardele de stil sau sintaxă nu sunt respectate (Quality Gates).</p>
+              </div>
+            </div>
+            <div class="acc-item">
+              <div class="acc-header">
+                <span>3. Containerizare & Registry</span>
+                <i class="fa-solid fa-chevron-down acc-icon"></i>
+              </div>
+              <div class="acc-content">
+                <p>Aplicația este împachetată într-un container <strong>Docker</strong> "ușor" (Alpine/Slim). Imaginea este apoi urcată securizat în <strong>Azure Container Registry (ACR)</strong>.</p>
+              </div>
+            </div>
+            <div class="acc-item">
+              <div class="acc-header">
+                <span>4. Secrete & Configurare</span>
+                <i class="fa-solid fa-chevron-down acc-icon"></i>
+              </div>
+              <div class="acc-content">
+                <p>Datele sensibile (chei API, parole DB) nu sunt niciodată hardcodate. Ele sunt injectate în timpul execuției folosind <strong>GitHub Secrets</strong> și variabile de mediu (Environment Variables) în Azure App Service.</p>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="grid" id="works">
-          <article class="work card" data-category="automation" data-title="ad gpo powershell">
-            <img src="/static/img/ad_gpo.jpg" alt="Active Directory & Group Policy" loading="lazy" onerror="this.src='/static/img/fallback-project.jpg'">
-            <div class="info">
-              <h3>AD & Group Policy</h3>
-              <p>Implementare AD enterprise și configurare GPO cu PowerShell.</p>
+        <div class="portfolio-controls">
+          <div class="filter-group">
+            <button class="filter-btn active" data-filter="all">Toate</button>
+            <button class="filter-btn" data-filter="cloud">Cloud</button>
+            <button class="filter-btn" data-filter="automation">Automatizare</button>
+            <button class="filter-btn" data-filter="security">Securitate</button>
+          </div>
+          <div class="search-bar">
+            <i class="fa-solid fa-search"></i>
+            <input type="text" id="projectSearch" placeholder="Caută proiecte...">
+          </div>
+        </div>
+
+        <div class="projects-grid" id="projectsContainer">
+          <article class="project-card" data-category="automation" data-title="AD GPO Powershell">
+            <div class="project-img">
+              <img src="/static/img/ad_gpo.jpg" alt="AD Project" onerror="this.src='https://placehold.co/600x400/1e293b/ffffff?text=AD+Automation'">
+            </div>
+            <div class="project-content">
+              <h3>Active Directory Automation</h3>
+              <p class="project-desc">Automatizarea sarcinilor administrative și configurarea GPO folosind scripturi PowerShell avansate.</p>
+              <div class="project-meta">
+                <span><i class="fa-brands fa-windows"></i> PowerShell</span>
+                <span><i class="fa-solid fa-server"></i> AD DS</span>
+              </div>
             </div>
           </article>
-          <article class="work card" data-category="cloud" data-title="azure vnet vpn gateway">
-            <img src="/static/img/azure_vpn.jpg" alt="Azure VNet & VPN" loading="lazy" onerror="this.src='/static/img/fallback-project.jpg'">
-            <div class="info">
+
+          <article class="project-card" data-category="cloud" data-title="Azure VPN Gateway">
+            <div class="project-img">
+              <img src="/static/img/azure_vpn.jpg" alt="Azure Project" onerror="this.src='https://placehold.co/600x400/1e293b/ffffff?text=Azure+VPN'">
+            </div>
+            <div class="project-content">
               <h3>Azure VNet & VPN</h3>
-              <p>VNet securizat și integrare cu VPN Gateway.</p>
+              <p class="project-desc">Arhitectură cloud securizată cu VNet peering și integrare VPN Gateway site-to-site.</p>
+              <div class="project-meta">
+                <span><i class="fa-brands fa-microsoft"></i> Azure</span>
+                <span><i class="fa-solid fa-shield-halved"></i> Security</span>
+              </div>
             </div>
           </article>
-          <article class="work card" data-category="automation" data-title="monitoring powershell uptime">
-            <img src="/static/img/powershell_monitoring.png" alt="Monitoring PowerShell" loading="lazy" onerror="this.src='/static/img/fallback-project.jpg'">
-            <div class="info">
-              <h3>Monitoring cu PowerShell</h3>
-              <p>Script pentru verificare uptime și alerte.</p>
-            </div>
-          </article>
-          <article class="work card" data-category="security" data-title="defender baseline securitate">
-            <img src="/static/img/defender.jpg" alt="Defender Optimization" loading="lazy" onerror="this.src='/static/img/fallback-project.jpg'">
-            <div class="info">
-              <h3>Defender Optimization</h3>
-              <p>Baseline de securitate și management amenințări.</p>
-            </div>
-          </article>
-          <article class="work card" data-category="cloud" data-title="hybrid m365 exchange sharepoint aad connect">
-            <img src="/static/img/m365_hybrid.jpg" alt="Hybrid M365" loading="lazy" onerror="this.src='/static/img/fallback-project.jpg'">
-            <div class="info">
-              <h3>Hybrid M365 Integration</h3>
-              <p>Sincronizare Exchange Online & SharePoint cu Azure AD Connect.</p>
-            </div>
-          </article>
-          <article class="work card" data-category="automation" data-title="bash scripting automations">
-            <img src="/static/img/bash_scripting.jpg" alt="Bash Scripting" loading="lazy" srcset="/static/img/bash_scripting_small.jpg 480w, /static/img/bash_scripting.jpg 800w" sizes="(max-width: 480px) 480px, 800px" onerror="this.src='/static/img/fallback-project.jpg'">
-            <div class="info">
-              <h3>Bash Scripting Automation</h3>
-              <p>Automatizări de sistem cu Bash.</p>
-            </div>
-          </article>
-        </div>
 
-        <!-- Lightbox modal -->
-        <div class="modal" id="lightbox" aria-hidden="true" role="dialog" aria-label="Previzualizare proiect">
-          <div class="dialog">
-            <header>
-              <strong id="lbTitle">Previzualizare</strong>
-              <button class="icon-btn" id="lbClose" aria-label="Închide"><i class="fa-solid fa-xmark"></i></button>
-            </header>
-            <main>
-              <img id="lbImg" alt="Previzualizare proiect">
-            </main>
-          </div>
+          <article class="project-card" data-category="security" data-title="Defender Optimization">
+            <div class="project-img">
+              <img src="/static/img/defender.jpg" alt="Defender Project" onerror="this.src='https://placehold.co/600x400/1e293b/ffffff?text=Defender+Ops'">
+            </div>
+            <div class="project-content">
+              <h3>Defender Optimization</h3>
+              <p class="project-desc">Implementarea baseline-urilor de securitate și managementul amenințărilor în timp real.</p>
+              <div class="project-meta">
+                <span><i class="fa-solid fa-lock"></i> SecOps</span>
+                <span><i class="fa-solid fa-virus-slash"></i> Defender</span>
+              </div>
+            </div>
+          </article>
+          
+           <article class="project-card" data-category="automation" data-title="Bash Scripting">
+            <div class="project-img">
+              <img src="/static/img/bash_scripting.jpg" alt="Bash Project" onerror="this.src='https://placehold.co/600x400/1e293b/ffffff?text=Bash+Scripts'">
+            </div>
+            <div class="project-content">
+              <h3>Linux Automation</h3>
+              <p class="project-desc">Suite de scripturi Bash pentru mentenanța serverelor, log rotation și backup automat.</p>
+              <div class="project-meta">
+                <span><i class="fa-brands fa-linux"></i> Bash</span>
+                <span><i class="fa-solid fa-terminal"></i> Cron</span>
+              </div>
+            </div>
+          </article>
         </div>
       </div>
     </section>
 
-    <!-- CONTACT (larger, Formspree, removed export/vCard) -->
-    <section id="contact" class="contact">
+    <section id="contact" class="reveal">
       <div class="container">
-        <h2 class="section-title">Contact</h2>
-        <div class="grid card wrap">
-          <div class="pane">
-            <form id="contactForm" action="https://formspree.io/f/xqaljnag" method="POST" novalidate>
-              
-              <div>
-                <label for="name">Nume</label>
-                <input id="name" name="name" type="text" class="input" placeholder="Nume" required>
-                <div class="error name">Numele este obligatoriu</div>
-              </div>
-              <div>
-                <label for="email">Email</label>
-                <input id="email" name="email" type="email" class="input" placeholder="Email" required>
-                <div class="error email">Introdu un email valid</div>
-              </div>
-              <div>
-                <label for="message">Mesaj</label>
-                <textarea id="message" name="message" rows="7" class="input" placeholder="Mesaj…" required></textarea>
-                <div class="error message">Mesajul este obligatoriu</div>
-              </div>
-              <!-- honeypot anti-spam -->
-              <input type="text" name="_gotcha" style="display:none">
-              <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
-                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i> Trimite</button>
-                <span id="formStatus" class="text-muted" aria-live="polite"></span>
-              </div>
-            </form>
-          </div>
-          <div class="pane">
-            <h3>Preferi direct?</h3>
-            <p class="text-muted">Scrie-mi pe email sau găsește-mă pe rețelele sociale. Răspund de obicei în aceeași zi.</p>
-            <div class="badges" style="margin-top:14px">
-              <span class="badge"><i class="fas fa-envelope"></i> ionita.a.iulian26@gmail.com</span>
-              <a class="badge" href="https://www.linkedin.com/in/ionita-andrei-iulian-a829bb213/" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
-              <a class="badge" href="https://github.com/iuliann26" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+        <div class="section-header">
+          <h2>Hai să discutăm</h2>
+          <p>Ai o idee de proiect sau vrei să colaborăm? Trimite-mi un mesaj.</p>
+        </div>
+
+        <div class="contact-form-container">
+          <form id="contactForm" action="https://formspree.io/f/xqaljnag" method="POST">
+            <div class="form-group">
+              <label for="name">Nume</label>
+              <input type="text" id="name" name="name" class="form-input" placeholder="Numele tău" required>
+              <div class="error-msg name-error">Numele este obligatoriu.</div>
             </div>
-          </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" class="form-input" placeholder="email@exemplu.com" required>
+              <div class="error-msg email-error">Email invalid.</div>
+            </div>
+            <div class="form-group">
+              <label for="message">Mesaj</label>
+              <textarea id="message" name="message" class="form-input" rows="5" placeholder="Despre ce ai vrea să vorbim?" required></textarea>
+              <div class="error-msg msg-error">Mesajul nu poate fi gol.</div>
+            </div>
+            <input type="text" name="_gotcha" style="display:none">
+            
+            <button type="submit" class="btn btn-primary" style="width:100%">Trimite Mesajul <i class="fa-solid fa-paper-plane"></i></button>
+            <p id="formStatus" style="margin-top:16px; text-align:center; font-size:0.9rem; color:var(--text-muted)"></p>
+          </form>
         </div>
       </div>
     </section>
   </main>
 
   <footer>
-    <div class="container">
-      <p>© <span id="year"></span> Iulian A. Ioniță. Toate drepturile rezervate.</p>
-      <div class="social" aria-label="Rețele sociale">
-        <a href="https://www.linkedin.com/in/ionita-andrei-iulian-a829bb213/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-        <a href="https://github.com/iuliann26" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
-        <a href="mailto:ionita.a.iulian26@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+    <div class="container footer-content">
+      <div>
+        © <span id="year"></span> Iulian A. Ioniță. Toate drepturile rezervate.
+      </div>
+      <div class="social-links">
+        <a href="https://linkedin.com/" target="_blank" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+        <a href="https://github.com/iuliann26" target="_blank" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+        <a href="mailto:ionita.a.iulian26@gmail.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
       </div>
     </div>
   </footer>
 
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
-
-  <!-- COMMAND PALETTE -->
-  <div class="cmdp" id="cmdp" aria-hidden="true">
-    <div class="box">
-      <input type="text" id="cmdInput" placeholder="Tastează pentru a naviga… (ex: 'about', 'skills', 'logout')">
-      <div class="list" id="cmdList"></div>
+  <div class="cmd-palette" id="cmdPalette">
+    <div class="cmd-box">
+      <input type="text" id="cmdInput" placeholder="Caută o secțiune sau comandă...">
+      <div class="cmd-list" id="cmdList">
+        </div>
     </div>
   </div>
 
+  <div class="toast" id="toast">Mesaj trimis!</div>
+
   <script>
-    (function(){
+    (function() {
       const $ = s => document.querySelector(s);
       const $$ = s => document.querySelectorAll(s);
 
-      /* -------- YEAR -------- */
-      $('#year').textContent = new Date().getFullYear();
-
-      /* -------- MOBILE MENU -------- */
-      const menu = $('#menu');
-      $('#hamburger')?.addEventListener('click', ()=> menu.classList.toggle('open'));
-
-      /* -------- HEADER SCROLL STATE -------- */
-      const header = $('#siteHeader');
-      const onScrollHeader = ()=>{
-        if(window.scrollY > 8) header.classList.add('scrolled'); else header.classList.remove('scrolled');
-      };
-      window.addEventListener('scroll', onScrollHeader); onScrollHeader();
-
-      /* -------- ACTIVE LINK + REVEAL ON SCROLL -------- */
-      const links = $$('a[href^="#"]');
-      const sections = document.querySelectorAll('main section');
-      const io = new IntersectionObserver(entries => {
-        entries.forEach(e => {
-          if(e.isIntersecting){
-            links.forEach(l=>l.classList.remove('active'));
-            const act = document.querySelector(`#menu a[href="#${e.target.id}"]`); // FIX template string
-            if(act) act.classList.add('active');
-            e.target.classList.add('seen');
+      // --- 1. Scroll Animations (Intersection Observer) ---
+      const observerOptions = { threshold: 0.15 };
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+            // Optional: Unobserve after reveal if you want it only once
+            // observer.unobserve(entry.target);
           }
-        })
-      },{threshold:.3});
-      sections.forEach(s=>io.observe(s));
+        });
+      }, observerOptions);
 
-      /* -------- SMOOTH SCROLL & PROGRESS -------- */
-      links.forEach(a=>a.addEventListener('click', ev=>{
-        const href = a.getAttribute('href');
-        if(href.startsWith('#')){
-          ev.preventDefault();
-          document.querySelector(href)?.scrollIntoView({behavior:'smooth'});
-          menu.classList.remove('open');
-        }
-      }));
-      const progress = $('#progress');
-      window.addEventListener('scroll',()=>{
-        const max = document.body.scrollHeight - innerHeight;
-        const pct = Math.min(100, Math.round(scrollY / (max||1) * 100));
-        progress.style.width = pct + '%';
+      $$('.reveal').forEach(el => observer.observe(el));
+
+      // --- 2. Header Scroll Effect ---
+      const header = $('#navbar');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) header.classList.add('scrolled');
+        else header.classList.remove('scrolled');
       });
 
-      /* -------- THEME TOGGLE (auto/light/dark) -------- */
-      const themeBtn = $('#themeToggle');
-      function applyTheme(mode){
-        const html = document.documentElement;
-        if(mode==='auto'){
-          const prefersDark = matchMedia('(prefers-color-scheme: dark)').matches;
-          html.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+      // --- 3. Mobile Menu with Scroll Lock ---
+      const hamburger = $('#mobileTrigger');
+      const mobileMenu = $('#mobileMenu');
+      const body = document.body;
+
+      hamburger.addEventListener('click', () => {
+        const isOpen = mobileMenu.classList.toggle('open');
+        hamburger.innerHTML = isOpen ? '<i class="fa-solid fa-xmark"></i>' : '<i class="fa-solid fa-bars"></i>';
+        body.style.overflow = isOpen ? 'hidden' : ''; // Lock scroll
+      });
+
+      // Close menu when a link is clicked
+      $$('.mobile-menu a').forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.remove('open');
+          hamburger.innerHTML = '<i class="fa-solid fa-bars"></i>';
+          body.style.overflow = '';
+        });
+      });
+
+      // --- 4. Accordion Logic (DevOps Section) ---
+      $$('.acc-header').forEach(header => {
+        header.addEventListener('click', () => {
+          const item = header.parentElement;
+          item.classList.toggle('active');
+        });
+      });
+
+      // --- 5. Typing Effect ---
+      const typingEl = $('#typingText');
+      const phrases = [
+        "Construiesc Pipeline-uri CI/CD.",
+        "Automatizez Infrastructură.",
+        "Asigur Securitatea în Cloud."
+      ];
+      let phraseIndex = 0;
+      let charIndex = 0;
+      let isDeleting = false;
+      let typeSpeed = 100;
+
+      function type() {
+        const currentPhrase = phrases[phraseIndex];
+        
+        if (isDeleting) {
+          typingEl.textContent = currentPhrase.substring(0, charIndex - 1);
+          charIndex--;
+          typeSpeed = 50;
         } else {
-          html.setAttribute('data-theme', mode);
+          typingEl.textContent = currentPhrase.substring(0, charIndex + 1);
+          charIndex++;
+          typeSpeed = 100;
         }
-        localStorage.setItem('theme-mode', mode);
-        themeBtn.innerHTML = html.getAttribute('data-theme')==='dark' ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>';
-      }
-      applyTheme(localStorage.getItem('theme-mode') || 'auto');
-      themeBtn.addEventListener('click', ()=>{
-        const current = localStorage.getItem('theme-mode') || 'auto';
-        const next = current==='auto' ? 'dark' : current==='dark' ? 'light' : 'auto';
-        applyTheme(next);
-        showToast(`Tema: ${next}`);
-      });
 
-      /* -------- TYPING EFFECT (first visit only for 24h) -------- */
-      const typingEl = $('#typing');
-      const typingText = [
-        'Inginer IT focu$at pe networking, cloud și automatizare…',
-        'DevOps mindset: IaC, CI/CD, securitate by design.',
-        'Construiesc soluții scalabile și observabile.'];
-      const lastSeen = +localStorage.getItem('typing-done') || 0;
-      if(Date.now() - lastSeen > 24*60*60*1000){
-        typeLines(typingText, typingEl, 42).then(()=> localStorage.setItem('typing-done', Date.now().toString()));
-      } else {
-        typingEl.textContent = 'Inginer IT pasionat de networking, cloud și automatizare.';
-        typingEl.classList.remove('typing');
-      }
-      async function typeLines(lines, el, speed=40){
-        for(const line of lines){
-          await type(line.replace('$','s'), el, speed);
-          await sleep(600);
-          await erase(el, speed/1.5);
-          await sleep(300);
+        if (!isDeleting && charIndex === currentPhrase.length) {
+          isDeleting = true;
+          typeSpeed = 2000; // Pause at end
+        } else if (isDeleting && charIndex === 0) {
+          isDeleting = false;
+          phraseIndex = (phraseIndex + 1) % phrases.length;
+          typeSpeed = 500;
         }
-        el.textContent = 'Inginer IT pasionat de networking, cloud și automatizare.';
-        el.classList.remove('typing');
-      }
-      function sleep(ms){return new Promise(r=>setTimeout(r,ms))}
-      async function type(text, el, speed){
-        el.textContent='';
-        for(const ch of text){ el.textContent += ch; await sleep(speed); }
-      }
-      async function erase(el, speed){
-        while(el.textContent.length){ el.textContent = el.textContent.slice(0,-1); await sleep(speed); }
-      }
 
-      /* -------- COPY EMAIL -------- */
-      $('#copyEmail').addEventListener('click', async ()=>{
-        try{ await navigator.clipboard.writeText('ionita.a.iulian26@gmail.com'); showToast('Email copiat în clipboard ✅'); }
-        catch{ showToast('Nu am putut copia emailul'); }
-      });
+        setTimeout(type, typeSpeed);
+      }
+      // Start typing
+      type();
 
-      /* -------- COUNTERS -------- */
-      const counters = document.querySelectorAll('[data-count]');
-      const cobs = new IntersectionObserver(es=>{
-        es.forEach(e=>{
-          if(e.isIntersecting){
-            const el = e.target; const target = +el.dataset.count; let n=0; const step = Math.max(1, Math.round(target/50));
-            const t = setInterval(()=>{ n+=step; el.textContent = (n>=target? target : n); if(n>=target) clearInterval(t); }, 24);
-            cobs.unobserve(el);
+      // --- 6. Stats Counter Animation ---
+      const stats = $$('.stat-number[data-target]');
+      const statsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if(entry.isIntersecting) {
+            const el = entry.target;
+            const target = +el.dataset.target;
+            let count = 0;
+            const increment = Math.ceil(target / 50);
+            
+            const timer = setInterval(() => {
+              count += increment;
+              if(count >= target) {
+                el.textContent = target;
+                clearInterval(timer);
+              } else {
+                el.textContent = count;
+              }
+            }, 30);
+            statsObserver.unobserve(el);
           }
-        })
-      },{threshold:1});
-      counters.forEach(c=>cobs.observe(c));
+        });
+      }, { threshold: 0.5 });
+      stats.forEach(stat => statsObserver.observe(stat));
 
-      /* -------- PORTFOLIO: FILTER + SEARCH + LIGHTBOX -------- */
+      // --- 7. Portfolio Filtering & Search ---
       const filterBtns = $$('.filter-btn');
-      const works = $$('#works .work');
-      function applyFilters(){
-        const active = $('.filter-btn.active')?.dataset.filter || 'all';
-        const q = $('#searchInput').value.toLowerCase().trim();
-        works.forEach(card=>{
-          const okCat = active==='all' || card.dataset.category===active;
-          const okText = card.dataset.title.includes(q);
-          card.style.display = (okCat && okText) ? '' : 'none';
+      const projects = $$('.project-card');
+      const searchInput = $('#projectSearch');
+
+      function filterProjects() {
+        const category = $('.filter-btn.active').dataset.filter;
+        const term = searchInput.value.toLowerCase();
+
+        projects.forEach(card => {
+          const matchCat = category === 'all' || card.dataset.category === category;
+          const matchTerm = card.dataset.title.toLowerCase().includes(term);
+          
+          if (matchCat && matchTerm) {
+            card.style.display = 'flex';
+            // Slight timeout for fade effect could be added here
+          } else {
+            card.style.display = 'none';
+          }
         });
       }
-      filterBtns.forEach(b=>b.addEventListener('click',()=>{
-        filterBtns.forEach(x=>x.classList.remove('active'));
-        b.classList.add('active');
-        applyFilters();
-      }));
-      $('#searchInput').addEventListener('input', applyFilters);
-      $$('#works .work').forEach(card=>{
-        card.addEventListener('click',()=>{
-          $('#lbImg').src = card.querySelector('img').src;
-          $('#lbImg').alt = card.querySelector('img').alt;
-          $('#lbTitle').textContent = card.querySelector('h3').textContent;
-          $('#lightbox').classList.add('open');
-          $('#lightbox').setAttribute('aria-hidden','false');
-        })
-      });
-      $('#lbClose').addEventListener('click',()=>{
-        $('#lightbox').classList.remove('open');
-        $('#lightbox').setAttribute('aria-hidden','true');
+
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          $('.filter-btn.active').classList.remove('active');
+          btn.classList.add('active');
+          filterProjects();
+        });
       });
 
-      /* -------- CONTACT: validation + Formspree submit -------- */
-      const form = $('#contactForm');
-      const statusEl = $('#formStatus');
-      form.addEventListener('submit', async (e)=>{
-        e.preventDefault();
-        const name = form.name.value.trim();
-        const email = form.email.value.trim();
-        const message = form.message.value.trim();
-        const emailRegex = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i;
-        const nameErr = $('.error.name');
-        const emailErr = $('.error.email');
-        const msgErr = $('.error.message');
-        let valid = true;
-        [nameErr,emailErr,msgErr].forEach(el=>el.style.display='none');
-        if(!name){ nameErr.style.display='block'; valid=false; }
-        if(!email || !emailRegex.test(email)){ emailErr.style.display='block'; valid=false; }
-        if(!message){ msgErr.style.display='block'; valid=false; }
-        if(!valid) return;
+      searchInput.addEventListener('input', filterProjects);
 
-        statusEl.textContent = 'Se trimite…';
-        try{
-          const data = new FormData(form);
-          const res = await fetch(form.action, { method:'POST', body:data, headers: { 'Accept':'application/json' } });
-          if(res.ok){
-            showToast('Mesaj trimis cu succes ✅');
-            statusEl.textContent = 'Mulțumesc! Îți voi răspunde în curând.';
-            form.reset();
-          } else {
-            const j = await res.json().catch(()=>({}));
-            const msg = j.errors?.map(e=>e.message).join(', ') || 'Eroare la trimitere.';
-            statusEl.textContent = msg;
-            showToast(msg);
-          }
-        } catch(err){
-          statusEl.textContent = 'Conexiune indisponibilă. Încearcă din nou.';
-          showToast('Conexiune indisponibilă.');
-        }
-      });
-
-      /* -------- TOAST -------- */
-      const toast = $('#toast');
-      function showToast(txt){ toast.textContent = txt; toast.classList.add('show'); setTimeout(()=>toast.classList.remove('show'), 2500); }
-
-      /* -------- COMMAND PALETTE (Ctrl/⌘ K) -------- */
-      const cmdp = $('#cmdp');
+      // --- 8. Command Palette ---
+      const cmdPalette = $('#cmdPalette');
       const cmdInput = $('#cmdInput');
       const cmdList = $('#cmdList');
-      const palette = [
-        {label:'Go: Acasă', action:()=>go('#home')},
-        {label:'Go: Despre', action:()=>go('#about')},
-        {label:'Go: Aptitudini', action:()=>go('#skills')},
-        {label:'Go: Portofoliu', action:()=>go('#portfolio')},
-        {label:'Go: Contact', action:()=>go('#contact')},
-        {% if current_user.is_authenticated %}
-        {label:'Logout', action:()=>window.location.href='{{ url_for("main.logout") }}'},
-        {% else %}
-        {label:'Login', action:()=>window.location.href='{{ url_for("main.login") }}'},
-        {label:'Înregistrare', action:()=>window.location.href='{{ url_for("main.register") }}'},
-        {% endif %}
-        {label:'Tema: Auto', action:()=>applyTheme('auto')},
-        {label:'Tema: Dark', action:()=>applyTheme('dark')},
-        {label:'Tema: Light', action:()=>applyTheme('light')}
+      
+      // Updated Commands List (No Theme Toggle)
+      const commands = [
+        { label: 'Navighează: Acasă', action: () => window.location.href='#home' },
+        { label: 'Navighează: Aptitudini', action: () => window.location.href='#skills' },
+        { label: 'Navighează: Proiecte', action: () => window.location.href='#portfolio' },
+        { label: 'Navighează: Contact', action: () => window.location.href='#contact' },
+        { label: 'Acțiune: Descarcă CV', action: () => $('a[download]').click() },
+        { label: 'Acțiune: Email Me', action: () => window.location.href='mailto:ionita.a.iulian26@gmail.com' }
       ];
-      function openCmd(){ cmdp.classList.add('open'); cmdp.setAttribute('aria-hidden','false'); cmdInput.value=''; renderCmd(''); cmdInput.focus(); }
-      function closeCmd(){ cmdp.classList.remove('open'); cmdp.setAttribute('aria-hidden','true'); }
-      function renderCmd(q){ cmdList.innerHTML = ''; const ql = q.toLowerCase(); palette.filter(i=>i.label.toLowerCase().includes(ql)).forEach(item=>{ const div = document.createElement('div'); div.className='item'; div.textContent=item.label; div.addEventListener('click',()=>{ item.action(); closeCmd(); }); cmdList.appendChild(div); }) }
-      function go(sel){ document.querySelector(sel)?.scrollIntoView({behavior:'smooth'}); }
-      document.addEventListener('keydown',e=>{
-        if((e.ctrlKey||e.metaKey) && e.key.toLowerCase()==='k'){ e.preventDefault(); openCmd(); }
-        if(e.key==='/'){
-          const active = document.activeElement.tagName; if(active!=='INPUT'&&active!=='TEXTAREA'){ e.preventDefault(); $('#searchInput').focus(); }
-        }
-        if(e.key==='Escape'){ closeCmd(); $('#lightbox').classList.remove('open'); }
-      });
-      $('#cmdk').addEventListener('click', openCmd);
-      cmdInput.addEventListener('input', e=>renderCmd(e.target.value));
-      cmdp.addEventListener('click', e=>{ if(e.target===cmdp) closeCmd(); });
 
-      /* -------- SERVICE WORKER (optional PWA cache) -------- */
-      if('serviceWorker' in navigator){
-        const swCode = `self.addEventListener('install',e=>{e.waitUntil(caches.open('iulian-v1').then(c=>c.addAll(['/','/static/img/hero-bg.jpg'])))});self.addEventListener('fetch',e=>{e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request)))})`;
-        const blob = new Blob([swCode],{type:'text/javascript'});
-        const swUrl = URL.createObjectURL(blob);
-        navigator.serviceWorker.register(swUrl).catch(()=>{});
+      function toggleCmd(show) {
+        cmdPalette.classList.toggle('open', show);
+        if(show) {
+          cmdInput.value = '';
+          renderCommands('');
+          cmdInput.focus();
+          body.style.overflow = 'hidden';
+        } else {
+          body.style.overflow = '';
+        }
       }
-    })(); 
+
+      function renderCommands(filter) {
+        cmdList.innerHTML = '';
+        const filtered = commands.filter(c => c.label.toLowerCase().includes(filter.toLowerCase()));
+        
+        filtered.forEach(c => {
+          const div = document.createElement('div');
+          div.className = 'cmd-item';
+          div.textContent = c.label;
+          div.onclick = () => { c.action(); toggleCmd(false); };
+          cmdList.appendChild(div);
+        });
+        
+        if(filtered.length === 0) {
+          cmdList.innerHTML = '<div style="padding:12px; color:var(--text-muted)">Niciun rezultat.</div>';
+        }
+      }
+
+      document.addEventListener('keydown', (e) => {
+        if((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+          e.preventDefault();
+          toggleCmd(!cmdPalette.classList.contains('open'));
+        }
+        if(e.key === 'Escape') toggleCmd(false);
+      });
+
+      $('#cmdTrigger').addEventListener('click', () => toggleCmd(true));
+      cmdPalette.addEventListener('click', (e) => {
+        if(e.target === cmdPalette) toggleCmd(false);
+      });
+      cmdInput.addEventListener('input', (e) => renderCommands(e.target.value));
+
+      // --- 9. Contact Form & Toast ---
+      const form = $('#contactForm');
+      const toast = $('#toast');
+      const formStatus = $('#formStatus');
+
+      function showToast(msg) {
+        toast.textContent = msg;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 3000);
+      }
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        // Basic Validation
+        const name = form.name.value.trim();
+        const email = form.email.value.trim();
+        const msg = form.message.value.trim();
+        
+        if(!name || !email || !msg) {
+          showToast('Te rog completează toate câmpurile.');
+          return;
+        }
+
+        const btn = form.querySelector('button');
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Se trimite...';
+        btn.disabled = true;
+
+        try {
+          const data = new FormData(form);
+          const response = await fetch(form.action, {
+            method: 'POST',
+            body: data,
+            headers: { 'Accept': 'application/json' }
+          });
+
+          if (response.ok) {
+            showToast('Mesaj trimis cu succes!');
+            form.reset();
+            formStatus.innerHTML = '<span style="color:var(--accent)">Mulțumesc! Voi răspunde curând.</span>';
+          } else {
+            showToast('Eroare la trimitere.');
+            formStatus.innerHTML = '<span style="color:#ef4444">Ceva nu a mers bine.</span>';
+          }
+        } catch (err) {
+          showToast('Eroare de rețea.');
+        } finally {
+          btn.innerHTML = originalText;
+          btn.disabled = false;
+        }
+      });
+
+      // --- 10. Footer Year ---
+      $('#year').textContent = new Date().getFullYear();
+
+    })();
   </script>
 </body>
 </html>
