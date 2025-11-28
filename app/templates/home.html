@@ -634,40 +634,97 @@
     }
     .cmd-item:hover, .cmd-item.selected { background: rgba(255,255,255,0.05); color: var(--text-main); }
 
-    /* ------------------ MEDIA QUERIES ------------------ */
+   /* =========================================
+       LOGICA PENTRU MENIURI (DESKTOP VS MOBIL)
+       ========================================= */
+
+    /* 1. DEFAULT (DESKTOP - Ecrane mari) */
+    
+    /* Ascundem complet meniul de mobil și butonul hamburger pe desktop */
+    .mobile-menu, 
+    .mobile-trigger {
+      display: none; 
+    }
+
+    /* Meniul Desktop și acțiunile sunt vizibile (flex) */
+    .desktop-menu, 
+    .desktop-actions {
+      display: flex;
+    }
+
+    /* =========================================
+       2. MEDIA QUERIES (MOBIL - Ecrane sub 900px)
+       ========================================= */
     @media (max-width: 900px) {
-      .nav { height: 60px; }
-      .desktop-menu { display: none; }
-      .hamburger { display: block; font-size: 1.5rem; }
       
+      /* A. ASCUNDE ELEMENTELE DE DESKTOP */
+      .desktop-menu, 
+      .desktop-actions {
+        display: none !important;
+      }
+
+      /* B. AFIȘEAZĂ ELEMENTELE DE MOBIL */
+      
+      /* 1. Butonul Hamburger */
+      .mobile-trigger {
+        display: block; /* Îl facem vizibil */
+      }
+
+      /* 2. Meniul Mobil (Sertarul) */
       .mobile-menu {
-        position: fixed; inset: 0; top: 60px;
+        display: flex; /* Îl facem vizibil structural */
+        position: fixed; 
+        inset: 0; 
+        top: 70px; /* Sub header */
         background: var(--bg-body);
         padding: 24px;
-        display: flex; flex-direction: column; gap: 20px;
-        transform: translateX(100%);
-        transition: transform 0.3s ease;
+        flex-direction: column; 
+        gap: 20px;
+        
+        /* Animația de slide */
+        transform: translateX(100%); /* Ascuns în dreapta ecranului */
+        transition: transform 0.3s ease-in-out;
+        
         z-index: 999;
         border-top: 1px solid var(--border);
+        overflow-y: auto; /* Permite scroll în meniu dacă e prea înalt */
       }
-      .mobile-menu.open { transform: translateX(0); }
-      .mobile-menu a { font-size: 1.2rem; border-bottom: 1px solid var(--border); padding-bottom: 10px; display: block; }
+
+      /* Clasa .open este adăugată de JavaScript când dai click */
+      .mobile-menu.open {
+        transform: translateX(0); /* Îl aduce în ecran */
+      }
+
+      /* Stiluri link-uri mobil */
+      .mobile-menu a {
+        font-size: 1.2rem;
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 10px;
+        display: block;
+      }
+
+      /* C. AJUSTĂRI DE ASPECT PENTRU MOBIL */
+      .nav { height: 60px; }
+      .mobile-menu { top: 60px; } /* Ajustăm top-ul dacă headerul e mai mic */
       
       .about-grid { grid-template-columns: 1fr; text-align: center; }
       .profile-img-wrapper { max-width: 300px; margin: 0 auto; }
-      
       .hero { min-height: 80vh; padding-top: 80px; }
     }
 
+    /* =========================================
+       3. MEDIA QUERIES (TELEFOANE MICI - Ecrane sub 640px)
+       ========================================= */
     @media (max-width: 640px) {
       h1 { font-size: 2.2rem; }
       .stats-grid { grid-template-columns: 1fr; }
+      
       .cta-group { flex-direction: column; }
       .btn { width: 100%; justify-content: center; }
+      
       .footer-content { flex-direction: column; gap: 20px; }
       .social-links a { margin: 0 10px; }
     }
-
     @keyframes blink { 50% { opacity: 0; } }
   </style>
 </head>
@@ -857,7 +914,6 @@
           </p>
           
 
-[Image of DevOps CI/CD pipeline diagram]
 
 
           <div class="accordion">

@@ -1,736 +1,262 @@
 <!DOCTYPE html>
 <html lang="ro">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Autentificare pentru portofoliul lui Iulian A. Ionita, specialist în IT, networking și automatizare.">
-  <meta name="keywords" content="Iulian Ionita, IT, networking, cloud, PowerShell, Azure, DevOps, Bash, autentificare, login">
-  <meta name="author" content="Iulian A. Ionita">
-  <title>Autentificare | Iulian A. Ionita</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="description" content="Autentificare - Portofoliu Iulian A. Ioniță" />
+  <meta name="theme-color" content="#0f172a">
+  <title>Autentificare | Iulian A. Ioniță</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" />
+
   <style>
-    /* Reset & Base */
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    /* ------------------ MODERN DESIGN SYSTEM (SHARED) ------------------ */
+    :root {
+      --bg-body: #0f172a;
+      --bg-card: #1e293b;
+      --bg-glass: rgba(15, 23, 42, 0.85);
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --primary: #6366f1;
+      --primary-hover: #4f46e5;
+      --accent: #14b8a6;
+      --border: rgba(255, 255, 255, 0.1);
+      --radius: 12px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --font-main: 'Inter', sans-serif;
+      --font-code: 'Fira Code', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
     body {
-      font-family: 'Poppins', sans-serif;
-      color: #1a1a1a;
-      background: #f8fafc;
-      scroll-behavior: smooth;
+      font-family: var(--font-main);
+      background-color: var(--bg-body);
+      color: var(--text-main);
       line-height: 1.6;
-      transition: background 0.3s, color 0.3s;
-    }
-    a { text-decoration: none; color: inherit; }
-    ul { list-style: none; }
-    .dark-mode {
-      background: #1e293b;
-      color: #f1f5f9;
-    }
-    .dark-mode header { background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.95)); }
-    .dark-mode .login { background: linear-gradient(135deg, #2d3748, #1e293b); }
-    .dark-mode footer { background: #0f172a; }
-    .dark-mode .login h2 { color: #f1f5f9; }
-    .dark-mode .login label { color: #e2e8f0; }
-    .dark-mode .login input, .dark-mode .login textarea {
-      background: #2d3748;
-      border-color: #4b5563;
-      color: #f1f5f9;
-    }
-    .dark-mode .login input:focus, .dark-mode .login textarea:focus {
-      border-color: #f87171;
-      box-shadow: 0 0 8px rgba(248, 113, 113, 0.3);
-    }
-    .dark-mode .login .success-message, .dark-mode .login .error-message {
-      background: #2d3748;
-      border-color: #34d399;
-      color: #34d399;
-    }
-    .dark-mode .login .error-message {
-      border-color: #dc2626;
-      color: #dc2626;
-    }
-
-    /* Header & Nav */
-    header {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(44, 62, 80, 0.95));
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 1000;
-      backdrop-filter: blur(12px);
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    }
-    .logo {
-      color: #fff;
-      font-size: 1.8rem;
-      font-weight: 700;
-      letter-spacing: 1.2px;
-      animation: fadeInDown 0.8s ease-out;
-    }
-    nav {
-      display: flex;
-      align-items: center;
-    }
-    nav ul {
-      display: flex;
-      gap: 1.5rem;
-    }
-    nav a {
-      color: #d1d5db;
-      font-weight: 500;
-      font-size: 1rem;
-      position: relative;
-      transition: color 0.3s, background 0.3s;
-      padding: 0.5rem;
-      min-height: 44px;
-      min-width: 44px;
-      display: flex;
-      align-items: center;
-      border-radius: 4px;
-    }
-    nav a:focus {
-      outline: 2px solid #f87171;
-      outline-offset: 2px;
-    }
-    nav a.active, nav a:hover {
-      color: #f87171;
-    }
-    nav a::after {
-      content: '';
-      position: absolute;
-      bottom: -6px;
-      left: 50%;
-      width: 0;
-      height: 3px;
-      background: #f87171;
-      transition: width 0.3s, left 0.3s;
-    }
-    nav a.active::after, nav a:hover::after {
-      left: 0;
-      width: 100%;
-    }
-    .theme-toggle {
-      background: none;
-      border: none;
-      color: #d1d5db;
-      font-size: 1.2rem;
-      cursor: pointer;
-      transition: color 0.3s;
-      padding: 0.5rem;
-      min-height: 44px;
-      min-width: 44px;
-      display: flex;
-      align-items: center;
-    }
-    .theme-toggle:hover, .theme-toggle:focus {
-      color: #f87171;
-      outline: 2px solid #f87171;
-      outline-offset: 2px;
-    }
-    .menu-toggle {
-      display: none;
-      background: none;
-      border: none;
-      color: #d1d5db;
-      font-size: 1.5rem;
-      cursor: pointer;
-      padding: 0.5rem;
-      min-height: 44px;
-      min-width: 44px;
-    }
-    .menu-toggle:hover, .menu-toggle:focus {
-      color: #f87171;
-      outline: 2px solid #f87171;
-      outline-offset: 2px;
-    }
-
-    /* Flash Messages */
-    .flash-messages {
-      position: fixed;
-      top: 80px;
-      right: 20px;
-      z-index: 1050;
-      max-width: 400px;
-    }
-    .flash-message {
-      padding: 1rem 1.5rem;
-      margin-bottom: 1rem;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-      animation: slideInRight 0.5s ease-out;
-      position: relative;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-    .flash-message.success {
-      background: #10b981;
-      color: #ffffff;
-      border-left: 4px solid #065f46;
-    }
-    .flash-message.error {
-      background: #ef4444;
-      color: #ffffff;
-      border-left: 4px solid #991b1b;
-    }
-    .flash-message.info {
-      background: #3b82f6;
-      color: #ffffff;
-      border-left: 4px solid #1e40af;
-    }
-    .flash-message.warning {
-      background: #f59e0b;
-      color: #ffffff;
-      border-left: 4px solid #92400e;
-    }
-    .flash-close {
-      background: none;
-      border: none;
-      color: inherit;
-      font-size: 1.2rem;
-      cursor: pointer;
-      padding: 0.25rem;
-      margin-left: auto;
-      opacity: 0.8;
-      transition: opacity 0.3s;
-    }
-    .flash-close:hover {
-      opacity: 1;
-    }
-    .dark-mode .flash-message.success {
-      background: #065f46;
-      border-left-color: #10b981;
-    }
-    .dark-mode .flash-message.error {
-      background: #991b1b;
-      border-left-color: #ef4444;
-    }
-    .dark-mode .flash-message.info {
-      background: #1e40af;
-      border-left-color: #3b82f6;
-    }
-    .dark-mode .flash-message.warning {
-      background: #92400e;
-      border-left-color: #f59e0b;
-    }
-
-    /* Login Section */
-    .login {
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      position: relative;
-      padding: 6rem 2rem 4rem;
-      background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
-      overflow: hidden;
-    }
-    .login::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: url('/static/img/hero-bg.jpg') center/cover no-repeat fixed;
-      z-index: -2;
-      transform: scale(1.1);
-      animation: parallax 30s linear infinite;
-      opacity: 0.3;
-    }
-    .login::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(180deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5));
-      z-index: -1;
-    }
-    .login h2 {
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: #1e293b;
-      margin-bottom: 2rem;
-      animation: fadeInUp 1s ease-out forwards;
-      opacity: 0;
-    }
-    .login form {
-      max-width: 500px;
-      width: 100%;
-      background: #fff;
-      padding: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-      animation: fadeInUp 1.2s ease-out forwards;
-      opacity: 0;
-    }
-    .login label {
-      font-weight: 500;
-      color: #1e293b;
-      display: block;
-      text-align: left;
-      margin-bottom: 0.5rem;
-    }
-    .login input {
-      width: 100%;
-      padding: 1rem;
-      border: 1px solid #d1d5db;
-      border-radius: 8px;
-      font-size: 1rem;
-      transition: border 0.3s, box-shadow 0.3s, transform 0.3s;
-      background: #fff;
-    }
-    .login input:focus {
-      border-color: #f87171;
-      box-shadow: 0 0 8px rgba(248, 113, 113, 0.3);
-      outline: none;
-      transform: scale(1.02);
-    }
-    .login .form-group {
-      margin-bottom: 1.2rem;
-    }
-    .login button {
-      width: 100%;
-      padding: 1rem;
-      background: #f87171;
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
-      min-height: 44px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-    }
-    .login button:hover, .login button:focus {
-      background: #ef4444;
-      transform: scale(0.95);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-      outline: 2px solid #ef4444;
-      outline-offset: 2px;
-    }
-    .login button:disabled {
-      background: #d1d5db;
-      cursor: not-allowed;
-    }
-    .login .error-message {
-      display: block;
-      padding: 1rem;
-      background: #fff;
-      border: 1px solid #dc2626;
-      border-radius: 8px;
-      color: #dc2626;
-      text-align: center;
-      font-size: 1rem;
-      margin-top: 1rem;
-    }
-    .login .success-message {
-      display: block;
-      padding: 1rem;
-      background: #fff;
-      border: 1px solid #34d399;
-      border-radius: 8px;
-      color: #065f46;
-      text-align: center;
-      font-size: 1rem;
-      margin-top: 1rem;
-    }
-    .login .register-link, .login .forgot-password {
-      margin-top: 1.5rem;
-      font-size: 1rem;
-      color: #f87171;
-      font-weight: 500;
-      transition: color 0.3s, transform 0.3s;
-      min-height: 44px;
-      display: inline-flex;
-      align-items: center;
-    }
-    .login .register-link:hover, .login .register-link:focus,
-    .login .forgot-password:hover, .login .forgot-password:focus {
-      color: #ef4444;
-      transform: scale(1.05);
-      outline: 2px solid #ef4444;
-      outline-offset: 2px;
-    }
-    .login .field-error {
-      color: #dc2626;
-      font-size: 0.875rem;
-      margin-top: 0.25rem;
-      display: block;
-    }
-    .login .form-footer {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      align-items: center;
-      margin-top: 1.5rem;
-    }
-    .login .remember-me {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.95rem;
-      color: #6b7280;
-      margin-bottom: 1rem;
-    }
-    .login .remember-me input[type="checkbox"] {
-      width: auto;
-      margin: 0;
-      transform: none;
+      background-image: 
+        radial-gradient(circle at 15% 50%, rgba(99, 102, 241, 0.08), transparent 25%),
+        radial-gradient(circle at 85% 30%, rgba(20, 184, 166, 0.08), transparent 25%);
     }
 
-    /* Back to Top Button */
-    .back-to-top {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #f87171;
-      color: #fff;
-      border: none;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
-      cursor: pointer;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.3s, visibility 0.3s, transform 0.3s;
-      z-index: 1000;
-    }
-    .back-to-top.show {
-      opacity: 1;
-      visibility: visible;
-    }
-    .back-to-top:hover, .back-to-top:focus {
-      background: #ef4444;
-      transform: scale(1.1);
-      outline: 2px solid #ef4444;
-      outline-offset: 2px;
-    }
+    a { text-decoration: none; color: inherit; transition: var(--transition); }
+    ul { list-style: none; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
 
-    /* Footer */
-    footer {
-      text-align: center;
-      padding: 2rem;
-      background: #1e293b;
-      color: #d1d5db;
-      font-size: 0.95rem;
+    /* ------------------ HEADER (IDENTIC CU HOME) ------------------ */
+    header {
+      position: sticky; top: 0; z-index: 1000;
+      background: var(--bg-glass);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      height: 70px;
     }
-    .social-links {
-      margin-top: 1rem;
+    .nav-container { display: flex; justify-content: space-between; align-items: center; height: 100%; }
+    
+    .brand {
+      font-family: var(--font-code); font-weight: 700; font-size: 1.3rem;
+      color: var(--text-main); display: flex; align-items: center; gap: 8px; z-index: 1001;
     }
-    .social-links a {
-      color: #d1d5db;
-      font-size: 1.5rem;
-      margin: 0 0.8rem;
-      transition: color 0.3s, transform 0.3s;
-      min-height: 44px;
-      display: inline-flex;
-      align-items: center;
-    }
-    .social-links a:hover, .social-links a:focus {
-      color: #f87171;
-      transform: scale(1.1);
-      outline: 2px solid #f87171;
-      outline-offset: 2px;
-    }
+    .brand span { color: var(--primary); }
 
-    /* Keyframes */
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
+    .desktop-nav { display: flex; gap: 24px; align-items: center; }
+    .nav-link { font-size: 0.95rem; color: var(--text-muted); font-weight: 500; }
+    .nav-link:hover { color: var(--text-main); }
+
+    /* Butonul de Register din dreapta */
+    .btn-register-nav {
+      font-size: 0.85rem; background: var(--primary); color: white;
+      padding: 8px 16px; border-radius: 6px; font-weight: 600;
     }
-    @keyframes fadeInDown {
-      from { opacity: 0; transform: translateY(-30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes parallax {
-      0% { transform: translateY(0) scale(1.1); }
-      100% { transform: translateY(-100px) scale(1.1); }
-    }
-    @keyframes slideInRight {
-      from { opacity: 1; transform: translateX(100%); }
-      to { opacity: 1; transform: translateX(0); }
+    .btn-register-nav:hover { background: var(--primary-hover); transform: translateY(-1px); }
+
+    .mobile-trigger {
+      display: none; background: none; border: none;
+      color: var(--text-main); font-size: 1.5rem; cursor: pointer; z-index: 1001;
     }
 
     /* Mobile Menu */
-    @media (max-width: 768px) {
-      nav ul {
-        display: none;
-        flex-direction: column;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(44, 62, 80, 0.95));
-        padding: 1rem;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      }
-      nav ul.show {
-        display: flex;
-      }
-      nav a {
-        font-size: 1.1rem;
-        padding: 1rem;
-        width: 100%;
-        text-align: center;
-      }
-      .menu-toggle {
-        display: flex;
-        align-items: center;
-      }
-      .theme-toggle {
-        margin-left: 1rem;
-      }
-      .flash-messages {
-        top: 70px;
-        right: 10px;
-        left: 10px;
-        max-width: none;
-      }
+    .mobile-menu {
+      position: fixed; inset: 0; top: 70px;
+      background: var(--bg-body); padding: 2rem;
+      display: flex; flex-direction: column; gap: 20px;
+      transform: translateX(100%); transition: transform 0.3s ease-in-out;
+      z-index: 999; border-top: 1px solid var(--border);
+    }
+    .mobile-menu.open { transform: translateX(0); }
+    .mobile-link { font-size: 1.2rem; font-weight: 600; padding-bottom: 15px; border-bottom: 1px solid var(--border); }
+
+    /* ------------------ AUTH SECTION ------------------ */
+    .auth-main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
     }
 
-    /* Responsive */
-    @media (max-width: 1024px) {
-      .login h2 { font-size: 2.2rem; }
-      .login form { padding: 1.5rem; }
+    .auth-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 40px;
+      width: 100%;
+      max-width: 450px;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+      animation: fadeUp 0.6s ease-out;
     }
-    @media (max-width: 768px) {
-      header { padding: 0.8rem 1.5rem; }
-      .logo { font-size: 1.6rem; }
-      .login h2 { font-size: 2rem; }
-      .login { padding: 4rem 1.5rem 3rem; }
+
+    .auth-header { text-align: center; margin-bottom: 30px; }
+    .auth-header h1 { font-size: 2rem; margin-bottom: 8px; font-weight: 700; }
+    .auth-header p { color: var(--text-muted); font-size: 0.95rem; }
+
+    .form-group { margin-bottom: 20px; }
+    .form-group label {
+      display: block; margin-bottom: 8px; font-size: 0.9rem; font-weight: 500; color: var(--text-muted);
     }
-    @media (max-width: 480px) {
-      .login { padding: 3rem 1rem; }
-      .login h2 { font-size: 1.8rem; }
-      .login form { padding: 1rem; }
-      .login input, .login button { font-size: 0.95rem; }
-      .login .register-link, .login .forgot-password { font-size: 0.95rem; }
+    
+    .form-control {
+      width: 100%; padding: 12px 16px;
+      background: var(--bg-body); border: 1px solid var(--border);
+      border-radius: 8px; color: var(--text-main); font-family: inherit;
+      transition: var(--transition);
     }
+    .form-control:focus {
+      outline: none; border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+    }
+
+    .btn-submit {
+      width: 100%; padding: 12px;
+      background: var(--primary); color: white; border: none;
+      border-radius: 8px; font-weight: 600; font-size: 1rem;
+      cursor: pointer; transition: var(--transition);
+      margin-top: 10px;
+    }
+    .btn-submit:hover { background: var(--primary-hover); transform: translateY(-2px); }
+
+    .auth-footer {
+      text-align: center; margin-top: 24px; font-size: 0.9rem; color: var(--text-muted);
+    }
+    .auth-footer a { color: var(--primary); font-weight: 500; }
+    .auth-footer a:hover { text-decoration: underline; }
+
+    /* Flash Messages */
+    .flash-container { margin-bottom: 20px; }
+    .alert {
+      padding: 12px 16px; border-radius: 8px; font-size: 0.9rem;
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 10px;
+    }
+    .alert-danger { background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); color: #fca5a5; }
+    .alert-success { background: rgba(20, 184, 166, 0.1); border: 1px solid rgba(20, 184, 166, 0.2); color: #5eead4; }
+    .field-error { color: #ef4444; font-size: 0.85rem; margin-top: 6px; display: block; }
+
+    /* Footer simplu */
+    footer { text-align: center; padding: 20px; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid var(--border); }
+
+    @media (max-width: 900px) {
+      .desktop-nav, .btn-register-nav { display: none; }
+      .mobile-trigger { display: block; }
+    }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
   </style>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      // Smooth scroll and active nav link
-      // Smooth scroll and active nav link
-      const navLinks = document.querySelectorAll('nav a');
-      navLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-          const href = link.getAttribute('href');
-          const isHomePage = window.location.pathname === '/' || window.location.pathname === '/index.html' || window.location.pathname === '';
-          
-          // Verifică dacă e un link intern (ancoră)
-          if (href.startsWith('/#')) {
-            // Dacă SUNTEM pe homepage, facem smooth scroll
-            if (isHomePage) {
-              e.preventDefault(); // Oprește navigarea normală
-              const targetId = href.substring(1); // Ia id-ul (ex: #about)
-              document.querySelector(targetId)?.scrollIntoView({ behavior: 'smooth' });
-            }
-            // Dacă NU suntem pe homepage (ex: /login), NU facem e.preventDefault()
-            // și lăsăm link-ul să ne ducă la /#about (care va încărca homepage-ul și va sări la secțiune)
-          } 
-          // Pentru link-uri normale (ex: /login, /register), nu facem nimic special
-          // (nu apelăm e.preventDefault())
-
-          // Close mobile menu after click
-          const navUl = document.querySelector('nav ul');
-          const menuToggle = document.querySelector('.menu-toggle');
-          if (navUl.classList.contains('show')) {
-            navUl.classList.remove('show');
-            menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
-          }
-        });
-      });// Smooth scroll and active nav link
-      const navLinks = document.querySelectorAll('nav a');
-      navLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-          const href = link.getAttribute('href');
-          const isHomePage = window.location.pathname === '/' || window.location.pathname === '/index.html' || window.location.pathname === '';
-          
-          // Verifică dacă e un link intern (ancoră)
-          if (href.startsWith('/#')) {
-            // Dacă SUNTEM pe homepage, facem smooth scroll
-            if (isHomePage) {
-              e.preventDefault(); // Oprește navigarea normală
-              const targetId = href.substring(1); // Ia id-ul (ex: #about)
-              document.querySelector(targetId)?.scrollIntoView({ behavior: 'smooth' });
-            }
-            // Dacă NU suntem pe homepage (ex: /login), NU facem e.preventDefault()
-            // și lăsăm link-ul să ne ducă la /#about (care va încărca homepage-ul și va sări la secțiune)
-          } 
-          // Pentru link-uri normale (ex: /login, /register), nu facem nimic special
-          // (nu apelăm e.preventDefault())
-
-          // Close mobile menu after click
-          const navUl = document.querySelector('nav ul');
-          const menuToggle = document.querySelector('.menu-toggle');
-          if (navUl.classList.contains('show')) {
-            navUl.classList.remove('show');
-            menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
-          }
-        });
-      });
-
-      // Highlight active nav link
-      const loginLink = document.querySelector('nav a[href="/login"]');
-      if (loginLink) loginLink.classList.add('active');
-
-      // Dark mode toggle
-      const themeToggle = document.querySelector('.theme-toggle');
-      themeToggle.addEventListener('click', () => {
-        document.body.classList.toggle('dark-mode');
-        const isDark = document.body.classList.contains('dark-mode');
-        themeToggle.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
-      });
-
-      // Mobile menu toggle
-      const menuToggle = document.querySelector('.menu-toggle');
-      const navUl = document.querySelector('nav ul');
-      menuToggle.addEventListener('click', () => {
-        navUl.classList.toggle('show');
-        menuToggle.innerHTML = navUl.classList.contains('show') ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
-      });
-
-      // Back to top button
-      const backToTop = document.querySelector('.back-to-top');
-      window.addEventListener('scroll', () => {
-        if (window.scrollY > 300) {
-          backToTop.classList.add('show');
-        } else {
-          backToTop.classList.remove('show');
-        }
-      });
-      backToTop.addEventListener('click', () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      });
-
-      // Flash messages auto-hide and close functionality
-      const flashMessages = document.querySelectorAll('.flash-message');
-      flashMessages.forEach((message, index) => {
-        // Add close button functionality
-        const closeBtn = message.querySelector('.flash-close');
-        if (closeBtn) {
-          closeBtn.addEventListener('click', () => {
-            message.style.animation = 'slideOutRight 0.3s ease-in forwards';
-            setTimeout(() => message.remove(), 300);
-          });
-        }
-
-        // Auto-hide after 5 seconds
-        setTimeout(() => {
-          if (message.parentElement) {
-            message.style.animation = 'slideOutRight 0.3s ease-in forwards';
-            setTimeout(() => message.remove(), 300);
-          }
-        }, 5000 + (index * 100));
-      });
-    });
-
-    // Add slideOutRight animation
-    const style = document.createElement('style');
-    style.textContent = `
-      @keyframes slideOutRight {
-        from { opacity: 1; transform: translateX(0); }
-        to { opacity: 0; transform: translateX(100%); }
-      }
-    `;
-    document.head.appendChild(style);
-  </script>
 </head>
 <body>
-  <!-- Flash Messages -->
-  <div class="flash-messages">
-    {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-        {% for category, message in messages %}
-          <div class="flash-message {{ category }}">
-            <i class="fas fa-{% if category == 'error' %}exclamation-triangle{% elif category == 'success' %}check-circle{% elif category == 'info' %}info-circle{% else %}exclamation-circle{% endif %}"></i>
-            <span>{{ message }}</span>
-            <button class="flash-close" aria-label="Închide mesajul">
-              <i class="fas fa-times"></i>
-            </button>
-          </div>
-        {% endfor %}
-      {% endif %}
-    {% endwith %}
-  </div>
 
   <header>
-    <div class="logo">Iulian A. Ionita</div>
-    <nav>
-      <button class="menu-toggle" aria-label="Deschide meniul"><i class="fas fa-bars"></i></button>
-      <ul>
-        <li><a href="/#home" aria-label="Du-te la secțiunea Acasă">Acasă</a></li>
-        <li><a href="/#about" aria-label="Du-te la secțiunea Despre">Despre</a></li>
-        <li><a href="/#skills" aria-label="Du-te la secțiunea Aptitudini">Aptitudini</a></li>
-        <li><a href="/#portfolio" aria-label="Du-te la secțiunea Portofoliu">Portofoliu</a></li>
-        <li><a href="/#contact" aria-label="Du-te la secțiunea Contact">Contact</a></li>
-        
-        <li><a href="/login" class="active" aria-label="Du-te la pagina de autentificare">Login</a></li>
-        <li><a href="/register" aria-label="Du-te la pagina de înregistrare">Înregistrare</a></li>
-        <li><button class="theme-toggle" aria-label="Comută între modurile de temă"><i class="fas fa-moon"></i></button></li>
-      </ul>
-    </nav>
+    <div class="container nav-container">
+      <a href="/" class="brand">
+        <i class="fa-solid fa-terminal"></i> <span>Iulian</span>.dev
+      </a>
+
+      <nav class="desktop-nav">
+        <a href="/#home" class="nav-link">Acasă</a>
+        <a href="/#about" class="nav-link">Despre</a>
+        <a href="/#skills" class="nav-link">Aptitudini</a>
+        <a href="/#portfolio" class="nav-link">Proiecte</a>
+      </nav>
+
+      <div style="display:flex; align-items:center; gap:15px">
+        <a href="{{ url_for('main.register') }}" class="btn-register-nav">Înregistrare</a>
+        <button class="mobile-trigger" id="mobileTrigger"><i class="fa-solid fa-bars"></i></button>
+      </div>
+    </div>
+
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="/#home" class="mobile-link">Acasă</a>
+      <a href="/#about" class="mobile-link">Despre</a>
+      <a href="/#skills" class="mobile-link">Aptitudini</a>
+      <a href="/#portfolio" class="mobile-link">Proiecte</a>
+      <a href="{{ url_for('main.register') }}" class="mobile-link" style="color:var(--primary)">Creează Cont</a>
+    </div>
   </header>
 
-  <!-- Login Section -->
-  <section class="login">
-    <h2>Autentificare</h2>
-    <form action="/login" method="post">
-      {{ form.hidden_tag() }} <!-- Includes CSRF token -->
-
-      <div class="form-group">
-        <label for="username">{{ form.username.label }}</label>
-        {{ form.username(id="username", placeholder="Nume de utilizator", required=True) }}
-        {% if form.username.errors %}
-          <span class="field-error">{{ form.username.errors[0] }}</span>
-        {% endif %}
+  <main class="auth-main">
+    <div class="auth-card">
+      <div class="auth-header">
+        <h1>Bine ai revenit!</h1>
+        <p>Autentifică-te pentru a continua.</p>
       </div>
 
-      <div class="form-group">
-        <label for="password">{{ form.password.label }}</label>
-        {{ form.password(id="password", placeholder="Parolă", required=True) }}
-        {% if form.password.errors %}
-          <span class="field-error">{{ form.password.errors[0] }}</span>
-        {% endif %}
+      <div class="flash-container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert alert-{{ category }}">
+                <i class="fa-solid fa-circle-info"></i> {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
       </div>
 
+      <form action="" method="POST">
+        {{ form.hidden_tag() }}
+        
+        <div class="form-group">
+          <label for="username">Utilizator</label>
+          {{ form.username(class="form-control", placeholder="Introdu utilizatorul", id="username") }}
+          {% for error in form.username.errors %}
+            <span class="field-error">{{ error }}</span>
+          {% endfor %}
+        </div>
 
+        <div class="form-group">
+          <label for="password">Parolă</label>
+          {{ form.password(class="form-control", placeholder="Introdu parola", id="password") }}
+          {% for error in form.password.errors %}
+            <span class="field-error">{{ error }}</span>
+          {% endfor %}
+        </div>
 
-      {{ form.submit(class="submit-button") }}
-    </form>
-    
-    <div class="form-footer">
-      <a href="/forgot-password" class="forgot-password" aria-label="Du-te la pagina de resetare parolă">Ai uitat parola?</a>
-      <a href="/register" class="register-link" aria-label="Du-te la pagina de înregistrare">Nu ai cont? Înregistrează-te</a>
+        <button type="submit" class="btn-submit">Autentificare</button>
+      </form>
+
+      <div class="auth-footer">
+        Nu ai cont? <a href="{{ url_for('main.register') }}">Înregistrează-te acum</a>
+      </div>
     </div>
-  </section>
+  </main>
 
   <footer>
-    <p>© <script>document.write(new Date().getFullYear());</script> Iulian A. Ionita. Toate drepturile rezervate.</p>
-    <div class="social-links">
-      <a href="https://linkedin.com/in/iulian-ionita" target="_blank" aria-label="Profil LinkedIn"><i class="fab fa-linkedin"></i></a>
-      <a href="https://github.com/iulian-ionita" target="_blank" aria-label="Profil GitHub"><i class="fab fa-github"></i></a>
-      <a href="mailto:iulian.ionita@example.com" aria-label="Trimite email"><i class="fas fa-envelope"></i></a>
-    </div>
+    © <script>document.write(new Date().getFullYear())</script> Iulian A. Ioniță
   </footer>
 
-  <button class="back-to-top" aria-label="Înapoi sus"><i class="fas fa-arrow-up"></i></button>
+  <script>
+    // Mobile Menu Logic
+    const hamburger = document.getElementById('mobileTrigger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const icon = hamburger.querySelector('i');
+
+    hamburger.addEventListener('click', () => {
+      const isOpen = mobileMenu.classList.toggle('open');
+      icon.classList = isOpen ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
+    });
+  </script>
 </body>
 </html>
