@@ -5,3 +5,12 @@ instance/
 *.sqlite
 .env
 .ruff_cache
+*.tfstate
+*.tfstate.*
+*.tfstate.backup
+*.tfvars
+*.auto.tfvars
+.terraform/
+.terraform.lock.hcl
+crash.log
+.terraform/
