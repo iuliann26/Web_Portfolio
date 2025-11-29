@@ -6,7 +6,7 @@
 ![Terraform](https://img.shields.io/badge/terraform-%235835CC.svg?style=for-the-badge&logo=terraform&logoColor=white)
 [![CI/CD Pipeline](https://github.com/[USER_TAU]/[NUME_REPO]/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/[USER_TAU]/[NUME_REPO]/actions)
 
-> **Live Demo:** [https://[NUME-APP].azurewebsites.net](https://[NUME-APP].azurewebsites.net)
+> **Live Demo:** [https://portofoliu-iulian.azurewebsites.net](https://portofoliu-iulian.azurewebsites.net)
 
 ## 📖 Despre Proiect
 
@@ -75,3 +75,6 @@ resource "azurerm_linux_web_app" "webapp" {
     }
   }
 }
+
+
+
