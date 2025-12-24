@@ -905,57 +905,82 @@
 
         <div class="devops-showcase">
           <h3>
-            <i class="fa-brands fa-python"></i> Website Personal - Arhitectură DevOps
-            <span class="tech-tag" style="margin-left:auto; background:rgba(255,255,255,0.1)">Featured</span>
+            <i class="fa-brands fa-python"></i> Cloud-Native & IaC Architecture
+            
+            <span class="tech-tag" style="margin-left:auto; background:rgba(99, 102, 241, 0.2); color:#fff; border:1px solid var(--primary);">Terraform Added</span>
           </h3>
           <p style="margin-bottom: 20px; color: var(--text-muted);">
-            O implementare completă a unui ciclu de dezvoltare software modern, folosind Python (Flask), Docker și Azure.
-            Mai jos este detaliat fluxul de lucru automatizat (Pipeline).
+            O soluție completă "from code to cloud". Infrastructura este provizionată automat cu <strong>Terraform</strong>, iar aplicația este livrată continuu prin <strong>GitHub Actions</strong>.
           </p>
           
-
-
+          
+          
 
           <div class="accordion">
+            
+            
             <div class="acc-item">
               <div class="acc-header">
-                <span>1. CI/CD Pipeline (GitHub Actions)</span>
+                <span>1. Infrastructure as Code (Terraform)</span>
+                <i class="fa-solid fa-chevron-down acc-icon"></i>
+              </div>
+              <div class="acc-content">
+                <p>
+                  Întreaga infrastructură Azure (Resource Group, SQL Server, Web App, Firewall) este definită în cod (HCL). 
+                  Folosesc <code>terraform plan</code> și <code>apply</code> pentru a gestiona starea resurselor, eliminând configurarea manuală și erorile umane.
+                </p>
+              </div>
+            </div>
+
+            
+            <div class="acc-item">
+              <div class="acc-header">
+                <span>2. CI/CD Pipeline (GitHub Actions)</span>
                 <i class="fa-solid fa-chevron-down acc-icon"></i>
               </div>
               <div class="acc-content">
                 <p>La fiecare <code>push</code> pe ramura <code>main</code>, un workflow automatizat este declanșat. Acesta rulează teste unitare (Pytest), verifică stilul codului și, dacă totul trece, inițiază procesul de build.</p>
               </div>
             </div>
+
+            
             <div class="acc-item">
               <div class="acc-header">
-                <span>2. Quality Assurance & Linting</span>
+                <span>3. Quality Assurance & Linting</span>
                 <i class="fa-solid fa-chevron-down acc-icon"></i>
               </div>
               <div class="acc-content">
                 <p>Calitatea codului este asigurată prin <strong>Ruff</strong> și <strong>Black</strong>. Pipeline-ul blochează deploy-ul dacă standardele de stil sau sintaxă nu sunt respectate (Quality Gates).</p>
               </div>
             </div>
+
+            
             <div class="acc-item">
               <div class="acc-header">
-                <span>3. Containerizare & Registry</span>
+                <span>4. Containerizare & Registry</span>
                 <i class="fa-solid fa-chevron-down acc-icon"></i>
               </div>
               <div class="acc-content">
-                <p>Aplicația este împachetată într-un container <strong>Docker</strong> "ușor" (Alpine/Slim). Imaginea este apoi urcată securizat în <strong>Azure Container Registry (ACR)</strong>.</p>
+                <p>Aplicația este împachetată într-un container <strong>Docker</strong> "ușor" (Alpine/Slim), optimizat cu drivere ODBC pentru SQL. Imaginea este versionată și stocată în <strong>Azure Container Registry (ACR)</strong>.</p>
               </div>
             </div>
+
+          
             <div class="acc-item">
               <div class="acc-header">
-                <span>4. Secrete & Configurare</span>
+                <span>5. Security & Configuration</span>
                 <i class="fa-solid fa-chevron-down acc-icon"></i>
               </div>
               <div class="acc-content">
-                <p>Datele sensibile (chei API, parole DB) nu sunt niciodată hardcodate. Ele sunt injectate în timpul execuției folosind <strong>GitHub Secrets</strong> și variabile de mediu (Environment Variables) în Azure App Service.</p>
+                <p>
+                  Datele sensibile (Connection Strings, Parole) sunt injectate securizat la runtime. 
+                  Accesul la baza de date este securizat prin reguli stricte de Firewall gestionate acum prin Terraform.
+                </p>
               </div>
             </div>
+
           </div>
         </div>
-
         <div class="portfolio-controls">
           <div class="filter-group">
             <button class="filter-btn active" data-filter="all">Toate</button>
