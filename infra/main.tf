@@ -88,6 +88,10 @@ resource "azurerm_linux_web_app" "webapp" {
     "DOCKER_REGISTRY_SERVER_URL"      = "https://${azurerm_container_registry.acr.login_server}"
     "DOCKER_REGISTRY_SERVER_USERNAME" = azurerm_container_registry.acr.admin_username
     "DOCKER_REGISTRY_SERVER_PASSWORD" = azurerm_container_registry.acr.admin_password
+
+    "APPINSIGHTS_INSTRUMENTATIONKEY"        = azurerm_application_insights.appinsights.instrumentation_key
+    "APPLICATIONINSIGHTS_CONNECTION_STRING" = azurerm_application_insights.appinsights.connection_string
+    "ApplicationInsightsAgent_EXTENSION_VERSION" = "~3"
   }
   
   lifecycle {
@@ -97,6 +101,28 @@ resource "azurerm_linux_web_app" "webapp" {
       app_settings["DOCKER_CUSTOM_IMAGE_NAME"] 
     ]
   }
+  
 
   tags = local.common_tags
+}
+# 8. Log Analytics Workspace (where data si stored)
+resource "azurerm_log_analytics_workspace" "logs" {
+  name                = "logs-${var.web_app_name}"  
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  sku                 = "PerGB2018"
+  retention_in_days   = 30
+  
+  tags                = local.common_tags
+}
+
+# 9. Application Insights (Monitoring brain)
+resource "azurerm_application_insights" "appinsights" {
+  name                = "appinsights-${var.web_app_name}"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  workspace_id        = azurerm_log_analytics_workspace.logs.id
+  application_type    = "web"
+  
+  tags                = local.common_tags
 }
