@@ -67,4 +67,3 @@ jobs:
           #  { "name": "DATABASE_URL", "value": "${{ secrets.DATABASE_URL }}", "slotSetting": false },
            # { "name": "SECRET_KEY", "value": "${{ secrets.SECRET_KEY }}", "slotSetting": false }
           #]
-            
