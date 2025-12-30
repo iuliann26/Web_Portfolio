@@ -15,5 +15,3 @@ WTForms==3.2.1
 pyodbc
 gunicorn
 email_validator
-opencensus-ext-azure
-opencensus-ext-flask
