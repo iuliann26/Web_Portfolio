@@ -1,0 +1,51 @@
+# =============================================================================
+# TERRAFORM VARIABLE DEFINITIONS - TEMPLATE
+# =============================================================================
+# Instructions:
+# 1. Copy this file to a new file named 'terraform.tfvars'.
+# 2. The 'terraform.tfvars' file is ignored by Git to protect your configuration.
+# 3. Replace the placeholder values below with your actual infrastructure names.
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# 1. General Infrastructure Scope
+# -----------------------------------------------------------------------------
+resource_group_name = "rg-portfolio-dev"
+location            = "West Europe"      # Primary region for Compute (App Service)
+sql_location        = "East US"          # Specific region for SQL (due to subscription policy)
+
+# -----------------------------------------------------------------------------
+# 2. Container Registry (ACR)
+# -----------------------------------------------------------------------------
+# Note: Must be globally unique, lowercase, alphanumeric only.
+acr_name = "acrportfolioexample"
+
+# -----------------------------------------------------------------------------
+# 3. Compute Resources (App Service)
+# -----------------------------------------------------------------------------
+app_service_plan_name = "asp-portfolio-linux"
+web_app_name          = "app-portfolio-unique-id" # Will become: https://<name>.azurewebsites.net
+
+# -----------------------------------------------------------------------------
+# 4. Data Persistence (SQL)
+# -----------------------------------------------------------------------------
+# Note: Server name must be globally unique in Azure.
+sql_server_name = "sql-server-portfolio-unique"
+sql_db_name     = "sqldb-portfolio-main"
+sql_admin_user  = "sqladminuser"
+
+# -----------------------------------------------------------------------------
+# 5. Secrets & Security
+# -----------------------------------------------------------------------------
+# SECURITY WARNING: 
+# Do not uncomment or set the password here if you plan to commit this file.
+#
+# Best Practice (Local Development):
+# Set the password using an environment variable in your terminal:
+#   Linux/Mac: export TF_VAR_sql_admin_password="YourStrongPassword!"
+#   Windows:   $env:TF_VAR_sql_admin_password="YourStrongPassword!"
+#
+# Best Practice (CI/CD):
+# Use GitHub Secrets to inject this value.
+
+# sql_admin_password = "CHANGE_THIS_IN_ENV_VAR"
