@@ -54,7 +54,7 @@ def test_homepage_contains_greeting(client):
     """
     response = client.get('/')
     # 'b' prefix denotes a byte string, as response.data is in bytes
-    assert b"DevOps Engineer" in response.data 
+    assert b"Cloud & DevOps" in response.data 
 
 def test_login_page_loads_successfully(client):
     """
