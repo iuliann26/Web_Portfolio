@@ -2,35 +2,43 @@
 <html lang="ro">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
   <meta name="description" content="Autentificare - Portofoliu Iulian A. Ioniță" />
   <meta name="theme-color" content="#0f172a">
   <title>Autentificare | Iulian A. Ioniță</title>
 
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" />
 
   <style>
-    /* ------------------ MODERN DESIGN SYSTEM (SHARED) ------------------ */
+    /* ------------------ MODERN DESIGN SYSTEM ------------------ */
     :root {
-      --bg-body: #0f172a;
-      --bg-card: #1e293b;
-      --bg-glass: rgba(15, 23, 42, 0.85);
+      --bg-body: #0f172a;       /* Slate 900 */
+      --bg-card: #1e293b;       /* Slate 800 */
+      --bg-glass: rgba(15, 23, 42, 0.95);
+      
       --text-main: #f1f5f9;
       --text-muted: #94a3b8;
-      --primary: #6366f1;
+      
+      --primary: #6366f1;       /* Indigo 500 */
       --primary-hover: #4f46e5;
-      --accent: #14b8a6;
+      --accent: #14b8a6;        /* Teal 400 */
+      
       --border: rgba(255, 255, 255, 0.1);
       --radius: 12px;
-      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      
       --font-main: 'Inter', sans-serif;
       --font-code: 'Fira Code', monospace;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
     
-    body {
+    html, body {
+      width: 100%;
+      overflow-x: hidden;
       font-family: var(--font-main);
       background-color: var(--bg-body);
       color: var(--text-main);
@@ -38,16 +46,19 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+    }
+
+    body {
       background-image: 
         radial-gradient(circle at 15% 50%, rgba(99, 102, 241, 0.08), transparent 25%),
         radial-gradient(circle at 85% 30%, rgba(20, 184, 166, 0.08), transparent 25%);
     }
 
-    a { text-decoration: none; color: inherit; transition: var(--transition); }
+    a { text-decoration: none; color: inherit; transition: 0.3s ease; }
     ul { list-style: none; }
-    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 
-    /* ------------------ HEADER (IDENTIC CU HOME) ------------------ */
+    /* ------------------ HEADER UNIFICAT ------------------ */
     header {
       position: sticky; top: 0; z-index: 1000;
       background: var(--bg-glass);
@@ -58,60 +69,64 @@
     .nav-container { display: flex; justify-content: space-between; align-items: center; height: 100%; }
     
     .brand {
-      font-family: var(--font-code); font-weight: 700; font-size: 1.3rem;
+      font-family: var(--font-code); font-weight: 700; font-size: 1.2rem;
       color: var(--text-main); display: flex; align-items: center; gap: 8px; z-index: 1001;
     }
     .brand span { color: var(--primary); }
 
+    /* Desktop Elements */
     .desktop-nav { display: flex; gap: 24px; align-items: center; }
     .nav-link { font-size: 0.95rem; color: var(--text-muted); font-weight: 500; }
     .nav-link:hover { color: var(--text-main); }
-
-    /* Butonul de Register din dreapta */
+    
+    .desktop-actions { display: flex; gap: 16px; align-items: center; }
+    
     .btn-register-nav {
       font-size: 0.85rem; background: var(--primary); color: white;
       padding: 8px 16px; border-radius: 6px; font-weight: 600;
+      transition: all 0.2s;
     }
     .btn-register-nav:hover { background: var(--primary-hover); transform: translateY(-1px); }
 
+    /* Mobile Elements */
     .mobile-trigger {
       display: none; background: none; border: none;
-      color: var(--text-main); font-size: 1.5rem; cursor: pointer; z-index: 1001;
+      color: var(--text-main); font-size: 1.5rem; cursor: pointer; padding: 5px; z-index: 1001;
     }
 
-    /* Mobile Menu */
     .mobile-menu {
       position: fixed; inset: 0; top: 70px;
-      background: var(--bg-body); padding: 2rem;
+      background: var(--bg-body); padding: 24px;
       display: flex; flex-direction: column; gap: 20px;
       transform: translateX(100%); transition: transform 0.3s ease-in-out;
       z-index: 999; border-top: 1px solid var(--border);
+      height: calc(100vh - 70px); overflow-y: auto;
     }
     .mobile-menu.open { transform: translateX(0); }
-    .mobile-link { font-size: 1.2rem; font-weight: 600; padding-bottom: 15px; border-bottom: 1px solid var(--border); }
-
-    /* ------------------ AUTH SECTION ------------------ */
-    .auth-main {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 40px 20px;
+    .mobile-link { font-size: 1.2rem; font-weight: 600; padding-bottom: 15px; border-bottom: 1px solid var(--border); display: block; }
+    
+    .mobile-auth-footer { margin-top: auto; padding-top: 20px; }
+    .btn-mobile-full {
+      display: flex; justify-content: center; align-items: center; width: 100%; padding: 12px;
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 8px; font-weight: 600; margin-bottom: 12px; font-size: 1rem;
     }
+    .btn-mobile-full.primary { background: var(--primary); color: white; border: none; }
 
+
+    /* ------------------ AUTH CARD ------------------ */
+    .auth-main {
+      flex: 1; display: flex; align-items: center; justify-content: center; padding: 40px 20px;
+    }
     .auth-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 40px;
-      width: 100%;
-      max-width: 450px;
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 40px;
+      width: 100%; max-width: 450px;
       box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
       animation: fadeUp 0.6s ease-out;
     }
-
     .auth-header { text-align: center; margin-bottom: 30px; }
-    .auth-header h1 { font-size: 2rem; margin-bottom: 8px; font-weight: 700; }
+    .auth-header h1 { font-size: 1.8rem; margin-bottom: 8px; font-weight: 700; color: var(--text-main); }
     .auth-header p { color: var(--text-muted); font-size: 0.95rem; }
 
     .form-group { margin-bottom: 20px; }
@@ -120,21 +135,14 @@
     }
     
     .form-control {
-      width: 100%; padding: 12px 16px;
-      background: var(--bg-body); border: 1px solid var(--border);
-      border-radius: 8px; color: var(--text-main); font-family: inherit;
-      transition: var(--transition);
+      width: 100%; padding: 12px 16px; background: var(--bg-body); border: 1px solid var(--border);
+      border-radius: 8px; color: var(--text-main); font-family: inherit; transition: var(--transition);
     }
-    .form-control:focus {
-      outline: none; border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
-    }
+    .form-control:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2); }
 
     .btn-submit {
-      width: 100%; padding: 12px;
-      background: var(--primary); color: white; border: none;
-      border-radius: 8px; font-weight: 600; font-size: 1rem;
-      cursor: pointer; transition: var(--transition);
+      width: 100%; padding: 12px; background: var(--primary); color: white; border: none;
+      border-radius: 8px; font-weight: 600; font-size: 1rem; cursor: pointer; transition: var(--transition);
       margin-top: 10px;
     }
     .btn-submit:hover { background: var(--primary-hover); transform: translateY(-2px); }
@@ -149,53 +157,76 @@
     .flash-container { margin-bottom: 20px; }
     .alert {
       padding: 12px 16px; border-radius: 8px; font-size: 0.9rem;
-      display: flex; align-items: center; gap: 10px;
-      margin-bottom: 10px;
+      display: flex; align-items: center; gap: 10px; margin-bottom: 10px;
     }
     .alert-danger { background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); color: #fca5a5; }
     .alert-success { background: rgba(20, 184, 166, 0.1); border: 1px solid rgba(20, 184, 166, 0.2); color: #5eead4; }
     .field-error { color: #ef4444; font-size: 0.85rem; margin-top: 6px; display: block; }
 
-    /* Footer simplu */
-    footer { text-align: center; padding: 20px; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid var(--border); }
+    /* Footer */
+    footer { text-align: center; padding: 30px 20px; color: var(--text-muted); font-size: 0.9rem; border-top: 1px solid var(--border); }
 
+    /* --- RESPONSIVE LOGIC --- */
     @media (max-width: 900px) {
-      .desktop-nav, .btn-register-nav { display: none; }
+      .desktop-nav, .desktop-actions { display: none !important; }
       .mobile-trigger { display: block; }
+      .nav { height: 60px; }
+      .mobile-menu { top: 60px; height: calc(100vh - 60px); }
     }
+
+    @media (min-width: 901px) {
+      .mobile-menu { display: none !important; }
+    }
+
     @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
   </style>
 </head>
 <body>
 
+  <!-- HEADER -->
   <header>
     <div class="container nav-container">
       <a href="/" class="brand">
         <i class="fa-solid fa-terminal"></i> <span>Iulian</span>.dev
       </a>
 
+      <!-- Desktop Nav -->
       <nav class="desktop-nav">
         <a href="/#home" class="nav-link">Acasă</a>
         <a href="/#about" class="nav-link">Despre</a>
         <a href="/#skills" class="nav-link">Aptitudini</a>
         <a href="/#portfolio" class="nav-link">Proiecte</a>
+        <a href="/#contact" class="nav-link">Contact</a>
       </nav>
 
-      <div style="display:flex; align-items:center; gap:15px">
+      <!-- Desktop Actions -->
+      <div class="desktop-actions">
+        <!-- Pe Login arătăm butonul de Register -->
         <a href="{{ url_for('main.register') }}" class="btn-register-nav">Înregistrare</a>
-        <button class="mobile-trigger" id="mobileTrigger"><i class="fa-solid fa-bars"></i></button>
       </div>
+
+      <!-- Mobile Trigger -->
+      <button class="mobile-trigger" id="mobileTrigger" aria-label="Menu">
+        <i class="fa-solid fa-bars"></i>
+      </button>
     </div>
 
+    <!-- Mobile Menu Drawer -->
     <div class="mobile-menu" id="mobileMenu">
       <a href="/#home" class="mobile-link">Acasă</a>
       <a href="/#about" class="mobile-link">Despre</a>
       <a href="/#skills" class="mobile-link">Aptitudini</a>
       <a href="/#portfolio" class="mobile-link">Proiecte</a>
-      <a href="{{ url_for('main.register') }}" class="mobile-link" style="color:var(--primary)">Creează Cont</a>
+      <a href="/#contact" class="mobile-link">Contact</a>
+      
+      <div class="mobile-auth-footer">
+        <a href="#" class="btn-mobile-full primary">Autentificare (Activ)</a>
+        <a href="{{ url_for('main.register') }}" class="btn-mobile-full">Creează Cont</a>
+      </div>
     </div>
   </header>
 
+  <!-- LOGIN FORM -->
   <main class="auth-main">
     <div class="auth-card">
       <div class="auth-header">
@@ -239,23 +270,38 @@
 
       <div class="auth-footer">
         Nu ai cont? <a href="{{ url_for('main.register') }}">Înregistrează-te acum</a>
+        <br>
+        <a href="#" style="font-size:0.85rem; margin-top:5px; display:inline-block;">Ai uitat parola?</a>
       </div>
     </div>
   </main>
 
   <footer>
-    © <script>document.write(new Date().getFullYear())</script> Iulian A. Ioniță
+    <div class="container">
+      <p>© <script>document.write(new Date().getFullYear())</script> Iulian A. Ioniță. Toate drepturile rezervate.</p>
+    </div>
   </footer>
 
   <script>
     // Mobile Menu Logic
-    const hamburger = document.getElementById('mobileTrigger');
-    const mobileMenu = document.getElementById('mobileMenu');
-    const icon = hamburger.querySelector('i');
+    const btn = document.getElementById('mobileTrigger');
+    const menu = document.getElementById('mobileMenu');
+    const icon = btn.querySelector('i');
+    const body = document.body;
 
-    hamburger.addEventListener('click', () => {
-      const isOpen = mobileMenu.classList.toggle('open');
+    btn.addEventListener('click', () => {
+      const isOpen = menu.classList.toggle('open');
       icon.classList = isOpen ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
+      body.style.overflow = isOpen ? 'hidden' : ''; // Blochează scroll-ul paginii
+    });
+
+    // Închide meniul la click pe link
+    document.querySelectorAll('.mobile-link, .btn-mobile-full').forEach(l => {
+      l.addEventListener('click', () => {
+        menu.classList.remove('open');
+        body.style.overflow = '';
+        icon.classList = 'fa-solid fa-bars';
+      });
     });
   </script>
 </body>

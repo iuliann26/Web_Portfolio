@@ -43,15 +43,22 @@
 
     /* Reset & Base */
     *, *::before, *::after { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    
+    html { 
+      scroll-behavior: smooth; 
+      overflow-x: hidden; /* OPREȘTE SCROLL ORIZONTAL */
+    }
+
     body {
       margin: 0;
       font-family: var(--font-main);
       background-color: var(--bg-body);
       color: var(--text-main);
       line-height: 1.7;
-      overflow-x: hidden;
+      
+      width: 100%;
+      position: relative;
+      overflow-x: hidden; /* DUBLĂ SIGURANȚĂ */
+
       background-image: 
         radial-gradient(circle at 15% 50%, rgba(99, 102, 241, 0.08), transparent 25%),
         radial-gradient(circle at 85% 30%, rgba(20, 184, 166, 0.08), transparent 25%);
@@ -656,60 +663,155 @@
        2. MEDIA QUERIES (MOBIL - Ecrane sub 900px)
        ========================================= */
     @media (max-width: 900px) {
-      
-      /* A. ASCUNDE ELEMENTELE DE DESKTOP */
+      /* 1. Ascunde elementele de Desktop */
       .desktop-menu, 
-      .desktop-actions {
+      .desktop-actions,
+      .btn-login-nav,
+      .btn-login,      /* Ascunde butoanele de login desktop */
+      .btn-register {  /* Ascunde butoanele de register desktop */
         display: none !important;
       }
 
-      /* B. AFIȘEAZĂ ELEMENTELE DE MOBIL */
-      
-      /* 1. Butonul Hamburger */
+      /* 2. Afișează elementele de Mobil */
       .mobile-trigger {
-        display: block; /* Îl facem vizibil */
+        display: block !important;
+        font-size: 1.5rem;
+        background: none;
+        border: none;
+        color: var(--text-main);
+        cursor: pointer;
+      }
+      
+      /* Afișează userul în header pe mobil (dacă există) */
+      .mobile-user-header {
+        display: inline-block !important;
+        font-size: 0.85rem;
+        color: var(--accent);
+        margin-right: 10px;
+        font-weight: 600;
       }
 
-      /* 2. Meniul Mobil (Sertarul) */
+      /* 3. Layout Compact (O singură coloană) */
+      .skills-grid, 
+      .projects-grid, 
+      .stats-grid, 
+      .about-grid,
+      .cta-group {
+        grid-template-columns: 1fr !important; /* Forțează o coloană */
+        flex-direction: column;
+        width: 100%;
+      }
+      
+      /* Ajustări Hero și Container */
+      .hero { min-height: auto; padding: 60px 0; }
+      .container { padding: 0 16px; }
+      h1 { font-size: 2rem; }
+      .btn { width: 100%; justify-content: center; }
+
+      /* 4. Meniul Sertar (Drawer) */
       .mobile-menu {
-        display: flex; /* Îl facem vizibil structural */
+        display: flex; /* Îl face vizibil structural */
         position: fixed; 
         inset: 0; 
-        top: 70px; /* Sub header */
+        top: 70px; 
         background: var(--bg-body);
         padding: 24px;
         flex-direction: column; 
         gap: 20px;
         
-        /* Animația de slide */
-        transform: translateX(100%); /* Ascuns în dreapta ecranului */
+        transform: translateX(100%); 
         transition: transform 0.3s ease-in-out;
-        
         z-index: 999;
         border-top: 1px solid var(--border);
-        overflow-y: auto; /* Permite scroll în meniu dacă e prea înalt */
+        height: calc(100vh - 70px);
+        overflow-y: auto;
       }
 
-      /* Clasa .open este adăugată de JavaScript când dai click */
       .mobile-menu.open {
-        transform: translateX(0); /* Îl aduce în ecran */
+        transform: translateX(0);
       }
 
-      /* Stiluri link-uri mobil */
       .mobile-menu a {
         font-size: 1.2rem;
-        border-bottom: 1px solid var(--border);
         padding-bottom: 10px;
         display: block;
+        border-bottom: 1px solid var(--border);
+      }
+    }@media (max-width: 900px) {
+      /* 1. Ascunde elementele de Desktop */
+      .desktop-menu, 
+      .desktop-actions,
+      .btn-login-nav,
+      .btn-login,      /* Ascunde butoanele de login desktop */
+      .btn-register {  /* Ascunde butoanele de register desktop */
+        display: none !important;
       }
 
-      /* C. AJUSTĂRI DE ASPECT PENTRU MOBIL */
-      .nav { height: 60px; }
-      .mobile-menu { top: 60px; } /* Ajustăm top-ul dacă headerul e mai mic */
+      /* 2. Afișează elementele de Mobil */
+      .mobile-trigger {
+        display: block !important;
+        font-size: 1.5rem;
+        background: none;
+        border: none;
+        color: var(--text-main);
+        cursor: pointer;
+      }
       
-      .about-grid { grid-template-columns: 1fr; text-align: center; }
-      .profile-img-wrapper { max-width: 300px; margin: 0 auto; }
-      .hero { min-height: 80vh; padding-top: 80px; }
+      /* Afișează userul în header pe mobil (dacă există) */
+      .mobile-user-header {
+        display: inline-block !important;
+        font-size: 0.85rem;
+        color: var(--accent);
+        margin-right: 10px;
+        font-weight: 600;
+      }
+
+      /* 3. Layout Compact (O singură coloană) */
+      .skills-grid, 
+      .projects-grid, 
+      .stats-grid, 
+      .about-grid,
+      .cta-group {
+        grid-template-columns: 1fr !important; /* Forțează o coloană */
+        flex-direction: column;
+        width: 100%;
+      }
+      
+      /* Ajustări Hero și Container */
+      .hero { min-height: auto; padding: 60px 0; }
+      .container { padding: 0 16px; }
+      h1 { font-size: 2rem; }
+      .btn { width: 100%; justify-content: center; }
+
+      /* 4. Meniul Sertar (Drawer) */
+      .mobile-menu {
+        display: flex; /* Îl face vizibil structural */
+        position: fixed; 
+        inset: 0; 
+        top: 70px; 
+        background: var(--bg-body);
+        padding: 24px;
+        flex-direction: column; 
+        gap: 20px;
+        
+        transform: translateX(100%); 
+        transition: transform 0.3s ease-in-out;
+        z-index: 999;
+        border-top: 1px solid var(--border);
+        height: calc(100vh - 70px);
+        overflow-y: auto;
+      }
+
+      .mobile-menu.open {
+        transform: translateX(0);
+      }
+
+      .mobile-menu a {
+        font-size: 1.2rem;
+        padding-bottom: 10px;
+        display: block;
+        border-bottom: 1px solid var(--border);
+      }
     }
 
     /* =========================================
@@ -784,15 +886,15 @@
     <section id="home" class="hero reveal">
       <div class="container">
         <div class="hero-content">
-          <h1>DevOps Engineer &<br>Cloud Automation Specialist</h1>
+          <h1>Cloud & DevOps Enthusiast<br>Powered by Engineering</h1>
           
           <div class="typing-wrapper">
             <span id="typingText"></span>
           </div>
           
           <p>
-            Proiectez infrastructură scalabilă și sigură pe Azure. <br>
-            Transform cunoștințele de inginerie în sisteme software automatizate și eficiente.
+            Transform curiozitatea tehnică în sisteme funcționale. <br>
+            Învăț activ Terraform, Docker și CI/CD transformând proiecte locale în arhitecturi Cloud scalabile.
           </p>
           
           <div class="cta-group">
@@ -814,17 +916,17 @@
               <h2>Despre Mine</h2>
             </div>
             <p style="color: var(--text-muted); margin-bottom: 24px;">
-              Sunt student la Mecatronică și Robotică (UPB) pasionat de intersecția dintre hardware și software. 
-              Îmi folosesc background-ul tehnic pentru a aborda probleme complexe de infrastructură, trecând de la sisteme fizice la cloud computing și automatizare software.
+              Sunt student în an terminal (Anul 4) la Mecatronică și Robotică (UPB), cu o tranziție activă și pasionată către Cloud Engineering. Aplic rigoarea ingineriei sistemelor fizice în arhitecturi software distribuite.
             </p>
+            Nu mă mulțumesc doar să scriu cod; vreau să înțeleg și să automatizez infrastructura pe care acesta rulează. Învăț prin practică ("learning by doing"), construind medii complexe în Azure și rezolvând problemele reale care apar la intersecția dintre Dev și Ops.
             
             <div class="stats-grid">
               <div class="stat-card">
-                <span class="stat-number" data-target="35">0</span>
+                <span class="stat-number" data-target="3">0</span>
                 <span class="stat-label">Proiecte Automate</span>
               </div>
               <div class="stat-card">
-                <span class="stat-number" data-target="15">0</span>
+                <span class="stat-number" data-target="4">0</span>
                 <span class="stat-label">Repo-uri GitHub</span>
               </div>
               <div class="stat-card">
@@ -832,8 +934,8 @@
                 <span class="stat-label">Pasiune</span>
               </div>
               <div class="stat-card">
-                <span class="stat-number">24/7</span>
-                <span class="stat-label">Uptime Mental</span>
+                <span class="stat-number">2025</span>
+                <span class="stat-label">Absolvire</span>
               </div>
             </div>
           </div>
@@ -852,7 +954,10 @@
           <div class="skill-card">
             <h3><i class="fa-solid fa-infinity" style="color:var(--accent)"></i> DevOps & CI/CD</h3>
             <div class="tags-container">
+              <span class="tech-tag">Pytest (Automated Testing)</span>
+              <span class="tech-tag">Gunicorn</span>
               <span class="tech-tag">GitHub Actions</span>
+              <span class="tech-tag">GitOps Principles</span>
               <span class="tech-tag">Docker</span>
               <span class="tech-tag">Containerization</span>
               <span class="tech-tag">Linting (Ruff/Black)</span>
@@ -863,7 +968,10 @@
           <div class="skill-card">
             <h3><i class="fa-solid fa-cloud" style="color:var(--primary)"></i> Cloud & IaC</h3>
             <div class="tags-container">
+              <span class="tech-tag">Terraform (HCL & State Mgmt)</span>
+              <span class="tech-tag">AAzure CLI</span>
               <span class="tech-tag">Azure Web Apps</span>
+              <span class="tech-tag">PaaS Architecture</span>
               <span class="tech-tag">Azure SQL</span>
               <span class="tech-tag">Terraform (Basic)</span>
               <span class="tech-tag">Linux/Bash</span>
@@ -886,6 +994,8 @@
           <div class="skill-card">
             <h3><i class="fa-solid fa-chart-line" style="color:#ef4444"></i> Monitoring</h3>
             <div class="tags-container">
+              <span class="tech-tag">Application Insights</span>
+              <span class="tech-tag">Distributed Tracing</span>
               <span class="tech-tag">Wireshark</span>
               <span class="tech-tag">Azure Log Stream</span>
               <span class="tech-tag">Performance Mon</span>
@@ -903,79 +1013,90 @@
           <p>O selecție de implementări practice și studii de caz.</p>
         </div>
 
+        <!-- FEATURED PROJECT: DevOps Showcase -->
         <div class="devops-showcase">
           <h3>
-            <i class="fa-brands fa-python"></i> Cloud-Native & IaC Architecture
-            
-            <span class="tech-tag" style="margin-left:auto; background:rgba(99, 102, 241, 0.2); color:#fff; border:1px solid var(--primary);">Terraform Added</span>
+            <i class="fa-brands fa-python"></i> Cloud-Native Architecture
+            <span class="tech-tag" style="margin-left:auto; background:rgba(16, 185, 129, 0.2); color:#10b981; border:1px solid #10b981;">v2.0 Live</span>
           </h3>
           <p style="margin-bottom: 20px; color: var(--text-muted);">
-            O soluție completă "from code to cloud". Infrastructura este provizionată automat cu <strong>Terraform</strong>, iar aplicația este livrată continuu prin <strong>GitHub Actions</strong>.
+            Evoluția unei aplicații monolitice într-un sistem distribuit, automatizat și monitorizat. 
+            Mai jos sunt etapele de inginerie implementate.
           </p>
           
-          
-          
+          <!-- Diagrama Principală -->
+          <div class="featured-diagram" style="margin-bottom: 20px; border:1px solid var(--border); border-radius:8px; overflow:hidden;">
+             <!-- Pune aici o imagine de ansamblu (ex: arhitectura Azure) -->
+             <img src="/static/img/architecture-diagram.png" alt="Architecture Diagram" loading="lazy" onerror="this.style.display='none'">
+          </div>
 
           <div class="accordion">
             
-            
+            <!-- PHASE 1: CI/CD & Containers -->
             <div class="acc-item">
               <div class="acc-header">
-                <span>1. Infrastructure as Code (Terraform)</span>
+                <span>1. CI/CD & Containerization</span>
                 <i class="fa-solid fa-chevron-down acc-icon"></i>
               </div>
               <div class="acc-content">
-                <p>
-                  Întreaga infrastructură Azure (Resource Group, SQL Server, Web App, Firewall) este definită în cod (HCL). 
-                  Folosesc <code>terraform plan</code> și <code>apply</code> pentru a gestiona starea resurselor, eliminând configurarea manuală și erorile umane.
-                </p>
+                <p><strong>Obiectiv:</strong> Eliminarea problemelor de tip "merge doar pe mașina mea".</p>
+                <ul style="padding-left: 20px; margin-top: 10px;">
+                  <li><strong>Docker:</strong> Containerizare cu imagine multi-stage (Alpine/Slim), incluzând drivere ODBC custom pentru SQL Server.</li>
+                  <li><strong>GitHub Actions:</strong> Pipeline automatizat care rulează la fiecare push.</li>
+                </ul>
+                <!-- IMAGINE: Pipeline-ul Verde din GitHub Actions -->
+                <div style="margin-top:15px;">
+                    <img src="/static/img/github-actions-pipeline.png" alt="GitHub Actions Pipeline" style="width:100%; border-radius:6px; border:1px solid var(--border);" onerror="this.style.display='none'">
+                </div>
               </div>
             </div>
 
-            
+            <!-- PHASE 2: Infrastructure as Code -->
             <div class="acc-item">
               <div class="acc-header">
-                <span>2. CI/CD Pipeline (GitHub Actions)</span>
+                <span>2. Infrastructure as Code (Terraform)</span>
                 <i class="fa-solid fa-chevron-down acc-icon"></i>
               </div>
               <div class="acc-content">
-                <p>La fiecare <code>push</code> pe ramura <code>main</code>, un workflow automatizat este declanșat. Acesta rulează teste unitare (Pytest), verifică stilul codului și, dacă totul trece, inițiază procesul de build.</p>
+                <p><strong>Obiectiv:</strong> Infrastructură reproductibilă și versionată.</p>
+                <p>Migrare de la ClickOps la <strong>Terraform</strong>. Întreaga infrastructură (Resource Group, App Service, SQL Database, Firewall Rules) este definită în cod HCL. Starea este gestionată pentru a detecta "configuration drift".</p>
+                <!-- IMAGINE: Screenshot cu un 'terraform plan' sau cod VS Code -->
+                <div style="margin-top:15px;">
+                    <img src="/static/img/terraform-code.png" alt="Terraform Code" style="width:100%; border-radius:6px; border:1px solid var(--border);" onerror="this.style.display='none'">
+                </div>
               </div>
             </div>
 
-            
+            <!-- PHASE 3: Security -->
             <div class="acc-item">
               <div class="acc-header">
-                <span>3. Quality Assurance & Linting</span>
+                <span>3. Security & Configuration</span>
                 <i class="fa-solid fa-chevron-down acc-icon"></i>
               </div>
               <div class="acc-content">
-                <p>Calitatea codului este asigurată prin <strong>Ruff</strong> și <strong>Black</strong>. Pipeline-ul blochează deploy-ul dacă standardele de stil sau sintaxă nu sunt respectate (Quality Gates).</p>
+                <p><strong>Obiectiv:</strong> Zero secrete în cod.</p>
+                <p>Datele sensibile (Connection Strings, API Keys) sunt injectate strict la runtime prin variabile de mediu. Accesul la rețea este restricționat prin reguli de Firewall gestionate de Terraform.</p>
               </div>
             </div>
 
-            
+            <!-- PHASE 4: Observability (MODIFICAT: Fără stil inline pe titlu) -->
             <div class="acc-item">
               <div class="acc-header">
-                <span>4. Containerizare & Registry</span>
+                <span>4. Observability & Monitoring</span>
                 <i class="fa-solid fa-chevron-down acc-icon"></i>
               </div>
               <div class="acc-content">
-                <p>Aplicația este împachetată într-un container <strong>Docker</strong> "ușor" (Alpine/Slim), optimizat cu drivere ODBC pentru SQL. Imaginea este versionată și stocată în <strong>Azure Container Registry (ACR)</strong>.</p>
-              </div>
-            </div>
-
-          
-            <div class="acc-item">
-              <div class="acc-header">
-                <span>5. Security & Configuration</span>
-                <i class="fa-solid fa-chevron-down acc-icon"></i>
-              </div>
-              <div class="acc-content">
-                <p>
-                  Datele sensibile (Connection Strings, Parole) sunt injectate securizat la runtime. 
-                  Accesul la baza de date este securizat prin reguli stricte de Firewall gestionate acum prin Terraform.
-                </p>
+                <p><strong>Obiectiv:</strong> Vizibilitate în timp real asupra performanței.</p>
+                <p>Integrare cu <strong>Azure Application Insights</strong> provisionat prin Terraform. Monitorizez:</p>
+                <ul style="padding-left: 20px; margin-top: 5px;">
+                  <li>Request Rates & Response Times</li>
+                  <li>Failure Rates (Erori 500/400)</li>
+                  <li>Live Metrics Stream (trafic în timp real)</li>
+                </ul>
+                <!-- IMAGINE: Graficele din Azure Application Insights -->
+                <div style="margin-top:15px;">
+                   <img src="/static/img/app-insights-dashboard.png" alt="Live Metrics Dashboard" style="width:100%; border-radius:6px; border:1px solid var(--border);" onerror="this.style.display='none'">
+                </div>
               </div>
             </div>
 
