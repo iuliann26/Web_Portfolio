@@ -1,6 +1,5 @@
 # infra/main.tf
-
-# Definim Tag-urile o singură dată (DRY Principle)
+#defineste folosind dry principle
 locals {
   common_tags = {
     Project     = "Personal-Portfolio"
