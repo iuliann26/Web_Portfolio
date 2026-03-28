@@ -1,0 +1,11 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'flask_app'
+    metrics_path: '/metrics'
+    scheme: https
+    static_configs:
+      - targets: ['portofoliu-iulian.azurewebsites.net:443']
+    tls_config:
+      insecure_skip_verify: true
