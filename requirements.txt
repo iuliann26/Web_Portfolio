@@ -15,3 +15,6 @@ WTForms==3.2.1
 pyodbc
 gunicorn
 email_validator
+pytest
+prometheus_flask_exporter
+prometheus_client
