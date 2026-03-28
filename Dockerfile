@@ -3,8 +3,6 @@ USER root
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     curl apt-transport-https gpg openssh-server && \
-    # Configurare SSH 
-    echo "root:Docker!" | chpasswd && \
     # Configurare MSSQL
     curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | \
     gpg --dearmor -o /usr/share/keyrings/microsoft-prod.gpg && \
@@ -18,5 +16,9 @@ WORKDIR /app_project
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
+RUN echo "root:Docker!" | chpasswd && \   
+    sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
+    sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config && \
+    sed -i 's/Port 22/Port 2222/' /etc/ssh/sshd_config
 EXPOSE 80 2222
 CMD service ssh start && gunicorn --bind 0.0.0.0:80 "app:create_app()"
